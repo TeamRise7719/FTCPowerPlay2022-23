@@ -55,60 +55,64 @@ public class RobotTeleOp extends OpMode {
 
 
         //----------------------------------------------=+(Drivetrain)+=----------------------------------------------\\
-//        robot.drive(gamepad1, telemetry);
+        robot.drive(gamepad1, telemetry);
 
 //        if (gamepad1.x) {
 //            robot.resetHeading();
 //        }
-        //----------------------------------------------=+(Drivetrain)+=----------------------------------------------\\
-
-
-        //----------------------------------------------=+(Grabber)+=----------------------------------------------\\
-        if (gamepad1.left_bumper) {
-            component.grab();
-        } else if (gamepad1.right_bumper) {
-            component.release();
-        }
-        //----------------------------------------------=+(Grabber)+=----------------------------------------------\\
-
-
-        //----------------------------------------------=+(Lift)+=----------------------------------------------\\
-        if (gamepad1.right_stick_y > 0.1 && !isLiftUp) {
-            component.moveLift(1.0);
-            isLiftDown = false;
-        } else if (gamepad1.right_stick_y < -0.1 && !isLiftDown) {
-            component.moveLift(-1.0);
-            isLiftUp = false;
-            isLiftHigh = false;
-        } else {
-            component.stopLift();
-        }
-
-        if (component.lift.getCurrentPosition() >= MAX_LIFT_ENCODERS) {
-            isLiftUp = true;
-            isLiftHigh = true;
-            //TODO: FINISH THIS SO YOU DONT BREAK LIFT
-        } else if (component.lift.getCurrentPosition() <= MIN_LIFT_ENCODERS) {
-            isLiftDown = true;
-            isLiftHigh = false;
-        }
-
-        if (component.lift.getCurrentPosition() >= MIN_SWING_ENCODERS) {
-            isLiftHigh = true;
-        } else {
-            isLiftHigh = false;
-        }
-        //----------------------------------------------=+(Lift)+=----------------------------------------------\\
-
-
+//        //----------------------------------------------=+(Drivetrain)+=----------------------------------------------\\
+//
+//
+//        //----------------------------------------------=+(Grabber)+=----------------------------------------------\\
+//        if (gamepad2.left_bumper) {
+//            component.grab();
+//        } else if (gamepad2.right_bumper) {
+//            component.release();
+//        }
+//        //----------------------------------------------=+(Grabber)+=----------------------------------------------\\
+//
+//
+//        //----------------------------------------------=+(Lift)+=----------------------------------------------\\
+//        if (gamepad2.right_stick_y > 0.1 && !isLiftUp) {
+//            component.moveLift(1.0);
+//            isLiftDown = false;
+//        } else if (gamepad2.right_stick_y < -0.1 && !isLiftDown) {
+//            component.moveLift(-1.0);
+//            isLiftUp = false;
+//            isLiftHigh = false;
+//        } else {
+//            component.stopLift();
+//        }
+//
+//        if (component.lift.getCurrentPosition() >= MAX_LIFT_ENCODERS) {
+//            isLiftUp = true;
+//            isLiftHigh = true;
+//            //TODO: FINISH THIS SO YOU DONT BREAK LIFT
+//        } else if (component.lift.getCurrentPosition() <= MIN_LIFT_ENCODERS) {
+//            isLiftDown = true;
+//            isLiftHigh = false;
+//        }
+//
+//        if (component.lift.getCurrentPosition() >= MIN_SWING_ENCODERS) {
+//            isLiftHigh = true;
+//        } else {
+//            isLiftHigh = false;
+//        }
+//        //----------------------------------------------=+(Lift)+=----------------------------------------------\\
+//
+//
+//        //----------------------------------------------=+(Arm)+=----------------------------------------------\\
+//        if (gamepad2.left_stick_y > 0.1 && isLiftHigh) {
+//            component.moveArm(0.6);
+//        } else if (gamepad2.left_stick_y < -0.1 && isLiftHigh) {
+//            component.moveArm(-0.6);
+//        } else {
+//            component.stopArm();
+//        }
         //----------------------------------------------=+(Arm)+=----------------------------------------------\\
-        if (gamepad1.left_stick_y > 0.1 && isLiftHigh) {
-            component.moveArm(0.6);
-        } else if (gamepad1.left_stick_y < -0.1 && isLiftHigh) {
-            component.moveArm(-0.6);
-        } else {
-            component.stopArm();
+        if (gamepad2.a) {
+            telemetry.addData("Gamepad 2", "pressed a");
+            component.moveLift(0.6);
         }
-        //----------------------------------------------=+(Arm)+=----------------------------------------------\\
     }
 }
