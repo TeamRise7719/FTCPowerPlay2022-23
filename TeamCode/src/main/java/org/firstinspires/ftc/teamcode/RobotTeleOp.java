@@ -55,28 +55,28 @@ public class RobotTeleOp extends OpMode {
 
 
         //----------------------------------------------=+(Drivetrain)+=----------------------------------------------\\
-        robot.drive(gamepad1, telemetry);
+//        robot.drive(gamepad1, telemetry);
 
-        if (gamepad1.x) {
-            robot.resetHeading();
-        }
+//        if (gamepad1.x) {
+//            robot.resetHeading();
+//        }
         //----------------------------------------------=+(Drivetrain)+=----------------------------------------------\\
 
 
         //----------------------------------------------=+(Grabber)+=----------------------------------------------\\
-        if (gamepad2.left_bumper) {
+        if (gamepad1.left_bumper) {
             component.grab();
-        } else if (gamepad2.right_bumper) {
+        } else if (gamepad1.right_bumper) {
             component.release();
         }
         //----------------------------------------------=+(Grabber)+=----------------------------------------------\\
 
 
         //----------------------------------------------=+(Lift)+=----------------------------------------------\\
-        if (gamepad2.right_stick_y > 0.1 && !isLiftUp) {
+        if (gamepad1.right_stick_y > 0.1 && !isLiftUp) {
             component.moveLift(1.0);
             isLiftDown = false;
-        } else if (gamepad2.right_stick_y < -0.1 && !isLiftDown) {
+        } else if (gamepad1.right_stick_y < -0.1 && !isLiftDown) {
             component.moveLift(-1.0);
             isLiftUp = false;
             isLiftHigh = false;
@@ -102,9 +102,9 @@ public class RobotTeleOp extends OpMode {
 
 
         //----------------------------------------------=+(Arm)+=----------------------------------------------\\
-        if (gamepad2.left_stick_y > 0.1 && isLiftHigh) {
+        if (gamepad1.left_stick_y > 0.1 && isLiftHigh) {
             component.moveArm(0.6);
-        } else if (gamepad2.left_stick_y < -0.1 && isLiftHigh) {
+        } else if (gamepad1.left_stick_y < -0.1 && isLiftHigh) {
             component.moveArm(-0.6);
         } else {
             component.stopArm();
