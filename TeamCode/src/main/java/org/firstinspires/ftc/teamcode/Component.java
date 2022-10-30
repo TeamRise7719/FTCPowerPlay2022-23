@@ -37,7 +37,7 @@ public class Component {
     }
 
     public void stopLift() {
-        lift.setPower(0.0);
+        lift.setPower(0.1);
     }
 
     public void grab(){
