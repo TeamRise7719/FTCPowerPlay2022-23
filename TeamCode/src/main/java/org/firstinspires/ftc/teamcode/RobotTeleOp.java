@@ -74,7 +74,7 @@ public class RobotTeleOp extends OpMode {
 
         //----------------------------------------------=+(Lift)+=----------------------------------------------\\
         if (gamepad2.right_stick_y > 0.1 /*&& !isLiftUp*/) {
-            component.moveLift(0.8);
+            component.moveLift(0.9);
 //            isLiftDown = false;
         } else if (gamepad2.right_stick_y < -0.1 /*&& !isLiftDown*/) {
             component.moveLift(-0.6);
@@ -102,10 +102,10 @@ public class RobotTeleOp extends OpMode {
 
 
         //----------------------------------------------=+(Arm)+=----------------------------------------------\\
-        if (gamepad2.left_stick_y > 0.1 && isLiftHigh) {
-            component.moveArm(0.6);
-        } else if (gamepad2.left_stick_y < -0.1 && isLiftHigh) {
-            component.moveArm(-0.6);
+        if (gamepad2.left_stick_y > 0.1 /*&& isLiftHigh*/) {
+            component.moveArm(0.2);
+        } else if (gamepad2.left_stick_y < -0.1 /*&& isLiftHigh*/) {
+            component.moveArm(-0.2);
         } else {
             component.stopArm();
         }
