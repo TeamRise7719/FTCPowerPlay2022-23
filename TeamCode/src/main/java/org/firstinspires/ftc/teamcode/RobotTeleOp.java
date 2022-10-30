@@ -73,31 +73,31 @@ public class RobotTeleOp extends OpMode {
 
 
         //----------------------------------------------=+(Lift)+=----------------------------------------------\\
-        if (gamepad2.right_stick_y > 0.1 && !isLiftUp) {
+        if (gamepad2.right_stick_y > 0.1 /*&& !isLiftUp*/) {
             component.moveLift(0.6);
-            isLiftDown = false;
-        } else if (gamepad2.right_stick_y < -0.1 && !isLiftDown) {
+//            isLiftDown = false;
+        } else if (gamepad2.right_stick_y < -0.1 /*&& !isLiftDown*/) {
             component.moveLift(-0.6);
-            isLiftUp = false;
-            isLiftHigh = false;
+//            isLiftUp = false;
+//            isLiftHigh = false;
         } else {
             component.stopLift();
         }
 
-        if (component.lift.getCurrentPosition() >= MAX_LIFT_ENCODERS) {
-            isLiftUp = true;
-            isLiftHigh = true;
-            //TODO: FINISH THIS SO YOU DONT BREAK LIFT
-        } else if (component.lift.getCurrentPosition() <= MIN_LIFT_ENCODERS) {
-            isLiftDown = true;
-            isLiftHigh = false;
-        }
+//        if (component.lift.getCurrentPosition() >= MAX_LIFT_ENCODERS) {
+//            isLiftUp = true;
+//            isLiftHigh = true;
+//            //TODO: FINISH THIS SO YOU DONT BREAK LIFT
+//        } else if (component.lift.getCurrentPosition() <= MIN_LIFT_ENCODERS) {
+//            isLiftDown = true;
+//            isLiftHigh = false;
+//        }
 
-        if (component.lift.getCurrentPosition() >= MIN_SWING_ENCODERS) {
-            isLiftHigh = true;
-        } else {
-            isLiftHigh = false;
-        }
+//        if (component.lift.getCurrentPosition() >= MIN_SWING_ENCODERS) {
+//            isLiftHigh = true;
+//        } else {
+//            isLiftHigh = false;
+//        }
         //----------------------------------------------=+(Lift)+=----------------------------------------------\\
 
 
