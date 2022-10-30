@@ -22,13 +22,9 @@ public class Component {
         lift = hardwareMap.dcMotor.get("lift");
         lift.setDirection(DcMotor.Direction.FORWARD);
         lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         arm = hardwareMap.dcMotor.get("arm");
         arm.setDirection(DcMotor.Direction.FORWARD);
         arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         leftGrabber = hardwareMap.servo.get("lGrab");
         leftGrabber.setDirection(Servo.Direction.FORWARD);
