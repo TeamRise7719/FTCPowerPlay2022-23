@@ -23,7 +23,7 @@ public class Component {
         lift.setDirection(DcMotor.Direction.FORWARD);
         lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         arm = hardwareMap.dcMotor.get("arm");
-        arm.setDirection(DcMotor.Direction.FORWARD);
+        arm.setDirection(DcMotor.Direction.REVERSE);
         arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         leftGrabber = hardwareMap.servo.get("lGrab");
