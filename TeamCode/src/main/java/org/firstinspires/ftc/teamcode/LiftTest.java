@@ -17,8 +17,6 @@ public class LiftTest extends OpMode {
         lift = hardwareMap.dcMotor.get("lift");
         lift.setDirection(DcMotor.Direction.FORWARD);
         lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
     @Override
