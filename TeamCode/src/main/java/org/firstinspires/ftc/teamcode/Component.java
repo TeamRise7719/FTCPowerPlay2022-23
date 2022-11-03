@@ -25,6 +25,7 @@ public class Component {
         arm = hardwareMap.dcMotor.get("arm");
         arm.setDirection(DcMotor.Direction.REVERSE);
         arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         leftGrabber = hardwareMap.servo.get("lGrab");
         leftGrabber.setDirection(Servo.Direction.FORWARD);
@@ -32,22 +33,27 @@ public class Component {
         rightGrabber.setDirection(Servo.Direction.REVERSE);
     }
 
+    public void init() {//Figure this out
+        //Arm down when encoder is 150. Behind when greater than 150
+        arm.setMode(DcMotor.RunMode.RESET_ENCODERS);
+    }
+
     public void moveLift(double power) {
         lift.setPower(power);
     }
 
     public void stopLift() {
-        lift.setPower(0.1);
+        lift.setPower(0.30);
     }
 
     public void grab(){
-        leftGrabber.setPosition(60);
-        rightGrabber.setPosition(60);
+        leftGrabber.setPosition(0.55);//.5
+        rightGrabber.setPosition(1.0);//1
     }
 
     public void release() {
-        leftGrabber.setPosition(0);
-        rightGrabber.setPosition(0);
+        leftGrabber.setPosition(0.4);
+        rightGrabber.setPosition(0.6);
     }
 
     public void moveArm(double power) {
@@ -58,9 +64,12 @@ public class Component {
         arm.setPower(0);
     }
 
+    public double getArmEncoder() {
+        return arm.getCurrentPosition();
+    }
     public void getTelemetry(Telemetry telemetry) {
         telemetry.addData("Lift Encoder", lift.getCurrentPosition());
-        telemetry.addData("Arm Encoder", arm.getCurrentPosition());
+        telemetry.addData("Arm Encoder", getArmEncoder());
         telemetry.addData("Left Grabber Position", leftGrabber.getPosition());
         telemetry.addData("Right Grabber Position", rightGrabber.getPosition());
     }

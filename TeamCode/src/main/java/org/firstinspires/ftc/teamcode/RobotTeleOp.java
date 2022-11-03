@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.teamcode.Drivetrain;
 
@@ -34,6 +35,8 @@ public class RobotTeleOp extends OpMode {
         isLiftUp = false;
         isLiftDown = true;
         isGrabberClosed = true;
+        component.grab();
+        component.init();
     }
 
     @Override
@@ -65,19 +68,19 @@ public class RobotTeleOp extends OpMode {
 
         //----------------------------------------------=+(Grabber)+=----------------------------------------------\\
         if (gamepad2.left_bumper) {
-            component.grab();
-        } else if (gamepad2.right_bumper) {
             component.release();
+        } else if (gamepad2.right_bumper) {
+            component.grab();
         }
         //----------------------------------------------=+(Grabber)+=----------------------------------------------\\
 
 
         //----------------------------------------------=+(Lift)+=----------------------------------------------\\
-        if (gamepad2.right_stick_y > 0.1 /*&& !isLiftUp*/) {
-            component.moveLift(0.9);
+        if (gamepad2.right_stick_y < -0.1 /*&& !isLiftUp*/) {
+            component.moveLift(1.0);
 //            isLiftDown = false;
-        } else if (gamepad2.right_stick_y < -0.1 /*&& !isLiftDown*/) {
-            component.moveLift(-0.6);
+        } else if (gamepad2.right_stick_y > 0.1 /*&& !isLiftDown*/) {
+            component.moveLift(-0.1);
 //            isLiftUp = false;
 //            isLiftHigh = false;
         } else {
