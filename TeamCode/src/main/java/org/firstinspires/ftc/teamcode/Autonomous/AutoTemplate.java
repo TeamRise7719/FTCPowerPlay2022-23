@@ -1,9 +1,11 @@
-package org.firstinspires.ftc.teamcode.AprilTags;
+package org.firstinspires.ftc.teamcode.Autonomous;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.teamcode.AprilTags.AprilTagDetectionPipeline;
+import org.firstinspires.ftc.teamcode.SeansEncLibrary;
 import org.openftc.apriltag.AprilTagDetection;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
@@ -12,12 +14,14 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 import java.util.ArrayList;
 
 /**
- * Created by Sean Cardosi on 11/2/22.
+ * Created by Sean Cardosi on 11/4/22.
  */
-@TeleOp(name = "AprilTag Init Test",group = "Test")
-public class AprilTagInitTest extends LinearOpMode {
+@Autonomous(name = "Auto Template", group = "Templates")
+public class AutoTemplate extends LinearOpMode {
+
     OpenCvCamera camera;
     AprilTagDetectionPipeline aprilTagDetectionPipeline;
+    SeansEncLibrary enc;
 
     static final double FEET_PER_METER = 3.28084;
 
@@ -43,6 +47,9 @@ public class AprilTagInitTest extends LinearOpMode {
 
     @Override
     public void runOpMode() {
+
+        enc = new SeansEncLibrary(hardwareMap, telemetry, this);
+        enc.init();
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
         aprilTagDetectionPipeline = new AprilTagDetectionPipeline(tagsize, fx, fy, cx, cy);
@@ -86,7 +93,6 @@ public class AprilTagInitTest extends LinearOpMode {
                 if(tagFound) {
                     if (tagOfInterest.id == Tag1) {
                         telemetry.addLine("Position 1");
-
                     } else if (tagOfInterest.id == Tag2) {
                         telemetry.addLine("Position 2");
                     } else if (tagOfInterest.id == Tag3) {
@@ -108,7 +114,7 @@ public class AprilTagInitTest extends LinearOpMode {
             } else {
                 telemetry.addLine("Don't see tag:(");
 
-                if(tagOfInterest == null) {
+                if (tagOfInterest == null) {
                     telemetry.addLine("(A tag has never been seen)");
                 } else {
                     telemetry.addLine("\nBut we HAVE seen a tag before; last seen at:");
@@ -125,7 +131,7 @@ public class AprilTagInitTest extends LinearOpMode {
          */
 
         /* Update the telemetry */
-        if(tagOfInterest != null) {
+        if (tagOfInterest != null) {
             telemetry.addLine("Tag snapshot:\n");
             tagToTelemetry(tagOfInterest);
             telemetry.update();
@@ -134,40 +140,44 @@ public class AprilTagInitTest extends LinearOpMode {
             telemetry.update();
         }
 
+        //-------------------------------+=(Auto)=+-------------------------------\\
+
+
+
         /* Actually do something useful */
-        if(tagOfInterest == null) {
+        if (tagOfInterest.id == Tag1){//Position 1: The left-most parking zone
             /*
-             * Insert your autonomous code here, presumably running some default configuration
-             * since the tag was never sighted during INIT
+             * Insert auto code here for position 1
+             */
+
+            //JUST AND EXAMPLE... FILL OUT
+            enc.steeringDrive(14,false,false);//Drive forward 14 inches
+            enc.steeringDrive(14,false,true);//Strafe 14 inches to the right
+            enc.arcTurn(90);//Turn 90 degrees to the right
+            /*
+             * Negative values will turn counterclockwise or strafe left or go backwards depending on
+             * what is specified in the function parameters.
+             */
+        } else if (tagOfInterest.id == Tag2) {//Position 2: The middle parking zone
+            /*
+             * Insert auto code here for position 1
+             */
+        } else if (tagOfInterest.id == Tag3) {//Position 3: The right-most parking zone
+            /*
+             * Insert auto code here for position 1
              */
         } else {
             /*
-             * Insert your autonomous code here, probably using the tag pose to decide your configuration.
+             * Insert default auto code here since we never found the tag.
              */
-
-
-            // e.g.
-            /*if(tagOfInterest.pose.x <= 20) {
-                // do something
-            } else if(tagOfInterest.pose.x >= 20 && tagOfInterest.pose.x <= 50) {
-                // do something else
-            } else if(tagOfInterest.pose.x >= 50) {
-                // do something else
-            }*/
         }
 
 
-        /* You wouldn't have this in your autonomous, this is just to prevent the sample from ending */
-        while (opModeIsActive()) {sleep(20);}
+
+        //-------------------------------+=(Auto)=+-------------------------------\\
     }
 
     void tagToTelemetry(AprilTagDetection detection) {
         telemetry.addLine(String.format("\nDetected tag ID=%d", detection.id));
-        telemetry.addLine(String.format("Translation X: %.2f feet", detection.pose.x*FEET_PER_METER));
-        telemetry.addLine(String.format("Translation Y: %.2f feet", detection.pose.y*FEET_PER_METER));
-        telemetry.addLine(String.format("Translation Z: %.2f feet", detection.pose.z*FEET_PER_METER));
-        telemetry.addLine(String.format("Rotation Yaw: %.2f degrees", Math.toDegrees(detection.pose.yaw)));
-        telemetry.addLine(String.format("Rotation Pitch: %.2f degrees", Math.toDegrees(detection.pose.pitch)));
-        telemetry.addLine(String.format("Rotation Roll: %.2f degrees", Math.toDegrees(detection.pose.roll)));
     }
 }

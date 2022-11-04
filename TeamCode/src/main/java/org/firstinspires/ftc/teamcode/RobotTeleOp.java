@@ -76,31 +76,13 @@ public class RobotTeleOp extends OpMode {
 
 
         //----------------------------------------------=+(Lift)+=----------------------------------------------\\
-        if (gamepad2.right_stick_y < -0.1 /*&& !isLiftUp*/) {
+        if (gamepad2.right_stick_y < -0.1) {
             component.moveLift(1.0);
-//            isLiftDown = false;
-        } else if (gamepad2.right_stick_y > 0.1 /*&& !isLiftDown*/) {
+        } else if (gamepad2.right_stick_y > 0.1) {
             component.moveLift(-0.1);
-//            isLiftUp = false;
-//            isLiftHigh = false;
         } else {
             component.stopLift();
         }
-
-//        if (component.lift.getCurrentPosition() >= MAX_LIFT_ENCODERS) {
-//            isLiftUp = true;
-//            isLiftHigh = true;
-//            //TODO: FINISH THIS SO YOU DONT BREAK LIFT
-//        } else if (component.lift.getCurrentPosition() <= MIN_LIFT_ENCODERS) {
-//            isLiftDown = true;
-//            isLiftHigh = false;
-//        }
-
-//        if (component.lift.getCurrentPosition() >= MIN_SWING_ENCODERS) {
-//            isLiftHigh = true;
-//        } else {
-//            isLiftHigh = false;
-//        }
         //----------------------------------------------=+(Lift)+=----------------------------------------------\\
 
 
@@ -110,12 +92,6 @@ public class RobotTeleOp extends OpMode {
         } else if (gamepad2.x /*&& isLiftHigh*/) {
             component.moveArm(0.1);
         }
-//        component.arm.setPosition(gamepad2.right_trigger);
-//        component.arm.setPosition(0.1);
         //----------------------------------------------=+(Arm)+=----------------------------------------------\\
-//        if (gamepad2.a) {
-//            telemetry.addData("Gamepad 2", "pressed a");
-//            component.moveLift(0.6);
-//        }
     }
 }
