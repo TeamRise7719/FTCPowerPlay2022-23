@@ -148,7 +148,7 @@ public class Drivetrain {
     public void drive(Gamepad gamepad1, Telemetry telemetry) {
         loop();
 
-        final double gx = gamepad1.left_stick_x;
+        final double gx = -gamepad1.left_stick_x;
         final double gy = -gamepad1.left_stick_y;
         final double r = -(gamepad1.right_stick_x);
 //        final double direction = Math.atan2(x, y) + getHeading();
