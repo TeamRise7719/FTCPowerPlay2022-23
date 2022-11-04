@@ -105,13 +105,13 @@ public class RobotTeleOp extends OpMode {
 
 
         //----------------------------------------------=+(Arm)+=----------------------------------------------\\
-//        if (gamepad2.b /*&& isLiftHigh*/) {
-//            component.moveArm(1.0);
-//        } else if (gamepad2.x /*&& isLiftHigh*/) {
-//            component.moveArm(0);
-//        }
+        if (gamepad2.b /*&& isLiftHigh*/) {
+            component.moveArm(1.0);
+        } else if (gamepad2.x /*&& isLiftHigh*/) {
+            component.moveArm(0.1);
+        }
 //        component.arm.setPosition(gamepad2.right_trigger);
-        component.arm.setPosition(0.1);
+//        component.arm.setPosition(0.1);
         //----------------------------------------------=+(Arm)+=----------------------------------------------\\
 //        if (gamepad2.a) {
 //            telemetry.addData("Gamepad 2", "pressed a");
