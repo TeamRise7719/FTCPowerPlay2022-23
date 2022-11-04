@@ -8,7 +8,6 @@ import org.openftc.apriltag.AprilTagDetection;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
-import org.openftc.easyopencv.OpenCvInternalCamera;
 
 import java.util.ArrayList;
 
@@ -34,7 +33,11 @@ public class AprilTagInitTest extends LinearOpMode {
     // UNITS ARE METERS
     double tagsize = 0.166;
 
-    int ID_TAG_OF_INTEREST = 18; // Tag ID 18 from the 36h11 family
+    int Tag1 = 1; // Tag ID 1 from the 36h11 family
+    int Tag2 = 2; // Tag ID 1 from the 36h11 family
+    int Tag3 = 3; // Tag ID 1 from the 36h11 family
+    int detectedTag = 0;
+
 
     AprilTagDetection tagOfInterest = null;
 
@@ -68,7 +71,12 @@ public class AprilTagInitTest extends LinearOpMode {
                 boolean tagFound = false;
 
                 for(AprilTagDetection tag : currentDetections) {
-                    if(tag.id == ID_TAG_OF_INTEREST) {
+                    /*if(tag.id == 1) {
+                        tagOfInterest = tag;
+                        tagFound = true;
+                        break;
+                    }*/
+                    if (tag.id == Tag1 || tag.id == Tag2 || tag.id == Tag3) {
                         tagOfInterest = tag;
                         tagFound = true;
                         break;
@@ -76,25 +84,34 @@ public class AprilTagInitTest extends LinearOpMode {
                 }
 
                 if(tagFound) {
-                    telemetry.addLine("Tag of interest is in sight!\n\nLocation data:");
+                    if (tagOfInterest.id == Tag1) {
+                        telemetry.addLine("Position 1");
+
+                    } else if (tagOfInterest.id == Tag2) {
+                        telemetry.addLine("Position 2");
+                    } else if (tagOfInterest.id == Tag3) {
+                        telemetry.addLine("Position 3");
+                    } else {
+                        telemetry.addLine("Something went wrong");
+                    }
                     tagToTelemetry(tagOfInterest);
                 } else {
-                    telemetry.addLine("Don't see tag of interest :(");
+                    telemetry.addLine("Don't see tag:(");
 
                     if(tagOfInterest == null) {
-                        telemetry.addLine("(The tag has never been seen)");
+                        telemetry.addLine("(A tag has never been seen)");
                     } else {
-                        telemetry.addLine("\nBut we HAVE seen the tag before; last seen at:");
+                        telemetry.addLine("\nBut we HAVE seen a tag before; last seen at:");
                         tagToTelemetry(tagOfInterest);
                     }
                 }
             } else {
-                telemetry.addLine("Don't see tag of interest :(");
+                telemetry.addLine("Don't see tag:(");
 
                 if(tagOfInterest == null) {
-                    telemetry.addLine("(The tag has never been seen)");
+                    telemetry.addLine("(A tag has never been seen)");
                 } else {
-                    telemetry.addLine("\nBut we HAVE seen the tag before; last seen at:");
+                    telemetry.addLine("\nBut we HAVE seen a tag before; last seen at:");
                     tagToTelemetry(tagOfInterest);
                 }
             }
@@ -128,14 +145,15 @@ public class AprilTagInitTest extends LinearOpMode {
              * Insert your autonomous code here, probably using the tag pose to decide your configuration.
              */
 
+
             // e.g.
-            if(tagOfInterest.pose.x <= 20) {
+            /*if(tagOfInterest.pose.x <= 20) {
                 // do something
             } else if(tagOfInterest.pose.x >= 20 && tagOfInterest.pose.x <= 50) {
                 // do something else
             } else if(tagOfInterest.pose.x >= 50) {
                 // do something else
-            }
+            }*/
         }
 
 
