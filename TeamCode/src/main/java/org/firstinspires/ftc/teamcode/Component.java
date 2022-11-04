@@ -13,7 +13,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class Component {
 
     public DcMotor lift;
-    public DcMotor arm;
+    public Servo arm;
     public Servo leftGrabber;
     public Servo rightGrabber;
 
@@ -22,10 +22,8 @@ public class Component {
         lift = hardwareMap.dcMotor.get("lift");
         lift.setDirection(DcMotor.Direction.FORWARD);
         lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        arm = hardwareMap.dcMotor.get("arm");
-        arm.setDirection(DcMotor.Direction.REVERSE);
-        arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        arm = hardwareMap.servo.get("arm");
+        arm.setDirection(Servo.Direction.FORWARD);
 
         leftGrabber = hardwareMap.servo.get("lGrab");
         leftGrabber.setDirection(Servo.Direction.FORWARD);
@@ -35,7 +33,6 @@ public class Component {
 
     public void init() {//Figure this out
         //Arm down when encoder is 150. Behind when greater than 150
-        arm.setMode(DcMotor.RunMode.RESET_ENCODERS);
     }
 
     public void moveLift(double power) {
@@ -56,20 +53,13 @@ public class Component {
         rightGrabber.setPosition(0.6);
     }
 
-    public void moveArm(double power) {
-        arm.setPower(power);
+    public void moveArm(double position) {
+        arm.setPosition(position);
     }
 
-    public void stopArm() {
-        arm.setPower(0);
-    }
-
-    public double getArmEncoder() {
-        return arm.getCurrentPosition();
-    }
     public void getTelemetry(Telemetry telemetry) {
         telemetry.addData("Lift Encoder", lift.getCurrentPosition());
-        telemetry.addData("Arm Encoder", getArmEncoder());
+        telemetry.addData("Arm Encoder", arm.getPosition());
         telemetry.addData("Left Grabber Position", leftGrabber.getPosition());
         telemetry.addData("Right Grabber Position", rightGrabber.getPosition());
     }
