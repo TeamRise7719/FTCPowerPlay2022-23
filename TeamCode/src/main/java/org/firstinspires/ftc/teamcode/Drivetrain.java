@@ -158,19 +158,23 @@ public class Drivetrain {
         double x = gx * Math.cos(heading) - gy * Math.sin(heading);
         double y = gx * Math.sin(heading) + gy * Math.cos(heading);
 
-//        double l = Math.max(Math.abs(gy) + Math.abs(gx) + Math.abs(r),1);
+        double l = Math.max(Math.abs(gy) + Math.abs(gx) + Math.abs(r),1);
         double lf_ = (y + x + r) /*/ l*/;//speed * Math.sin(direction + Math.PI / 4.0) + rotation;
         double lr_ = (y - x + r) /*/ l*/;//speed * Math.cos(direction + Math.PI / 4.0) - rotation;
         double rf_ = (y - x - r) /*/ l*/;//speed * Math.cos(direction + Math.PI / 4.0) + rotation;
         double rr_ = (y + x - r) /*/ l*/;//speed * Math.sin(direction + Math.PI / 4.0) - rotation;
-        List<Double> speeds = Arrays.asList(lf_,lr_,rf_,rr_);
-        double l = Math.max(Collections.max(speeds),-Collections.min(speeds));
-        if (l > 1) {
-            lf_ /= l;
-            lr_ /= l;
-            rf_ /= l;
-            rr_ /= l;
-        }
+//        List<Double> speeds = Arrays.asList(lf_,lr_,rf_,rr_);
+//        double l = Math.max(Collections.max(speeds),-Collections.min(speeds));
+//        if (l > 1) {
+//            lf_ /= l;
+//            lr_ /= l;
+//            rf_ /= l;
+//            rr_ /= l;
+//        }
+        lf_ /= l;
+        lr_ /= l;
+        rf_ /= l;
+        rr_ /= l;
 
         if(gamepad1.right_bumper) {//If we are in a state where we want to quarter the drive speed then do so.
             lf.setPower(lf_ / 4.0);
