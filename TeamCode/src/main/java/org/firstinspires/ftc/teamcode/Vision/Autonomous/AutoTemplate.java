@@ -1,11 +1,12 @@
-package org.firstinspires.ftc.teamcode.Autonomous;
+package org.firstinspires.ftc.teamcode.Vision.Autonomous;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.teamcode.AprilTags.AprilTagDetectionPipeline;
-import org.firstinspires.ftc.teamcode.SeansEncLibrary;
+import org.firstinspires.ftc.teamcode.Vision.Subsystems.AprilTags.AprilTagDetectionPipeline;
+import org.firstinspires.ftc.teamcode.Vision.Subsystems.Sensing.SeansEncLibrary;
+import org.firstinspires.ftc.teamcode.Vision.Subsystems.Components.Component;
 import org.openftc.apriltag.AprilTagDetection;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 /**
  * Created by Sean Cardosi on 11/4/22.
  */
-@Autonomous(name = "Auto Template", group = "Templates")
+@Autonomous(name = "Auto Right", group = "Templates")
 public class AutoTemplate extends LinearOpMode {
 
     OpenCvCamera camera;
@@ -143,17 +144,30 @@ public class AutoTemplate extends LinearOpMode {
         //-------------------------------+=(Auto)=+-------------------------------\\
 
 
+        Component program = new Component(hardwareMap);
 
-        /* Actually do something useful */
+
+        program.init() ;
+        // Actually do something useful *
         if (tagOfInterest.id == Tag1){//Position 1: The left-most parking zone
             /*
              * Insert auto code here for position 1
              */
+            //enc.steeringDrive(1,false,true);
+            //enc.steeringDrive(2,false,true);
+            program.moveLift(1);
+            sleep(500);
+            program.stopLift();
+            enc.steeringDrive(10,false,false);
+            enc.arcTurn(-50);
+            enc.steeringDrive(10,false,true);
+            enc.steeringDrive(6,false,false);
+            //enc.steeringDrive(-3,false,false);
 
             //JUST AND EXAMPLE... FILL OUT
-            enc.steeringDrive(14,false,false);//Drive forward 14 inches
-            enc.steeringDrive(14,false,true);//Strafe 14 inches to the right
-            enc.arcTurn(90);//Turn 90 degrees to the right
+           // enc.steeringDrive(14,false,false);//Drive forward 14 inches
+            //enc.steeringDrive(14,false,true);//Strafe 14 inches to the right
+            //enc.arcTurn(90);//Turn 90 degrees to the right
             /*
              * Negative values will turn counterclockwise or strafe left or go backwards depending on
              * what is specified in the function parameters.
@@ -162,10 +176,23 @@ public class AutoTemplate extends LinearOpMode {
             /*
              * Insert auto code here for position 1
              */
+            program.moveLift(1);
+            sleep(500);
+            program.stopLift();
+            enc.steeringDrive(18 ,false,false);
+
+
+
         } else if (tagOfInterest.id == Tag3) {//Position 3: The right-most parking zone
             /*
              * Insert auto code here for position 1
              */
+            program.moveLift(1);
+            sleep(500);
+            program.stopLift();
+            enc.steeringDrive(10,false,false);
+            enc.steeringDrive(8,false,true);
+            enc.steeringDrive(10,false,false);
         } else {
             /*
              * Insert default auto code here since we never found the tag.

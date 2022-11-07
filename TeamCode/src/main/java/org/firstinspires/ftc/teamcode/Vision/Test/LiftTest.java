@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Vision.Test;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
  * Created by Sean Cardosi on 10/30/22.
  */
 @Disabled
-@TeleOp(name = "LiftTest", group = "Test")
+@TeleOp(name = "LiftTest", group = "Tests")
 public class LiftTest extends OpMode {
 
     DcMotor lift;
