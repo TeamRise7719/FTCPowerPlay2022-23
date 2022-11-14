@@ -23,8 +23,8 @@ public class threadTeleop extends OpMode {
     @Override
     public void loop() {
         if (gamepad1.a){
-            test.start();
             test2.start();
+            test.start();
         }
     }
 }

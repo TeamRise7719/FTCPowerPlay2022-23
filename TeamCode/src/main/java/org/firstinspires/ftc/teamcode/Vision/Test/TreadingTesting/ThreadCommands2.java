@@ -19,8 +19,6 @@ public class ThreadCommands2 extends Thread{
     }
 
     public void run() {
-//        leftGrabber.setPosition(0.4);
-//        rightGrabber.setPosition(0.6);
         leftGrabber.setPosition(0.55);
         rightGrabber.setPosition(1.0);
     }
