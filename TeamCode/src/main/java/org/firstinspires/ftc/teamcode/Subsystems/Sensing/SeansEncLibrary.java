@@ -117,7 +117,6 @@ public class  SeansEncLibrary {
         turnPID.setInputRange(-180, 180);
     }
 
-
     //Stop All Motors
     private void stop_all_motors() {
         left_back_drive.setPower(0);
