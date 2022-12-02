@@ -9,10 +9,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 @TeleOp(name = "threadTeleop", group = "Tests")
 public class threadTeleop extends OpMode {
 
-
     ThreadCommands test;
     ThreadCommands2 test2;
-
 
     @Override
     public void init() {
@@ -23,8 +21,8 @@ public class threadTeleop extends OpMode {
     @Override
     public void loop() {
         if (gamepad1.a){
-            test2.start();
-            test.start();
+            test2.run();
+            test.run();
         }
     }
 }
