@@ -1,10 +1,10 @@
-package org.firstinspires.ftc.teamcode.Vision.Teleop;
+package org.firstinspires.ftc.teamcode.Teleop;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.Vision.Subsystems.Components.Component;
-import org.firstinspires.ftc.teamcode.Vision.Subsystems.Driving.Drivetrain;
+import org.firstinspires.ftc.teamcode.Subsystems.Components.Component;
+import org.firstinspires.ftc.teamcode.Subsystems.Driving.Drivetrain;
 
 /**
  * Created by Sean Cardosi on 8/28/22.
@@ -72,6 +72,10 @@ public class RobotTeleOp extends OpMode {
         } else if (gamepad2.right_bumper) {
             component.grab();
         }
+//        component.leftGrabber.setPosition(gamepad2.left_trigger);
+//        component.rightGrabber.setPosition(gamepad2.right_trigger);
+//        telemetry.addData("Right", gamepad2.right_trigger);
+//        telemetry.addData("Left", gamepad2.left_trigger);
         //----------------------------------------------=+(Grabber)+=----------------------------------------------\\
 
 

@@ -1,11 +1,10 @@
-package org.firstinspires.ftc.teamcode.Vision.Test;
+package org.firstinspires.ftc.teamcode.Test;
 
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.Vision.Subsystems.Components.Component;
-import org.firstinspires.ftc.teamcode.Vision.Subsystems.Sensing.SeansEncLibrary;
+import org.firstinspires.ftc.teamcode.Subsystems.Components.Component;
 
 
 /**

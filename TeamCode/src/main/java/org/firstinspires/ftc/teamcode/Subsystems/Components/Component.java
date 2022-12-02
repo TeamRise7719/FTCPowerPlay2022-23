@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Vision.Subsystems.Components;
+package org.firstinspires.ftc.teamcode.Subsystems.Components;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -29,6 +29,8 @@ public class Component {
         leftGrabber.setDirection(Servo.Direction.FORWARD);
         rightGrabber = hardwareMap.servo.get("rGrab");
         rightGrabber.setDirection(Servo.Direction.REVERSE);
+
+        moveArm(0.1);
     }
 
     public void init() {//Figure this out
@@ -44,13 +46,13 @@ public class Component {
     }
 
     public void grab(){
-        leftGrabber.setPosition(0.55);//.5
-        rightGrabber.setPosition(1.0);//1
+        leftGrabber.setPosition(0.38);//.5
+        rightGrabber.setPosition(0.56);//1
     }
 
     public void release() {
-        leftGrabber.setPosition(0.4);
-        rightGrabber.setPosition(0.6);
+        leftGrabber.setPosition(0.25);
+        rightGrabber.setPosition(0.45);
     }
 
     public void moveArm(double position) {

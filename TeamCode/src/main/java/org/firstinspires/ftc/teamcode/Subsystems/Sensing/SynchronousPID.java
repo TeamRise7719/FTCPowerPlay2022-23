@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Vision.Subsystems.Sensing;
+package org.firstinspires.ftc.teamcode.Subsystems.Sensing;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
 

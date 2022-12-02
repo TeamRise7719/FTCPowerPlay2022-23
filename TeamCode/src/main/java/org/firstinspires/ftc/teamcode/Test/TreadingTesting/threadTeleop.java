@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Vision.Test.TreadingTesting;
+package org.firstinspires.ftc.teamcode.Test.TreadingTesting;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;

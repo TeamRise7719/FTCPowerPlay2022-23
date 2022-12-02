@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Vision.Subsystems.Sensing;
+package org.firstinspires.ftc.teamcode.Subsystems.Sensing;
 
 import android.util.Log;
 
@@ -6,7 +6,6 @@ import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 

@@ -1,12 +1,12 @@
-package org.firstinspires.ftc.teamcode.Vision.Autonomous;
+package org.firstinspires.ftc.teamcode.Autonomous;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.teamcode.Vision.Subsystems.AprilTags.AprilTagDetectionPipeline;
-import org.firstinspires.ftc.teamcode.Vision.Subsystems.Sensing.SeansEncLibrary;
-import org.firstinspires.ftc.teamcode.Vision.Subsystems.Components.Component;
+import org.firstinspires.ftc.teamcode.Subsystems.AprilTags.AprilTagDetectionPipeline;
+import org.firstinspires.ftc.teamcode.Subsystems.Components.Component;
+import org.firstinspires.ftc.teamcode.Subsystems.Sensing.SeansEncLibrary;
 import org.openftc.apriltag.AprilTagDetection;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
