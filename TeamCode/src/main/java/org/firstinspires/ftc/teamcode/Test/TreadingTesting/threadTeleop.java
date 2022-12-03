@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode.Test.TreadingTesting;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 /**
  * Created by Jeremiah on 11/12/22.
  */
+@Disabled
 @TeleOp(name = "threadTeleop", group = "Tests")
 public class threadTeleop extends OpMode {
 
@@ -14,8 +16,7 @@ public class threadTeleop extends OpMode {
 
     @Override
     public void init() {
-        test = new ThreadCommands(hardwareMap);
-        test2 = new ThreadCommands2(hardwareMap);
+
     }
 
     @Override

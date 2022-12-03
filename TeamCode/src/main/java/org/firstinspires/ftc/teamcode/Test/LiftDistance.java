@@ -24,12 +24,12 @@ public class LiftDistance {
         double COUNTS_PER_MOTOR_REV = 383.6;
         double InchesT = COUNTS_PER_MOTOR_REV / 3.14159265359;
         int move = ((int)(distance * InchesT));
-        int newTarget = lift.getTargetPosition()+move;
+        int newTarget = (lift.getCurrentPosition()+move);
         lift.setTargetPosition(newTarget);
         lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         lift.setPower(.4);
         while(lift.isBusy()){}
-        lift.setPower(0);
+        lift.setPower(.3);
     }
 
 }
