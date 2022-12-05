@@ -13,8 +13,9 @@ public class ThreadCommands implements Runnable{
 
     DcMotor lift;
     public ThreadCommands(HardwareMap hardwareMap){
-        lift = BlocksOpModeCompanion.hardwareMap.dcMotor.get("lift");
+        lift = hardwareMap.dcMotor.get("lift");
     }
+
 
     public void init(){
         lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);

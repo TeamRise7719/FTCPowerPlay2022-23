@@ -12,21 +12,23 @@ import org.firstinspires.ftc.teamcode.Test.LiftDistance;
 
 @Autonomous(name = "Threaded Auto", group = "tests")
 public class AutoTest extends LinearOpMode {
-    ThreadCommands2 test2;
-    ThreadCommands test;
     Component component;
     LiftDistance lift;
-
+    ThreadCommands test;
+    ThreadCommands2 test2;
 
     @Override
     public void runOpMode() throws InterruptedException {
         component = new Component(hardwareMap);
-        test = new ThreadCommands(hardwareMap);
-        test2 = new ThreadCommands2(hardwareMap,telemetry,this);
         lift = new LiftDistance(hardwareMap);
+        test = new ThreadCommands(hardwareMap);
+        test2 = new ThreadCommands2(hardwareMap, telemetry, this);
+        Thread myThread = new Thread(test);
+        Thread myThread2 = new Thread(test2);
         lift.init();
         component.init();
         test2.init();
+        test.init();
 
         waitForStart();
 
@@ -34,10 +36,8 @@ public class AutoTest extends LinearOpMode {
         sleep(1000);
         component.stopLift();
         lift.liftD(4);
-        test.run();
-        test2.run();
-
-
+        myThread2.start();
+        myThread.start();
     }
 
 }
