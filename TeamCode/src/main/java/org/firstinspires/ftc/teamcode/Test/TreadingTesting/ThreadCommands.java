@@ -24,7 +24,7 @@ public class ThreadCommands implements Runnable{
     }
 
     public void liftD(double distance){
-        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        lift.setMode(DcMotor.RunMode.RESET_ENCODERS);
         double COUNTS_PER_MOTOR_REV = 383.6;
         double InchesT = COUNTS_PER_MOTOR_REV / 3.14159265359;
         int move = ((int)(distance * InchesT));
