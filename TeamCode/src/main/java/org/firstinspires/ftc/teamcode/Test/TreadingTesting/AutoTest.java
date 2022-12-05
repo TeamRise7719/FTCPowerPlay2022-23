@@ -38,8 +38,8 @@ public class AutoTest extends LinearOpMode {
         lift.liftD(4);
         myThread2.start();
         myThread.start();
-        sleep(2000);
-        while(true){}
+        while(myThread.isAlive()){}
+        
     }
 
 }
