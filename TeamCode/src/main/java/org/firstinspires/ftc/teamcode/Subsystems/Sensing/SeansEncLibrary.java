@@ -55,7 +55,7 @@ public class  SeansEncLibrary {
     private static final int ENCODER_THRESHOLD = 3;      // As tight as we can make it with an integer gyro
 
 
-    private static final double P_TURN_COEFF = 0.0;//0.008     // Larger is more responsive, but also less stable
+    private static final double P_TURN_COEFF = 0.06;//0.008     // Larger is more responsive, but also less stable
     private static final double I_TURN_COEFF = 0.0;//0.0000000000015;//0.0000000000015  // Larger is more responsive, but also less stable
     private static final double D_TURN_COEFF = 0;//0.000001;//0.000001     // Larger is more responsive, but also less stable
 
