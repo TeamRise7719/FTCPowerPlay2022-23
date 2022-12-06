@@ -32,8 +32,6 @@ import org.firstinspires.ftc.teamcode.Subsystems.Sensing.SynchronousPID;
 public class ThreadCommands2 implements Runnable {
 
 
-
-
     private DcMotor left_back_drive;
     private DcMotor left_front_drive;
     private DcMotor right_back_drive;

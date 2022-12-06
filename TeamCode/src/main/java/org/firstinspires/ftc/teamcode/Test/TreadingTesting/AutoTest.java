@@ -13,6 +13,7 @@ import org.firstinspires.ftc.teamcode.Test.LiftDistance;
 @Autonomous(name = "Threaded Auto", group = "tests")
 public class AutoTest extends LinearOpMode {
     Component component;
+    SeansEncLibrary enc;
     LiftDistance lift;
     ThreadCommands test;
     ThreadCommands2 test2;
@@ -21,14 +22,20 @@ public class AutoTest extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         component = new Component(hardwareMap);
         lift = new LiftDistance(hardwareMap);
+        enc = new SeansEncLibrary(hardwareMap, telemetry, this);
         test = new ThreadCommands(hardwareMap);
         test2 = new ThreadCommands2(hardwareMap, telemetry, this);
         Thread myThread = new Thread(test);
         Thread myThread2 = new Thread(test2);
+        enc.init();
         lift.init();
         component.init();
         test2.init();
         test.init();
+        Runnable liftAction = () -> {component.liftD(5);};
+        Thread liftThread = new Thread(liftAction);
+        Runnable drive10 = () -> {enc.steeringDrive(10,false,false);};
+        Thread driving = new Thread(drive10);
 
         waitForStart();
 
@@ -36,9 +43,13 @@ public class AutoTest extends LinearOpMode {
         sleep(1000);
         component.stopLift();
         lift.liftD(4);
-        myThread2.start();
-        myThread.start();
+        liftThread.start();
+        driving.start();
+        //myThread2.start();
+        //myThread.start();
         while(myThread.isAlive()){}
+        component.stopLift();
+        sleep(5000);
         
     }
 

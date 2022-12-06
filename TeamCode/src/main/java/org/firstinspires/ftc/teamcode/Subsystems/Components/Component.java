@@ -22,6 +22,7 @@ public class Component {
         lift = hardwareMap.dcMotor.get("lift");
         lift.setDirection(DcMotor.Direction.FORWARD);
         lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         arm = hardwareMap.servo.get("arm");
         arm.setDirection(Servo.Direction.FORWARD);
 
@@ -39,6 +40,18 @@ public class Component {
 
     public void moveLift(double power) {
         lift.setPower(power);
+    }
+    public void liftD(double distance){
+        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        double COUNTS_PER_MOTOR_REV = 383.6;
+        double InchesT = COUNTS_PER_MOTOR_REV / Math.PI;
+        int move = ((int)(distance * InchesT));
+        int newTarget = (lift.getCurrentPosition()+move);
+        lift.setTargetPosition(newTarget);
+        lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        lift.setPower(.4);
+        while(lift.isBusy()){}
+        lift.setPower(.3);
     }
 
     public void stopLift() {

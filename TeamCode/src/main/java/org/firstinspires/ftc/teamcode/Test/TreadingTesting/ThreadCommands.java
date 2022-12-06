@@ -36,7 +36,6 @@ public class ThreadCommands implements Runnable{
         lift.setPower(.3);
     }
 
-
     @Override
     public void run(){
         liftD(10);
