@@ -25,13 +25,16 @@ public class LiftAuto extends LinearOpMode {
         liftl.init();
         enc.init();
 
-        Runnable liftAction = () -> {component.stopLift(); sleep(10000);};
+        Runnable liftAction = () -> {component.stopLift(); sleep(3000);};
         Thread liftThread = new Thread(liftAction);
 
         waitForStart();
+        component.moveLift(.2);
+        sleep(2000);
         liftl.liftD(4);
         liftThread.start();
-        enc.steeringDrive(-10,false,false);
+        //enc.steeringDrive(-10,false,false);
+        enc.arcTurn(90);
         while (liftThread.isAlive()){}
     }
 }

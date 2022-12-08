@@ -7,6 +7,7 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.Subsystems.AprilTags.AprilTagDetectionPipeline;
 import org.firstinspires.ftc.teamcode.Subsystems.Components.Component;
 import org.firstinspires.ftc.teamcode.Subsystems.Sensing.SeansEncLibrary;
+import org.firstinspires.ftc.teamcode.Test.TreadingTesting.LiftDistance;
 import org.openftc.apriltag.AprilTagDetection;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
@@ -141,29 +142,41 @@ public class autoLeft extends LinearOpMode {
 
 
         Component program = new Component(hardwareMap);
+        LiftDistance liftl = new LiftDistance(hardwareMap);
 
+        Runnable liftAction = () -> {liftl.liftD(29);};
+        Thread liftThread = new Thread(liftAction);
+        Runnable lifts = ()  -> {program.stopLift(); sleep(5000);};
+        Thread liftS2 = new Thread(lifts);
 
         program.init() ;
+        liftl.init();
         // Actually do something useful *
         if (tagOfInterest.id == Tag1){//Position 1: The left-most parking zone
             /*
              * Insert auto code here for position 1
              */
-            //enc.steeringDrive(1,false,true);
-            //enc.steeringDrive(2,false,true);
-            program.moveLift(1);
-            sleep(500);
+            program.moveLift(.1);
+            sleep(2000);
             program.stopLift();
-            enc.steeringDrive(10,false,false);
-            enc.arcTurn(-50);
-            enc.steeringDrive(10,false,true);
-            enc.steeringDrive(6,false,false);
-            //enc.steeringDrive(-3,false,false);
+            program.grab();
+            liftl.liftD(4);
+            liftThread.start();
+            enc.steeringDrive(4.5,false,false);
+            enc.steeringDrive(30,false,true);
+            enc.steeringDrive(21.5,false,false);
+            enc.arcTurn(180);
+            enc.steeringDrive(-27, false,false);
+            enc.steeringDrive(14,false,true);
+            while(liftThread.isAlive()){}
+            sleep(500);
+            liftS2.start();
+            liftl.liftD(-10);
+            program.release();
+            program.grab();
+            while(liftS2.isAlive()){}
 
-            //JUST AND EXAMPLE... FILL OUT
-            // enc.steeringDrive(14,false,false);//Drive forward 14 inches
-            //enc.steeringDrive(14,false,true);//Strafe 14 inches to the right
-            //enc.arcTurn(90);//Turn 90 degrees to the right
+
             /*
              * Negative values will turn counterclockwise or strafe left or go backwards depending on
              * what is specified in the function parameters.

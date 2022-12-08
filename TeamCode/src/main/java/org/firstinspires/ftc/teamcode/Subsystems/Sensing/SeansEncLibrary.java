@@ -55,14 +55,14 @@ public class  SeansEncLibrary {
     private static final int ENCODER_THRESHOLD = 3;      // As tight as we can make it with an integer gyro
 
 
-    private static final double P_TURN_COEFF = 0.06;//0.008     // Larger is more responsive, but also less stable
+    private static final double P_TURN_COEFF = 0.525 ;//0.525     // Larger is more responsive, but also less stable
     private static final double I_TURN_COEFF = 0.0;//0.0000000000015;//0.0000000000015  // Larger is more responsive, but also less stable
-    private static final double D_TURN_COEFF = 0;//0.000001;//0.000001     // Larger is more responsive, but also less stable
+    private static final double D_TURN_COEFF = 0.0;//0.000001;//0.000001     // Larger is more responsive, but also less stable
 
-
-    private static final double P_DRIVE_COEFF = 0.5;    // Larger is more responsive, but also less stable
-    private static final double I_DRIVE_COEFF = 0.7;/*0.0000000000059*/;     // Larger is more responsive, but also less stable
-    private static final double D_DRIVE_COEFF = 0.01;/*0.00004*/;    // Larger is more responsive, but also less stable
+    //Tuned for Vision
+    private static final double P_DRIVE_COEFF = 0.4;    // Larger is more responsive, but also less stable
+    private static final double I_DRIVE_COEFF = 0.4025;/*0.0000000000059*/;     // Larger is more responsive, but also less stable
+    private static final double D_DRIVE_COEFF = 0.00275;/*0.00004*/;    // Larger is more responsive, but also less stable
 
     public SeansEncLibrary(HardwareMap hardwareMap, Telemetry tel, LinearOpMode opMode) {
         gyro = hardwareMap.get(BNO055IMU.class, "imu");
@@ -361,7 +361,7 @@ public class  SeansEncLibrary {
         right_back_drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         right_front_drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        double trackWidth = 14.0;//13.8;// TODO: Tune the trackwidth
+        double trackWidth = 13.7;//13.8;// TODO: Tune the trackwidth
         double radius = trackWidth / 2;
         double circumference = 2 * PI * radius;
         double distance = (angle / 180) * circumference;//Divide by 180 because we are using -180/+180 not 0/+360
