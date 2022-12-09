@@ -144,7 +144,7 @@ public class autoLeft extends LinearOpMode {
         Component program = new Component(hardwareMap);
         LiftDistance liftl = new LiftDistance(hardwareMap);
 
-        Runnable liftAction = () -> {liftl.liftD(29);};
+        Runnable liftAction = () -> {liftl.liftD(20);};
         Thread liftThread = new Thread(liftAction);
         Runnable lifts = ()  -> {program.stopLift(); sleep(5000);};
         Thread liftS2 = new Thread(lifts);
@@ -163,13 +163,16 @@ public class autoLeft extends LinearOpMode {
             liftl.liftD(4);
             liftThread.start();
             enc.steeringDrive(4.5,false,false);
-            enc.steeringDrive(30,false,true);
-            enc.steeringDrive(21.5,false,false);
-            enc.arcTurn(180);
-            enc.steeringDrive(-27, false,false);
-            enc.steeringDrive(14,false,true);
+            enc.arcTurn(-90);
+            enc.steeringDrive(42,false,true);
+//            enc.steeringDrive(30,false,true);
+//            enc.steeringDrive(21.5,false,false);
+//            enc.arcTurn(180);
+//            enc.steeringDrive(-27, false,false);
+//            enc.steeringDrive(14,false,true);
             while(liftThread.isAlive()){}
             sleep(500);
+            enc.steeringDrive(-2,false,false);
             liftS2.start();
             liftl.liftD(-10);
             program.release();
