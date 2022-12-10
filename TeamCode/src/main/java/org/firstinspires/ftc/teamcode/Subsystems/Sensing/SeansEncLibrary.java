@@ -60,9 +60,9 @@ public class  SeansEncLibrary {
     private static final double D_TURN_COEFF = 0.0;//0.000001;//0.000001     // Larger is more responsive, but also less stable
 
     //Tuned for Vision
-    private static final double P_DRIVE_COEFF = 0.4;    // Larger is more responsive, but also less stable
-    private static final double I_DRIVE_COEFF = 0.4025;/*0.0000000000059*/;     // Larger is more responsive, but also less stable
-    private static final double D_DRIVE_COEFF = 0.00275;/*0.00004*/;    // Larger is more responsive, but also less stable
+    private static final double P_DRIVE_COEFF = 0.01; //0.4;    // Larger is more responsive, but also less stable
+    private static final double I_DRIVE_COEFF = 0; //0.4025;/*0.0000000000059*/;     // Larger is more responsive, but also less stable
+    private static final double D_DRIVE_COEFF = 1.0; //0.00275;/*0.00004*/;    // Larger is more responsive, but also less stable
 
     public SeansEncLibrary(HardwareMap hardwareMap, Telemetry tel, LinearOpMode opMode) {
         gyro = hardwareMap.get(BNO055IMU.class, "imu");
@@ -184,15 +184,19 @@ public class  SeansEncLibrary {
 
             drivePID.setContinuous(false);
             drivePID.setSetpoint(newAverageTarget);
-            drivePID.setOutputRange(-0.4, 0.4);
+            drivePID.setOutputRange(-1.0, 1.0);
 
+            ElapsedTime te = new ElapsedTime();
             while (linearOpMode.opModeIsActive()) {
                 encAvg = (left_front_drive.getCurrentPosition() + left_back_drive.getCurrentPosition() + right_back_drive.getCurrentPosition() + right_front_drive.getCurrentPosition()) / 4;
 
-                if (((abs(newAverageTarget - encAvg)) < ENCODER_THRESHOLD)) {
+
+                if (!((abs(newAverageTarget - encAvg)) < ENCODER_THRESHOLD)) {
+                    te.reset();
+                }
+                if (te.seconds() >= 0.75){
                     break;
                 }
-
                 if (steeringToggle) {
                     gyro_angle = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
                     turnPID.calcInit();
@@ -218,7 +222,7 @@ public class  SeansEncLibrary {
 
 
         if (strafe) {
-            int moveCounts = (int) (distance * COUNTS_PER_INCH);
+            int moveCounts = (int) ((distance * COUNTS_PER_INCH) * 1.2);
             int newBackLeftTarget;
             int newFrontLeftTarget;
             int newBackRightTarget;
@@ -361,7 +365,7 @@ public class  SeansEncLibrary {
         right_back_drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         right_front_drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        double trackWidth = 13.7;//13.8;// TODO: Tune the trackwidth
+        double trackWidth = 13.9;//13.8;// TODO: Tune the trackwidth
         double radius = trackWidth / 2;
         double circumference = 2 * PI * radius;
         double distance = (angle / 180) * circumference;//Divide by 180 because we are using -180/+180 not 0/+360

@@ -26,9 +26,13 @@ public class LiftDistance {
         double spoolC = 1.14;
         double COUNTS_PER_MOTOR_REV = 383.6;
         double InchesT = COUNTS_PER_MOTOR_REV / (spoolC*Math.PI);
+//        int power = 1;
+//        if (distance < 0) {
+//            power = -1;
+//        }
         int move = ((int)(distance * InchesT));
-        int newTarget = (lift.getCurrentPosition()+move);
-        lift.setTargetPosition(newTarget);
+        int newTarget = (lift.getCurrentPosition() + move);
+        lift.setTargetPosition(move);
         lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         lift.setPower(.4);
         while(lift.isBusy()){}

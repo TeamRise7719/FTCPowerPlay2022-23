@@ -66,4 +66,6 @@ public class Component {
         telemetry.addData("Right Grabber Position", rightGrabber.getPosition());
     }
 
+
+
 }

@@ -144,10 +144,8 @@ public class autoLeft extends LinearOpMode {
         Component program = new Component(hardwareMap);
         LiftDistance liftl = new LiftDistance(hardwareMap);
 
-        Runnable liftAction = () -> {liftl.liftD(20);};
+        Runnable liftAction = () -> {liftl.liftD(24);};
         Thread liftThread = new Thread(liftAction);
-        Runnable lifts = ()  -> {program.stopLift(); sleep(5000);};
-        Thread liftS2 = new Thread(lifts);
 
         program.init() ;
         liftl.init();
@@ -157,27 +155,22 @@ public class autoLeft extends LinearOpMode {
              * Insert auto code here for position 1
              */
             program.moveLift(.1);
-            sleep(2000);
+            sleep(1000);
             program.stopLift();
             program.grab();
-            liftl.liftD(4);
+           liftl.liftD(4);
             liftThread.start();
-            enc.steeringDrive(4.5,false,false);
+            enc.steeringDrive(-4, false, true);
+            enc.steeringDrive(3,false,false);
             enc.arcTurn(-90);
-            enc.steeringDrive(42,false,true);
-//            enc.steeringDrive(30,false,true);
-//            enc.steeringDrive(21.5,false,false);
-//            enc.arcTurn(180);
-//            enc.steeringDrive(-27, false,false);
-//            enc.steeringDrive(14,false,true);
-            while(liftThread.isAlive()){}
-            sleep(500);
-            enc.steeringDrive(-2,false,false);
-            liftS2.start();
-            liftl.liftD(-10);
+            enc.steeringDrive(35,false,true);
+            while (liftThread.isAlive()){}
+            enc.steeringDrive(-2.5,false,false);
+            liftl.liftD(-20);
             program.release();
-            program.grab();
-            while(liftS2.isAlive()){}
+            enc.steeringDrive(2.5,false,false);
+            enc.steeringDrive(-13, false,true);
+            enc.steeringDrive(23,false,false);
 
 
             /*
@@ -188,10 +181,21 @@ public class autoLeft extends LinearOpMode {
             /*
              * Insert auto code here for position 1
              */
-            program.moveLift(1);
-            sleep(500);
+            program.moveLift(.1);
+            sleep(1000);
             program.stopLift();
-            enc.steeringDrive(18 ,false,false);
+            program.grab();
+            liftl.liftD(4);
+            liftThread.start();
+            enc.steeringDrive(-4, false, true);
+            enc.steeringDrive(3,false,false);
+            enc.arcTurn(-90);
+            enc.steeringDrive(35,false,true);
+            while (liftThread.isAlive()){}
+            enc.steeringDrive(-2.5,false,false);
+            liftl.liftD(-20);
+            program.release();
+            enc.steeringDrive(2.5,false,false);
 
 
 
@@ -199,12 +203,25 @@ public class autoLeft extends LinearOpMode {
             /*
              * Insert auto code here for position 1
              */
-            program.moveLift(1);
-            sleep(500);
+            program.moveLift(.1);
+            sleep(1000);
             program.stopLift();
-            enc.steeringDrive(10,false,false);
-            enc.steeringDrive(8,false,true);
-            enc.steeringDrive(10,false,false);
+            program.grab();
+            liftl.liftD(4);
+            liftThread.start();
+            enc.steeringDrive(-4, false, true);
+            enc.steeringDrive(3,false,false);
+            enc.arcTurn(-90);
+            enc.steeringDrive(35,false,true);
+            while (liftThread.isAlive()){}
+            enc.steeringDrive(-2.5,false,false);
+            //liftDownThread.start();
+            liftl.liftD(-20);
+            program.release();
+            enc.steeringDrive(2.5,false,false);
+            enc.steeringDrive(-13, false,true);
+            enc.steeringDrive(-23,false,false);
+            enc.arcTurn(90);
         } else {
             /*
              * Insert default auto code here since we never found the tag.
