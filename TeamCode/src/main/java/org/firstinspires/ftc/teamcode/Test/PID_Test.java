@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Test;
 
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Subsystems.Components.Component;
@@ -10,7 +11,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.Components.Component;
 /**
  * Created by Jordan Nuthalapaty 10/26/2022
  */
-
+@Disabled
 @Autonomous(name = "Maverick Test Auto", group = "Maverick Auto")
 public class PID_Test extends LinearOpMode {
     @Override
