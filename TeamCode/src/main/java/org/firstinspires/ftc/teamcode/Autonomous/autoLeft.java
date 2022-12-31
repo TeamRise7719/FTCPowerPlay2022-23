@@ -7,7 +7,7 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.Subsystems.AprilTags.AprilTagDetectionPipeline;
 import org.firstinspires.ftc.teamcode.Subsystems.Components.Component;
 import org.firstinspires.ftc.teamcode.Subsystems.Sensing.SeansEncLibrary;
-import org.firstinspires.ftc.teamcode.Test.TreadingTesting.LiftDistance;
+import org.firstinspires.ftc.teamcode.Subsystems.Components.LiftDistance;
 import org.openftc.apriltag.AprilTagDetection;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;

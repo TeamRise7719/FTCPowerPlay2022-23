@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Subsystems.Components.Component;
+import org.firstinspires.ftc.teamcode.Subsystems.Components.LiftDistance;
 import org.firstinspires.ftc.teamcode.Subsystems.Sensing.SeansEncLibrary;
 
 

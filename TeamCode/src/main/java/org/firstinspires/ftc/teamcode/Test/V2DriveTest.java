@@ -87,10 +87,12 @@ public class V2DriveTest extends OpMode{
 
         drivetrain.drive(gamepad1, telemetry);
 
+        //Puts robot into starting position
         if (gamepad1.x) {
             drivetrain.resetHeading();
         }
 
+        //Raises and lowers arm between 90 degree and down positions
         if (gamepad2.right_bumper && !bumperChangedR) {
             if (!armIsUp) {
                 armIsUp = true;
@@ -101,8 +103,8 @@ public class V2DriveTest extends OpMode{
         } else if (!gamepad2.right_bumper) {
             bumperChangedR = false;
         }
-
-        if (gamepad2.left_bumper && !bumperChangedL) {
+        // Flips arm
+        if (gamepad2.left_bumper && !bumperChangedL && !clawOpen) {
             if (!armIsFront) {
                 armIsFront = true;
             } else {
@@ -112,7 +114,7 @@ public class V2DriveTest extends OpMode{
         } else if (!gamepad2.left_bumper) {
             bumperChangedL = false;
         }
-
+        //Opens and closes claw
         if (gamepad2.a && !buttonChanged) {
             if (!clawOpen) {
                 clawOpen = true;
@@ -123,9 +125,9 @@ public class V2DriveTest extends OpMode{
         } else if (!gamepad2.a) {
             buttonChanged = false;
         }
-
-        if (gamepad2.dpad_up) {
-            positArm = 0.44;
+        //Puts arm upright
+        if (!clawOpen && gamepad2.dpad_up) {
+             positArm = 0.44;
         } else {
             if (armIsUp && armIsFront) {
                 positArm = frontUp;
@@ -141,7 +143,7 @@ public class V2DriveTest extends OpMode{
             }
         }
 
-
+        //Claw's open and close positions
         if (clawOpen) {
             positClaw = 0.5; // + ( (gamepad2.right_trigger - gamepad2.left_trigger) / 8);
         }
@@ -149,12 +151,13 @@ public class V2DriveTest extends OpMode{
             positClaw = 0.26; // + ( (gamepad2.right_trigger - gamepad2.left_trigger) / 8);
         }
 
-
+        //Moves the lift
         power = gamepad2.right_stick_y;
 
         liftL.setPower(power);
         liftR.setPower(power); 
 
+        //Makes both sides of the claws and arms move together
         if (armIsFront) {
             right.setPosition(positArm);
             left.setPosition(positArm);

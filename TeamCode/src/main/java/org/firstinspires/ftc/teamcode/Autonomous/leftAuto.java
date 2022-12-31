@@ -15,12 +15,8 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.ArrayList;
 
-/**
- * Created by Sean Cardosi on 11/4/22.
- */
-@Autonomous(name = "Auto Right", group = "Autos")
-public class AutoTemplate extends LinearOpMode {
-
+@Autonomous(name = "Auto Left Cones", group = "Autos")
+public class leftAuto extends LinearOpMode {
     OpenCvCamera camera;
     AprilTagDetectionPipeline aprilTagDetectionPipeline;
     SeansEncLibrary enc;
@@ -148,24 +144,18 @@ public class AutoTemplate extends LinearOpMode {
         Component program = new Component(hardwareMap);
         LiftDistance liftl = new LiftDistance(hardwareMap);
 
-        Runnable liftAction = () -> {program.stopLift();sleep(15000);};
+        Runnable liftAction = () -> {liftl.liftD(24);};
         Thread liftThread = new Thread(liftAction);
 
         program.init() ;
+        liftl.init();
         // Actually do something useful *
         if (tagOfInterest.id == Tag1){//Position 1: The left-most parking zone
             /*
              * Insert auto code here for position 1
              */
-            program.moveLift(.1);
-            sleep(1000);
-            program.grab();
-            liftl.liftD(4);
-            liftThread.start();
-            enc.steeringDrive(-4, false, true);
-            enc.steeringDrive(-25,false,true);
-            enc.steeringDrive(35,false,false);
-            while (liftThread.isAlive()){}
+
+
 
             /*
              * Negative values will turn counterclockwise or strafe left or go backwards depending on
@@ -177,12 +167,21 @@ public class AutoTemplate extends LinearOpMode {
              */
             program.moveLift(.1);
             sleep(1000);
+            program.stopLift();
             program.grab();
             liftl.liftD(4);
             liftThread.start();
             enc.steeringDrive(-4, false, true);
-            enc.steeringDrive(38,false,false);
+            enc.steeringDrive(3,false,false);
+            enc.arcTurn(-90);
+            enc.steeringDrive(35,false,true);
             while (liftThread.isAlive()){}
+            enc.steeringDrive(-2.5,false,false);
+            liftl.liftD(-20);
+            program.release();
+            enc.steeringDrive(2.5,false,false);
+
+
 
         } else if (tagOfInterest.id == Tag3) {//Position 3: The right-most parking zone
             /*
@@ -190,19 +189,29 @@ public class AutoTemplate extends LinearOpMode {
              */
             program.moveLift(.1);
             sleep(1000);
+            program.stopLift();
             program.grab();
             liftl.liftD(4);
             liftThread.start();
-            enc.steeringDrive(25,false,true);
-            enc.steeringDrive(35,false,false);
+            enc.steeringDrive(-4, false, true);
+            enc.steeringDrive(3,false,false);
+            enc.arcTurn(-90);
+            enc.steeringDrive(35,false,true);
             while (liftThread.isAlive()){}
-
+            enc.steeringDrive(-2.5,false,false);
+            //liftDownThread.start();
+            liftl.liftD(-20);
+            program.release();
+            enc.steeringDrive(2.5,false,false);
+            enc.steeringDrive(-13, false,true);
+            enc.steeringDrive(-23,false,false);
+            enc.arcTurn(90);
         } else {
             /*
              * Insert default auto code here since we never found the tag.
              */
         }
-//
+
 
 
         //-------------------------------+=(Auto)=+-------------------------------\\
