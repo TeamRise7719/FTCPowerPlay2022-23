@@ -21,16 +21,16 @@ public class PID_Test extends LinearOpMode {
         Component program = new Component(hardwareMap);
 
 
-        program.init();
-
-        waitForStart();
-        program.moveLift(1);
-        sleep(500);
-        program.stopLift();
-        program.moveArm(0);
-        sleep(1000);
-        program.moveLift(-1);
-        sleep(500);
-        program.stopLift();
+//        program.init();
+//
+//        waitForStart();
+//        program.moveLift(1);
+//        sleep(500);
+//        program.stopLift();
+//        program.moveArm(0);
+//        sleep(1000);
+//        program.moveLift(-1);
+//        sleep(500);
+//        program.stopLift();
     }
 }

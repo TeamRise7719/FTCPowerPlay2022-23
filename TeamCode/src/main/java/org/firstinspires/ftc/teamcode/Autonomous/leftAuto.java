@@ -165,21 +165,21 @@ public class leftAuto extends LinearOpMode {
             /*
              * Insert auto code here for position 1
              */
-            program.moveLift(.1);
-            sleep(1000);
-            program.stopLift();
-            program.grab();
-            liftl.liftD(4);
-            liftThread.start();
-            enc.steeringDrive(-4, false, true);
-            enc.steeringDrive(3,false,false);
-            enc.arcTurn(-90);
-            enc.steeringDrive(35,false,true);
-            while (liftThread.isAlive()){}
-            enc.steeringDrive(-2.5,false,false);
-            liftl.liftD(-20);
-            program.release();
-            enc.steeringDrive(2.5,false,false);
+//            program.moveLift(.1);
+//            sleep(1000);
+//            program.stopLift();
+//            program.grab();
+//            liftl.liftD(4);
+//            liftThread.start();
+//            enc.steeringDrive(-4, false, true);
+//            enc.steeringDrive(3,false,false);
+//            enc.arcTurn(-90);
+//            enc.steeringDrive(35,false,true);
+//            while (liftThread.isAlive()){}
+//            enc.steeringDrive(-2.5,false,false);
+//            liftl.liftD(-20);
+//            program.release();
+//            enc.steeringDrive(2.5,false,false);
 
 
 
@@ -187,25 +187,25 @@ public class leftAuto extends LinearOpMode {
             /*
              * Insert auto code here for position 1
              */
-            program.moveLift(.1);
-            sleep(1000);
-            program.stopLift();
-            program.grab();
-            liftl.liftD(4);
-            liftThread.start();
-            enc.steeringDrive(-4, false, true);
-            enc.steeringDrive(3,false,false);
-            enc.arcTurn(-90);
-            enc.steeringDrive(35,false,true);
-            while (liftThread.isAlive()){}
-            enc.steeringDrive(-2.5,false,false);
-            //liftDownThread.start();
-            liftl.liftD(-20);
-            program.release();
-            enc.steeringDrive(2.5,false,false);
-            enc.steeringDrive(-13, false,true);
-            enc.steeringDrive(-23,false,false);
-            enc.arcTurn(90);
+//            program.moveLift(.1);
+//            sleep(1000);
+//            program.stopLift();
+//            program.grab();
+//            liftl.liftD(4);
+//            liftThread.start();
+//            enc.steeringDrive(-4, false, true);
+//            enc.steeringDrive(3,false,false);
+//            enc.arcTurn(-90);
+//            enc.steeringDrive(35,false,true);
+//            while (liftThread.isAlive()){}
+//            enc.steeringDrive(-2.5,false,false);
+//            //liftDownThread.start();
+//            liftl.liftD(-20);
+//            program.release();
+//            enc.steeringDrive(2.5,false,false);
+//            enc.steeringDrive(-13, false,true);
+//            enc.steeringDrive(-23,false,false);
+//            enc.arcTurn(90);
         } else {
             /*
              * Insert default auto code here since we never found the tag.

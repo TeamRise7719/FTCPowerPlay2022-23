@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.Subsystems.Components.Component;
 import org.firstinspires.ftc.teamcode.Subsystems.Driving.Drivetrain;
 
 /**
@@ -33,6 +34,7 @@ public class V2DriveTest extends OpMode{
     boolean armIsFront = false, armIsUp = false;
     boolean buttonChanged = false, clawOpen = false;
 
+    Component hight;
 
     @Override
     public void init() {
@@ -63,6 +65,8 @@ public class V2DriveTest extends OpMode{
         clawR.setPosition(positClaw);
         clawL.setPosition(positClaw);
 
+        hight = new Component(hardwareMap);
+
 //        right.setPosition(posit);
 //        left.setPosition(posit);
         isReady = true;
@@ -71,10 +75,12 @@ public class V2DriveTest extends OpMode{
 
     @Override
     public void init_loop() {
+       hight.init();
         if (isReady) {
             telemetry.addData(">", "Robot Ready!");
             telemetry.update();
         }
+
     }
 
     @Override
@@ -164,6 +170,15 @@ public class V2DriveTest extends OpMode{
         } else {
             right.setPosition(positArm);
             left.setPosition(positArm );
+        }
+
+        //Lift positions
+        if (gamepad2.b){
+            hight.small();
+        }else if (gamepad2.y){
+            hight.mid();
+        } else if (gamepad2.x){
+            hight.high();
         }
 
         clawR.setPosition(positClaw);

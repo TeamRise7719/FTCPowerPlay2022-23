@@ -24,22 +24,22 @@ public class AutoTest extends LinearOpMode {
         component.init();
 
         //Lambda functions
-        Runnable liftAction = () -> {liftm.liftD(10);};
-        Thread liftThread = new Thread(liftAction);
-        Runnable stopL = () -> {component.stopLift(); sleep(10000);};
-        Thread stopLi = new Thread(stopL);
-
-        waitForStart();
-
-        component.moveLift(.1);
-        sleep(2000);
-        component.stopLift();
-        liftm.liftD(4);
-        liftThread.start();
-        enc.steeringDrive(-10,false,false);
-        while(liftThread.isAlive()){}
-        stopLi.start();
-        while (stopLi.isAlive()){}
+//        Runnable liftAction = () -> {liftm.liftD(10);};
+//        Thread liftThread = new Thread(liftAction);
+//        Runnable stopL = () -> {component.stopLift(); sleep(10000);};
+//        Thread stopLi = new Thread(stopL);
+//
+//        waitForStart();
+//
+//        component.moveLift(.1);
+//        sleep(2000);
+//        component.stopLift();
+//        liftm.liftD(4);
+//        liftThread.start();
+//        enc.steeringDrive(-10,false,false);
+//        while(liftThread.isAlive()){}
+//        stopLi.start();
+//        while (stopLi.isAlive()){}
     }
 
 }

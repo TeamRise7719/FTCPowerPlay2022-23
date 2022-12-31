@@ -148,8 +148,8 @@ public class AutoTemplate extends LinearOpMode {
         Component program = new Component(hardwareMap);
         LiftDistance liftl = new LiftDistance(hardwareMap);
 
-        Runnable liftAction = () -> {program.stopLift();sleep(15000);};
-        Thread liftThread = new Thread(liftAction);
+//        Runnable liftAction = () -> {program.stopLift();sleep(15000);};
+//        Thread liftThread = new Thread(liftAction);
 
         program.init() ;
         // Actually do something useful *
@@ -157,15 +157,15 @@ public class AutoTemplate extends LinearOpMode {
             /*
              * Insert auto code here for position 1
              */
-            program.moveLift(.1);
-            sleep(1000);
-            program.grab();
-            liftl.liftD(4);
-            liftThread.start();
-            enc.steeringDrive(-4, false, true);
-            enc.steeringDrive(-25,false,true);
-            enc.steeringDrive(35,false,false);
-            while (liftThread.isAlive()){}
+//            program.moveLift(.1);
+//            sleep(1000);
+//            program.grab();
+//            liftl.liftD(4);
+//            liftThread.start();
+//            enc.steeringDrive(-4, false, true);
+//            enc.steeringDrive(-25,false,true);
+//            enc.steeringDrive(35,false,false);
+//            while (liftThread.isAlive()){}
 
             /*
              * Negative values will turn counterclockwise or strafe left or go backwards depending on
@@ -175,27 +175,27 @@ public class AutoTemplate extends LinearOpMode {
             /*
              * Insert auto code here for position 1
              */
-            program.moveLift(.1);
-            sleep(1000);
-            program.grab();
-            liftl.liftD(4);
-            liftThread.start();
-            enc.steeringDrive(-4, false, true);
-            enc.steeringDrive(38,false,false);
-            while (liftThread.isAlive()){}
+//            program.moveLift(.1);
+//            sleep(1000);
+//            program.grab();
+//            liftl.liftD(4);
+//            liftThread.start();
+//            enc.steeringDrive(-4, false, true);
+//            enc.steeringDrive(38,false,false);
+//            while (liftThread.isAlive()){}
 
         } else if (tagOfInterest.id == Tag3) {//Position 3: The right-most parking zone
             /*
              * Insert auto code here for position 1
              */
-            program.moveLift(.1);
-            sleep(1000);
-            program.grab();
-            liftl.liftD(4);
-            liftThread.start();
-            enc.steeringDrive(25,false,true);
-            enc.steeringDrive(35,false,false);
-            while (liftThread.isAlive()){}
+//            program.moveLift(.1);
+//            sleep(1000);
+//            program.grab();
+//            liftl.liftD(4);
+//            liftThread.start();
+//            enc.steeringDrive(25,false,true);
+//            enc.steeringDrive(35,false,false);
+//            while (liftThread.isAlive()){}
 
         } else {
             /*
