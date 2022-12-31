@@ -148,7 +148,7 @@ public class AutoTemplate extends LinearOpMode {
         Component program = new Component(hardwareMap);
         LiftDistance liftl = new LiftDistance(hardwareMap);
 
-        Runnable liftAction = () -> {liftl.liftD(24);};
+        Runnable liftAction = () -> {program.stopLift();sleep(15000);};
         Thread liftThread = new Thread(liftAction);
 
         program.init() ;
@@ -159,11 +159,13 @@ public class AutoTemplate extends LinearOpMode {
              */
             program.moveLift(.1);
             sleep(1000);
-            program.stopLift();
             program.grab();
+            liftl.liftD(4);
+            liftThread.start();
             enc.steeringDrive(-4, false, true);
             enc.steeringDrive(-25,false,true);
             enc.steeringDrive(35,false,false);
+            while (liftThread.isAlive()){}
 
             /*
              * Negative values will turn counterclockwise or strafe left or go backwards depending on
@@ -175,12 +177,12 @@ public class AutoTemplate extends LinearOpMode {
              */
             program.moveLift(.1);
             sleep(1000);
-            program.stopLift();
             program.grab();
+            liftl.liftD(4);
+            liftThread.start();
             enc.steeringDrive(-4, false, true);
             enc.steeringDrive(38,false,false);
-
-
+            while (liftThread.isAlive()){}
 
         } else if (tagOfInterest.id == Tag3) {//Position 3: The right-most parking zone
             /*
@@ -188,10 +190,12 @@ public class AutoTemplate extends LinearOpMode {
              */
             program.moveLift(.1);
             sleep(1000);
-            program.stopLift();
             program.grab();
+            liftl.liftD(4);
+            liftThread.start();
             enc.steeringDrive(25,false,true);
             enc.steeringDrive(35,false,false);
+            while (liftThread.isAlive()){}
 
         } else {
             /*

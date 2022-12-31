@@ -64,7 +64,7 @@ public class Drivetrain {
         imu                             = hardwareMap.get(BNO055IMU.class, "imu");
 
         imu.initialize(parameters);
-        angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS);
+        angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.YZX, AngleUnit.RADIANS);
 
 
     }
