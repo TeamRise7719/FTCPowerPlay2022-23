@@ -23,6 +23,15 @@ public class QaqortoqTeleOp extends OpMode {
     double lastHeight;
     boolean clawsOpen = false;
     boolean leftBumperState = true;
+    double positArm = 0.625;
+    double positClaw = 0.45;
+    double middle = 0.44;
+    double backDown = 0.625;
+    double backUp = 0.55;
+    double frontDown = 0.27;
+    double frontUp = 0.34;
+    boolean bumperChangedL = false, bumperChangedR = false;
+    boolean armIsFront = false, armIsUp = false;
 
     @Override
     public void init() {
@@ -36,6 +45,7 @@ public class QaqortoqTeleOp extends OpMode {
         isReady = true;
 //        component.grab();
         component.init();
+        component.setClaw(positClaw);
     }
 
     @Override
@@ -67,10 +77,10 @@ public class QaqortoqTeleOp extends OpMode {
 
         //----------------------------------------------=+(Grabber)+=----------------------------------------------\\
         if (gamepad1.left_bumper && !clawsOpen && !leftBumperState) {
-            component.release();
+            component.setClaw(0.5);
             clawsOpen = true;
         } else if (gamepad1.left_bumper && clawsOpen && !leftBumperState) {
-            component.grab();
+            component.setClaw(0.26);
             clawsOpen = false;
         }
 
@@ -79,11 +89,11 @@ public class QaqortoqTeleOp extends OpMode {
 
 
         //----------------------------------------------=+(Lift)+=----------------------------------------------\\
-        if (gamepad2.dpad_up) {
+        if (gamepad2.right_stick_y > 0.0) {
             component.leftLift.setPower(1.0);
             component.rightLift.setPower(1.0);
             lastHeight = component.rightLift.getCurrentPosition();
-        } else if (gamepad2.dpad_down) {
+        } else if (gamepad2.right_stick_y < 0.0) {
             component.leftLift.setPower(-1.0);
             component.rightLift.setPower(-1.0);
             lastHeight = component.rightLift.getCurrentPosition();
@@ -98,17 +108,47 @@ public class QaqortoqTeleOp extends OpMode {
 
         //----------------------------------------------=+(Arm)+=----------------------------------------------\\
 
-        if (!clawsOpen) {
-            if (gamepad2.a) {
-                component.moveArm(0.47);
+        //Raises and lowers arm between 90 degree and down positions
+        if (gamepad2.right_bumper && !bumperChangedR) {
+            if (!armIsUp) {
+                armIsUp = true;
+            } else {
+                armIsUp = false;
             }
-            if (gamepad2.right_bumper) {
-                component.moveArm(0.597);
+            bumperChangedR = true;
+        } else if (!gamepad2.right_bumper) {
+            bumperChangedR = false;
+        }
+        // Flips arm
+        if (gamepad2.left_bumper && !bumperChangedL && !clawsOpen) {
+            if (!armIsFront) {
+                armIsFront = true;
+            } else {
+                armIsFront = false;
             }
-            if (gamepad2.left_bumper) {
-                component.moveArm(0.37);
+            bumperChangedL = true;
+        } else if (!gamepad2.left_bumper) {
+            bumperChangedL = false;
+        }
+
+        if (!clawsOpen && gamepad2.dpad_up) {
+            positArm = middle;
+        } else {
+            if (armIsUp && armIsFront) {
+                positArm = frontUp;
+            }
+            if (armIsUp && !armIsFront) {
+                positArm = backUp;
+            }
+            if (!armIsUp && armIsFront) {
+                positArm = frontDown;
+            }
+            if (!armIsUp && !armIsFront) {
+                positArm = backDown;
             }
         }
+        component.leftArm.setPosition(positArm);
+        component.rightArm.setPosition(positArm);
         //----------------------------------------------=+(Arm)+=----------------------------------------------\\
     }
 }
