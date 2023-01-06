@@ -93,7 +93,7 @@ public class QaqortoqTeleOp extends OpMode {
                 component.setClaw(0.26);
                 clawsOpen = false;
             }
-        } else if (is90) {
+        } else {
             if (gamepad2.a && !clawsOpen && !aButton2State) {
                 component.setClaw(0.5);
                 clawsOpen = true;
