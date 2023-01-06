@@ -37,6 +37,7 @@ public class QaqortoqTeleOp extends OpMode {
     boolean isUp = false;
     boolean rightBumper2state = false;
     boolean leftBumper2State = false;
+    boolean aButton2State = false;
 
     @Override
     public void init() {
@@ -84,15 +85,26 @@ public class QaqortoqTeleOp extends OpMode {
 
 
         //----------------------------------------------=+(Grabber)+=----------------------------------------------\\
-        if (gamepad1.left_bumper && !clawsOpen && !leftBumperState) {
-            component.setClaw(0.5);
-            clawsOpen = true;
-        } else if (gamepad1.left_bumper && clawsOpen && !leftBumperState) {
-            component.setClaw(0.26);
-            clawsOpen = false;
+        if (is45) {
+            if (gamepad1.left_bumper && !clawsOpen && !leftBumperState) {
+                component.setClaw(0.5);
+                clawsOpen = true;
+            } else if (gamepad1.left_bumper && clawsOpen && !leftBumperState) {
+                component.setClaw(0.26);
+                clawsOpen = false;
+            }
+        } else if (is90) {
+            if (gamepad2.a && !clawsOpen && !aButton2State) {
+                component.setClaw(0.5);
+                clawsOpen = true;
+            } else if (gamepad2.a && clawsOpen && !aButton2State) {
+                component.setClaw(0.26);
+                clawsOpen = false;
+            }
         }
 
         leftBumperState = gamepad1.left_bumper;
+        aButton2State = gamepad2.a;
         //----------------------------------------------=+(Grabber)+=----------------------------------------------\\
 
 
