@@ -115,7 +115,7 @@ public class QaqortoqTeleOp extends OpMode {
 
 
         //----------------------------------------------=+(Arm)+=----------------------------------------------\\
-        if (gamepad2.dpad_up) {
+        if (gamepad2.dpad_up && !clawsOpen) {
             isUp = true;
             is45 = false;
             is90 = false;
@@ -154,7 +154,7 @@ public class QaqortoqTeleOp extends OpMode {
         }
         rightBumper2state = gamepad2.right_bumper;
 
-        if (gamepad2.left_bumper && !leftBumper2State) {
+        if (gamepad2.left_bumper && !leftBumper2State && !clawsOpen) {
             if (isFront) {//Change everything to the back side
                 isFront = false;
                 isBack = true;
