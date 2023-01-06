@@ -30,8 +30,13 @@ public class QaqortoqTeleOp extends OpMode {
     double backUp = 0.55;
     double frontDown = 0.27;
     double frontUp = 0.34;
-    boolean bumperChangedL = false, bumperChangedR = false;
-    boolean armIsFront = false, armIsUp = false;
+    boolean is90 = false;
+    boolean is45 = false;
+    boolean isFront = false;
+    boolean isBack = false;
+    boolean isUp = false;
+    boolean rightBumper2state = false;
+    boolean leftBumper2State = false;
 
     @Override
     public void init() {
@@ -45,7 +50,6 @@ public class QaqortoqTeleOp extends OpMode {
         isReady = true;
 //        component.grab();
         component.init();
-        component.setClaw(positClaw);
     }
 
     @Override
@@ -59,6 +63,10 @@ public class QaqortoqTeleOp extends OpMode {
     @Override
     public void start() {
         super.start();
+        component.setClaw(positClaw);
+        component.setArm(0.27);//Set arm to front 45 position
+        is45 = true;
+        isFront = true;
     }
 
     @Override
@@ -107,48 +115,65 @@ public class QaqortoqTeleOp extends OpMode {
 
 
         //----------------------------------------------=+(Arm)+=----------------------------------------------\\
-
-        //Raises and lowers arm between 90 degree and down positions
-        if (gamepad2.right_bumper && !bumperChangedR) {
-            if (!armIsUp) {
-                armIsUp = true;
-            } else {
-                armIsUp = false;
-            }
-            bumperChangedR = true;
-        } else if (!gamepad2.right_bumper) {
-            bumperChangedR = false;
-        }
-        // Flips arm
-        if (gamepad2.left_bumper && !bumperChangedL && !clawsOpen) {
-            if (!armIsFront) {
-                armIsFront = true;
-            } else {
-                armIsFront = false;
-            }
-            bumperChangedL = true;
-        } else if (!gamepad2.left_bumper) {
-            bumperChangedL = false;
+        if (gamepad2.dpad_up) {
+            isUp = true;
+            is45 = false;
+            is90 = false;
+            component.setArm(0.44);
         }
 
-        if (!clawsOpen && gamepad2.dpad_up) {
-            positArm = middle;
-        } else {
-            if (armIsUp && armIsFront) {
-                positArm = frontUp;
-            }
-            if (armIsUp && !armIsFront) {
-                positArm = backUp;
-            }
-            if (!armIsUp && armIsFront) {
-                positArm = frontDown;
-            }
-            if (!armIsUp && !armIsFront) {
-                positArm = backDown;
+        if (gamepad2.right_bumper && !rightBumper2state) {
+            if (!isUp) {
+                if (is90) {//Swap to 45 position
+                    is45 = true;
+                    is90 = false;
+                    if (isFront) {
+                        component.setArm(0.27);
+                    } else if (isBack) {
+                        component.setArm(0.625);
+                    }
+                } else if (is45) {//Swap to 90 position
+                    is45 = false;
+                    is90 = true;
+                    if (isFront) {
+                        component.setArm(0.34);
+                    } else if (isBack) {
+                        component.setArm(0.55);
+                    }
+                }
+            } else {//Go from up to 90 position
+                isUp = false;
+                is90 = true;
+                is45 = false;
+                if (isFront) {
+                    component.setArm(0.34);
+                } else if (isBack) {
+                    component.setArm(0.55);
+                }
             }
         }
-        component.leftArm.setPosition(positArm);
-        component.rightArm.setPosition(positArm);
+        rightBumper2state = gamepad2.right_bumper;
+
+        if (gamepad2.left_bumper && !leftBumper2State) {
+            if (isFront) {//Change everything to the back side
+                isFront = false;
+                isBack = true;
+                if (is90) {
+                    component.setArm(0.55);
+                } else if (is45) {
+                    component.setArm(0.625);
+                }
+            } else if (isBack) {//Change everything to the front side
+                isFront = true;
+                isBack = false;
+                if (is90) {
+                    component.setArm(0.34);
+                } else if (is45) {
+                    component.setArm(0.27);
+                }
+            }
+        }
+        leftBumper2State = gamepad2.left_bumper;
         //----------------------------------------------=+(Arm)+=----------------------------------------------\\
     }
 }

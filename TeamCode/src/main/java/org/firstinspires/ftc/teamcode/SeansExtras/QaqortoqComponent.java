@@ -80,6 +80,11 @@ public class QaqortoqComponent {
         leftGrabber.setPosition(0.25);
         rightGrabber.setPosition(0.45);
     }
+
+    public void setArm(double a) {
+        leftArm.setPosition(a);
+        rightArm.setPosition(a);
+    }
     public void setClaw(double a) {
         leftGrabber.setPosition(a);
         rightGrabber.setPosition(a);
