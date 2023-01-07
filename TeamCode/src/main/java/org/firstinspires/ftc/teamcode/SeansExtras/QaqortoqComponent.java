@@ -133,4 +133,30 @@ public class QaqortoqComponent {
 //        telemetry.addData("StringPosition",getStringPosition());
     }
 
+    //Quality of Life for Auto
+    public void ArmFD() {
+        rightArm.setPosition(0.27);
+        leftArm.setPosition(0.27);
+    }
+
+    public void ArmF90() {
+        rightArm.setPosition(0.34);
+        leftArm.setPosition(0.34);
+    }
+
+    public void ArmM() {
+        rightArm.setPosition(0.44);
+        leftArm.setPosition(0.44);
+    }
+
+    public void ArmBD() {
+        rightArm.setPosition(0.625);
+        leftArm.setPosition(0.625);
+    }
+
+    public void ArmB90() {
+        rightArm.setPosition(0.55);
+        leftArm.setPosition(0.55);
+    }
+
 }

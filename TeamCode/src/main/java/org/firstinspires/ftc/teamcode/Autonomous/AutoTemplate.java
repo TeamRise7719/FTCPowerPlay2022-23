@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Autonomous;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -18,6 +19,8 @@ import java.util.ArrayList;
 /**
  * Created by Sean Cardosi on 11/4/22.
  */
+
+@Disabled
 @Autonomous(name = "Auto Right", group = "Autos")
 public class AutoTemplate extends LinearOpMode {
 

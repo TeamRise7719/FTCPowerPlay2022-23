@@ -1,4 +1,5 @@
 package org.firstinspires.ftc.teamcode.Test;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -12,6 +13,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.Driving.Drivetrain;
 /**
  * Created by Sean Cardosi on 8/28/22.
  */
+@Disabled
 @TeleOp(name = "Qaqortoq Drive", group = "Qaqortoq")
 public class V2DriveTest extends OpMode{
 

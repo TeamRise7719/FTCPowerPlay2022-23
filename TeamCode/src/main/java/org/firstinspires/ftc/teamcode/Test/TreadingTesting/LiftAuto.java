@@ -1,13 +1,14 @@
 package org.firstinspires.ftc.teamcode.Test.TreadingTesting;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Subsystems.Components.Component;
 import org.firstinspires.ftc.teamcode.Subsystems.Components.LiftDistance;
 import org.firstinspires.ftc.teamcode.Subsystems.Sensing.SeansEncLibrary;
 
-
+@Disabled
 @Autonomous(name = "Lift Raised", group = "tests")
 public class LiftAuto extends LinearOpMode {
 
