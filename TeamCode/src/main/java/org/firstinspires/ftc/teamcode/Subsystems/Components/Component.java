@@ -23,16 +23,15 @@ public class Component {
         lift = hardwareMap.dcMotor.get("liftR");
         lift.setDirection(DcMotor.Direction.FORWARD);
         lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-//        arm = hardwareMap.servo.get("arm");
-//        arm.setDirection(Servo.Direction.FORWARD);
-//        hight = new LiftDistance(hardwareMap);
-//
-//        leftGrabber = hardwareMap.servo.get("lGrab");
-//        leftGrabber.setDirection(Servo.Direction.FORWARD);
-//        rightGrabber = hardwareMap.servo.get("rGrab");
-//        rightGrabber.setDirection(Servo.Direction.REVERSE);
-//
-//        moveArm(0.1);
+        arm = hardwareMap.servo.get("arm");
+        arm.setDirection(Servo.Direction.FORWARD);
+        hight = new LiftDistance(hardwareMap);
+
+        leftGrabber = hardwareMap.servo.get("lGrab");
+        leftGrabber.setDirection(Servo.Direction.FORWARD);
+        rightGrabber = hardwareMap.servo.get("rGrab");
+        rightGrabber.setDirection(Servo.Direction.REVERSE);
+
     }
 
     public void init() {//Figure this out
@@ -48,34 +47,34 @@ public class Component {
     public void high(){
         hight.liftD(24.5);
     }
-//    public void moveLift(double power) {
-//        lift.setPower(power);
-//    }
-//
-//    public void stopLift() {
-//        lift.setPower(0.30);
-//    }
-//
-//    public void grab(){
-//        leftGrabber.setPosition(0.38);//.5
-//        rightGrabber.setPosition(0.56);//1
-//    }
-//
-//    public void release() {
-//        leftGrabber.setPosition(0.25);
-//        rightGrabber.setPosition(0.45);
-//    }
-//
-//    public void moveArm(double position) {
-//        arm.setPosition(position);
-//    }
-//
-//    public void getTelemetry(Telemetry telemetry) {
-//        telemetry.addData("Lift Encoder", lift.getCurrentPosition());
-//        telemetry.addData("Arm Encoder", arm.getPosition());
-//        telemetry.addData("Left Grabber Position", leftGrabber.getPosition());
-//        telemetry.addData("Right Grabber Position", rightGrabber.getPosition());
-//    }
+    public void moveLift(double power) {
+        lift.setPower(power);
+    }
+
+    public void stopLift() {
+        lift.setPower(0.30);
+    }
+
+    public void grab(){
+        leftGrabber.setPosition(0.38);//.5
+        rightGrabber.setPosition(0.56);//1
+    }
+
+    public void release() {
+        leftGrabber.setPosition(0.25);
+        rightGrabber.setPosition(0.45);
+    }
+
+    public void moveArm(double position) {
+        arm.setPosition(position);
+    }
+
+    public void getTelemetry(Telemetry telemetry) {
+        telemetry.addData("Lift Encoder", lift.getCurrentPosition());
+        telemetry.addData("Arm Encoder", arm.getPosition());
+        telemetry.addData("Left Grabber Position", leftGrabber.getPosition());
+        telemetry.addData("Right Grabber Position", rightGrabber.getPosition());
+    }
 
 
 
