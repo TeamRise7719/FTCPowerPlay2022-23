@@ -1,16 +1,17 @@
 package org.firstinspires.ftc.teamcode.Test;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.Subsystems.Components.Component;
-import org.firstinspires.ftc.teamcode.Subsystems.Driving.Drivetrain;
+import org.firstinspires.ftc.teamcode.Vision.Subsystems.Components.LiftDistance;
+import org.firstinspires.ftc.teamcode.Vision.Subsystems.Driving.Drivetrain;
 
 /**
  * Created by Sean Cardosi on 8/28/22.
  */
+@Disabled
 @TeleOp(name = "Qaqortoq Drive", group = "Qaqortoq")
 public class V2DriveTest extends OpMode{
 
@@ -34,7 +35,7 @@ public class V2DriveTest extends OpMode{
     boolean armIsFront = false, armIsUp = false;
     boolean buttonChanged = false, clawOpen = false;
 
-    Component hight;
+    LiftDistance liftD;
 
     @Override
     public void init() {
@@ -65,7 +66,7 @@ public class V2DriveTest extends OpMode{
         clawR.setPosition(positClaw);
         clawL.setPosition(positClaw);
 
-        hight = new Component(hardwareMap);
+        liftD = new LiftDistance(hardwareMap);
 
 //        right.setPosition(posit);
 //        left.setPosition(posit);
@@ -75,7 +76,6 @@ public class V2DriveTest extends OpMode{
 
     @Override
     public void init_loop() {
-       hight.init();
         if (isReady) {
             telemetry.addData(">", "Robot Ready!");
             telemetry.update();
@@ -133,7 +133,7 @@ public class V2DriveTest extends OpMode{
         }
         //Puts arm upright
         if (!clawOpen && gamepad2.dpad_up) {
-             positArm = 0.44;
+             positArm = middle;
         } else {
             if (armIsUp && armIsFront) {
                 positArm = frontUp;
@@ -173,13 +173,17 @@ public class V2DriveTest extends OpMode{
         }
 
         //Lift positions
-        if (gamepad2.b){
-            hight.small();
-        }else if (gamepad2.y){
-            hight.mid();
-        } else if (gamepad2.x){
-            hight.high();
-        }
+//        if (gamepad2.b){
+//           low pole
+//        }
+//
+//        if (gamepad2.y){
+//            middle pole
+//        }
+//
+//        if (gamepad2.x){
+//            high pole
+//        }
 
         clawR.setPosition(positClaw);
         clawL.setPosition(positClaw);
