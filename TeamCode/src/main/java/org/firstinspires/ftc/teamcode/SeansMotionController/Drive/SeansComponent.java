@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.SeansExtras;
+package org.firstinspires.ftc.teamcode.SeansMotionController.Drive;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -6,11 +6,12 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.SeansExtras.SeansSynchronousPID;
 
 /**
  * Created by Sean Cardosi on 12/20/22.
  */
-public class QaqortoqComponent {
+public class SeansComponent {
 
     public DcMotor leftLift;
     public DcMotor rightLift;
@@ -27,7 +28,7 @@ public class QaqortoqComponent {
     double LIFT_I2 = 0.0;
     double LIFT_D2 = 0.0;
 
-    public QaqortoqComponent(HardwareMap hardwareMap) {
+    public SeansComponent(HardwareMap hardwareMap) {
 
 
         leftLift = hardwareMap.dcMotor.get("perpEncoder");

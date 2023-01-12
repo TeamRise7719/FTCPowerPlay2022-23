@@ -85,26 +85,17 @@ public class QaqortoqTeleOp extends OpMode {
 
 
         //----------------------------------------------=+(Grabber)+=----------------------------------------------\\
-        if (is45) {
-            if (gamepad1.left_bumper && !clawsOpen && !leftBumperState) {
-                component.setClaw(0.5);
-                clawsOpen = true;
-            } else if (gamepad1.left_bumper && clawsOpen && !leftBumperState) {
-                component.setClaw(0.26);
-                clawsOpen = false;
-            }
-        } else if (is90) {
-            if (gamepad2.a && !clawsOpen && !aButton2State) {
-                component.setClaw(0.5);
-                clawsOpen = true;
-            } else if (gamepad2.a && clawsOpen && !aButton2State) {
-                component.setClaw(0.26);
-                clawsOpen = false;
-            }
+        if (gamepad1.left_bumper && !clawsOpen && !leftBumperState) {
+//            component.release();
+            component.setClaw(0.48);
+            clawsOpen = true;
+        } else if (gamepad1.left_bumper && clawsOpen && !leftBumperState) {
+//            component.grab();
+            component.setClaw(0.525);
+            clawsOpen = false;
         }
 
         leftBumperState = gamepad1.left_bumper;
-        aButton2State = gamepad2.a;
         //----------------------------------------------=+(Grabber)+=----------------------------------------------\\
 
 
@@ -118,7 +109,7 @@ public class QaqortoqTeleOp extends OpMode {
             component.rightLift.setPower(-1.0);
             lastHeight = component.rightLift.getCurrentPosition();
         } else {
-            double targetInCm = lastHeight / 384.5 * (2 * Math.PI * 1.801);
+            double targetInCm = lastHeight / 537.7 * (2 * Math.PI * 1.801);
             component.holdLift(targetInCm);
         }
         telemetry.addData("Lift Left", component.leftLift.getCurrentPosition());
@@ -131,7 +122,7 @@ public class QaqortoqTeleOp extends OpMode {
             isUp = true;
             is45 = false;
             is90 = false;
-            component.setArm(0.44);
+            component.setArm(0.435);
         }
 
         if (gamepad2.right_bumper && !rightBumper2state) {
@@ -140,17 +131,17 @@ public class QaqortoqTeleOp extends OpMode {
                     is45 = true;
                     is90 = false;
                     if (isFront) {
-                        component.setArm(0.27);
+                        component.setArm(0.28);
                     } else if (isBack) {
-                        component.setArm(0.625);
+                        component.setArm(0.59);
                     }
                 } else if (is45) {//Swap to 90 position
                     is45 = false;
                     is90 = true;
                     if (isFront) {
-                        component.setArm(0.34);
+                        component.setArm(0.35);
                     } else if (isBack) {
-                        component.setArm(0.55);
+                        component.setArm(0.53);
                     }
                 }
             } else {//Go from up to 90 position
@@ -158,9 +149,9 @@ public class QaqortoqTeleOp extends OpMode {
                 is90 = true;
                 is45 = false;
                 if (isFront) {
-                    component.setArm(0.34);
+                    component.setArm(0.35);
                 } else if (isBack) {
-                    component.setArm(0.55);
+                    component.setArm(0.53);
                 }
             }
         }
