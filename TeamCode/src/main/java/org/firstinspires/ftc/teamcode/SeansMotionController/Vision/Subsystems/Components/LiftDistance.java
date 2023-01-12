@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Vision.Subsystems.Components;
+package org.firstinspires.ftc.teamcode.SeansMotionController.Vision.Subsystems.Components;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;

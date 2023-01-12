@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Vision.Autonomous;
+package org.firstinspires.ftc.teamcode.SeansMotionController.Vision.Subsystems.Autonomous;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -6,18 +6,24 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.Qaqortoq.Subsystems.AprilTags.AprilTagDetectionPipeline;
-import org.firstinspires.ftc.teamcode.Vision.Subsystems.Components.Component;
+import org.firstinspires.ftc.teamcode.SeansMotionController.Vision.Subsystems.Components.Component;
+import org.firstinspires.ftc.teamcode.SeansMotionController.Vision.Subsystems.Components.LiftDistance;
 import org.firstinspires.ftc.teamcode.Qaqortoq.Subsystems.Sensing.SeansEncLibrary;
-import org.firstinspires.ftc.teamcode.Vision.Subsystems.Components.LiftDistance;
 import org.openftc.apriltag.AprilTagDetection;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.ArrayList;
+
+/**
+ * Created by Sean Cardosi on 11/4/22.
+ */
+
 @Disabled
-@Autonomous(name = " Vision Auto Left", group = "Vision Autos")
-public class autoLeft extends LinearOpMode {
+@Autonomous(name = " Vision Auto Right", group = " Vision Autos")
+public class AutoTemplate extends LinearOpMode {
+
     OpenCvCamera camera;
     AprilTagDetectionPipeline aprilTagDetectionPipeline;
     SeansEncLibrary enc;
@@ -145,11 +151,10 @@ public class autoLeft extends LinearOpMode {
         Component program = new Component(hardwareMap);
         LiftDistance liftl = new LiftDistance(hardwareMap);
 
-        Runnable liftAction = () -> {liftl.liftD(24);};
+        Runnable liftAction = () -> {program.stopLift();sleep(15000);};
         Thread liftThread = new Thread(liftAction);
 
         program.init() ;
-        liftl.init();
         // Actually do something useful *
         if (tagOfInterest.id == Tag1){//Position 1: The left-most parking zone
             /*
@@ -157,22 +162,13 @@ public class autoLeft extends LinearOpMode {
              */
             program.moveLift(.1);
             sleep(1000);
-            program.stopLift();
             program.grab();
-           liftl.liftD(4);
+            liftl.liftD(4);
             liftThread.start();
             enc.steeringDrive(-4, false, true);
-            enc.steeringDrive(3,false,false);
-            enc.arcTurn(-90);
-            enc.steeringDrive(35,false,true);
+            enc.steeringDrive(-25,false,true);
+            enc.steeringDrive(35,false,false);
             while (liftThread.isAlive()){}
-            enc.steeringDrive(-2.5,false,false);
-            liftl.liftD(-20);
-            program.release();
-            enc.steeringDrive(2.5,false,false);
-            enc.steeringDrive(-13, false,true);
-            enc.steeringDrive(23,false,false);
-
 
             /*
              * Negative values will turn counterclockwise or strafe left or go backwards depending on
@@ -184,21 +180,12 @@ public class autoLeft extends LinearOpMode {
              */
             program.moveLift(.1);
             sleep(1000);
-            program.stopLift();
             program.grab();
             liftl.liftD(4);
             liftThread.start();
             enc.steeringDrive(-4, false, true);
-            enc.steeringDrive(3,false,false);
-            enc.arcTurn(-90);
-            enc.steeringDrive(35,false,true);
+            enc.steeringDrive(38,false,false);
             while (liftThread.isAlive()){}
-            enc.steeringDrive(-2.5,false,false);
-            liftl.liftD(-20);
-            program.release();
-            enc.steeringDrive(2.5,false,false);
-
-
 
         } else if (tagOfInterest.id == Tag3) {//Position 3: The right-most parking zone
             /*
@@ -206,29 +193,19 @@ public class autoLeft extends LinearOpMode {
              */
             program.moveLift(.1);
             sleep(1000);
-            program.stopLift();
             program.grab();
             liftl.liftD(4);
             liftThread.start();
-            enc.steeringDrive(-4, false, true);
-            enc.steeringDrive(3,false,false);
-            enc.arcTurn(-90);
-            enc.steeringDrive(35,false,true);
+            enc.steeringDrive(25,false,true);
+            enc.steeringDrive(35,false,false);
             while (liftThread.isAlive()){}
-            enc.steeringDrive(-2.5,false,false);
-            //liftDownThread.start();
-            liftl.liftD(-20);
-            program.release();
-            enc.steeringDrive(2.5,false,false);
-            enc.steeringDrive(-13, false,true);
-            enc.steeringDrive(-23,false,false);
-            enc.arcTurn(90);
+
         } else {
             /*
              * Insert default auto code here since we never found the tag.
              */
         }
-
+//
 
 
         //-------------------------------+=(Auto)=+-------------------------------\\

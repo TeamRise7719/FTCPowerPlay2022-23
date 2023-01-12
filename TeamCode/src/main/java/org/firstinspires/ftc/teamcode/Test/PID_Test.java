@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.Vision.Subsystems.Components.Component;
+import org.firstinspires.ftc.teamcode.SeansMotionController.Vision.Subsystems.Components.Component;
 
 
 /**

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Vision.Tests.TreadingTesting;
+package org.firstinspires.ftc.teamcode.SeansMotionController.Vision.Tests.TreadingTesting;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;

@@ -5,8 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.Vision.Subsystems.Components.LiftDistance;
-import org.firstinspires.ftc.teamcode.Vision.Subsystems.Driving.Drivetrain;
+import org.firstinspires.ftc.teamcode.SeansMotionController.Vision.Subsystems.Components.LiftDistance;
+import org.firstinspires.ftc.teamcode.SeansMotionController.Vision.Subsystems.Driving.Drivetrain;
 
 /**
  * Created by Sean Cardosi on 8/28/22.

@@ -28,11 +28,11 @@ public class QaqortoqTeleOp extends OpMode {
     boolean leftBumperState = true;
     double positArm = 0.625;
     double positClaw = 0.45;
-    double middle = 0.44;
-    double backDown = 0.625;
-    double backUp = 0.55;
-    double frontDown = 0.27;
-    double frontUp = 0.34;
+    double middle = 0.435;
+    double backDown = 0.28;
+    double backUp = 0.35;
+    double frontDown = 0.59;
+    double frontUp = 0.53;
     boolean is90 = false;
     boolean is45 = false;
     boolean isFront = false;
@@ -67,8 +67,8 @@ public class QaqortoqTeleOp extends OpMode {
     @Override
     public void start() {
         super.start();
-        component.setClaw(positClaw);
-        component.setArm(0.27);//Set arm to front 45 position
+        component.setClaw(0.52);
+        component.setArm(0.59);//Set arm to front 45 position
         is45 = true;
         isFront = true;
     }

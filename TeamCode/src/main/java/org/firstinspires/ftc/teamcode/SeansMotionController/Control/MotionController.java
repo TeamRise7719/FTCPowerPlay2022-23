@@ -5,7 +5,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.SeansExtras.SeansSynchronousPID;
+import org.firstinspires.ftc.teamcode.Qaqortoq.Subsystems.Sensing.SeansSynchronousPID;
+import org.firstinspires.ftc.teamcode.Qaqortoq.Subsystems.Sensing.SeansSynchronousPID;
 import org.firstinspires.ftc.teamcode.SeansMotionController.Drive.SeanDrivetrain;
 import org.firstinspires.ftc.teamcode.SeansMotionController.Util.ActionPoint;
 import org.firstinspires.ftc.teamcode.SeansMotionController.Util.Angle;
