@@ -7,13 +7,8 @@ public class Wait extends HeadingControlledWaypoint {
 
     public double waitTime;
 
-    public Wait(double x, double y, double targetHeading, double milliseconds) {
-        super(x, y, targetHeading);
-        this.waitTime = milliseconds;
-    }
-
-    public Wait(Point point, double targetHeading, double milliseconds) {
-        super(point, targetHeading);
+    public Wait(double milliseconds) {
+        super(0, 0, 0,false,0);
         this.waitTime = milliseconds;
     }
 }

@@ -9,13 +9,13 @@ public class ActionPoint extends Waypoint {
     double activationDistance;
 
     public ActionPoint(double x, double y, double activationDistance, Thread thread) {
-        super(x, y);
+        super(x, y,0);
         this.activationDistance = activationDistance;
         this.thread = thread;
     }
 
     public ActionPoint(Point point, double activationDistance, Thread thread) {
-        super(point);
+        super(point,0);
         this.activationDistance = activationDistance;
         this.thread = thread;
     }

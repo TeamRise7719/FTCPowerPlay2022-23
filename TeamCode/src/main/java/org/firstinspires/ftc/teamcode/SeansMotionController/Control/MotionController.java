@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Qaqortoq.Subsystems.Sensing.SeansSynchronousPID;
-import org.firstinspires.ftc.teamcode.Qaqortoq.Subsystems.Sensing.SeansSynchronousPID;
 import org.firstinspires.ftc.teamcode.SeansMotionController.Drive.SeanDrivetrain;
 import org.firstinspires.ftc.teamcode.SeansMotionController.Util.ActionPoint;
 import org.firstinspires.ftc.teamcode.SeansMotionController.Util.Angle;
@@ -161,13 +160,11 @@ public class MotionController {
             //Do the actions
             if (actionIndex != -1 && actionIndex < thingsToDo.size()) {
                 if (asPoint(thingsToDo.get(actionIndex)).distance(asPoint(robot)) < thingsToDo.get(actionIndex).getActivationDistance()){//If distance to actionpoint is less than activation distance... activate
-                    //TODO: Test with a sample thread.
-//                    telemetry.addData("State",thingsToDo.get(actionIndex).getAction());
                     thingsToDo.get(actionIndex).startThread();
                     actionIndex++;
                 }
             }
-            if (currentWaypoint instanceof Wait) {//TODO: Make sure this works
+            if (currentWaypoint instanceof Wait) {
                 if (!resetTimer) {
                     waitTime.reset();
                     resetTimer = true;
@@ -182,15 +179,23 @@ public class MotionController {
                 }
                 //TODO: Maybe do this
 //                advancedRunToPoint(currentWaypoint, PIDActivationDistance, accuratePathFollowing, opMode, false, telemetry);
+                drive.setMotorPowers(0,0,0,SPEED_SCALE,telemetry);//Should stop extraneous motion
                 continue;//Keep repeating loop until time is up.
             }
             if (waypointIndex < path.size() - 1 && Math.abs(asPoint(robot).distance(asPoint(currentWaypoint))) < PIDActivationDistance) {
                 //Past target... sort of. Get there and go to next one.
-                if (currentWaypoint instanceof HeadingControlledWaypoint) {
-                    advancedRunToPoint(currentWaypoint, PIDActivationDistance, accuratePathFollowing, opMode, false, telemetry);
+                if (!(currentWaypoint instanceof StopWaypoint) && currentWaypoint instanceof HeadingControlledWaypoint && ((HeadingControlledWaypoint) currentWaypoint).isStopping) {
+                    advancedRunToPoint(currentWaypoint, PIDActivationDistance, accuratePathFollowing, opMode, true, telemetry);
+                } else if (!(currentWaypoint instanceof StopWaypoint) && currentWaypoint instanceof HeadingControlledWaypoint && !((HeadingControlledWaypoint) currentWaypoint).isStopping) {
+                    simpleRunToPoint(currentWaypoint, PIDActivationDistance, telemetry);
                 }
-                waypointIndex++;
-                currentWaypoint = path.get(waypointIndex);
+                if (!(currentWaypoint instanceof StopWaypoint) && currentWaypoint instanceof HeadingControlledWaypoint && Math.abs(asPoint(robot).distance(asPoint(currentWaypoint))) < currentWaypoint.minAccuracy && !((HeadingControlledWaypoint) currentWaypoint).isStopping) {
+                    waypointIndex++;
+                    currentWaypoint = path.get(waypointIndex);
+                } else {
+                    waypointIndex++;
+                    currentWaypoint = path.get(waypointIndex);
+                }
                 continue;
             }
 
@@ -203,7 +208,7 @@ public class MotionController {
                 Point p;
                 if (intersections.size() > 0) {
                     p = intersections.get(0);
-                    target = new HeadingControlledWaypoint(p.getX(), p.getY(),((StopWaypoint) currentWaypoint).getTargetHeading());
+                    target = new HeadingControlledWaypoint(p.getX(), p.getY(),((StopWaypoint) currentWaypoint).getTargetHeading(), false,PIDActivationDistance);
                 } else {
 //                    break;//Temporary measure.
                     target = currentWaypoint;

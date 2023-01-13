@@ -6,11 +6,11 @@ package org.firstinspires.ftc.teamcode.SeansMotionController.Util;
 public class StopWaypoint extends HeadingControlledWaypoint {
 
     public StopWaypoint(double x, double y, double targetHeading) {
-        super(x, y, targetHeading);
+        super(x, y, targetHeading,true,10);
     }
 
     public StopWaypoint(Point point, double targetHeading) {
-        super(point, targetHeading);
+        super(point, targetHeading,true,10);
     }
 
     public double getX() {
