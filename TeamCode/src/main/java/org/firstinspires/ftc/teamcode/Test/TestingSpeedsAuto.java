@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.SeansMotionController.Vision.Subsystems.Components.Component;
+import org.firstinspires.ftc.teamcode.Vision.Subsystems.Components.Component;
 @Disabled
 @Autonomous(name = "Speed", group = "tests")
 public class TestingSpeedsAuto extends LinearOpMode {

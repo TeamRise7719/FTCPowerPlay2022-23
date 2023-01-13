@@ -1,11 +1,11 @@
-package org.firstinspires.ftc.teamcode.SeansMotionController.Vision.Teleop;
+package org.firstinspires.ftc.teamcode.Vision.Teleop;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.SeansMotionController.Vision.Subsystems.Components.Component;
-import org.firstinspires.ftc.teamcode.SeansMotionController.Vision.Subsystems.Driving.Drivetrain;
+import org.firstinspires.ftc.teamcode.Vision.Subsystems.Components.Component;
+import org.firstinspires.ftc.teamcode.Vision.Subsystems.Driving.Drivetrain;
 
 /**
  * Created by Sean Cardosi on 8/28/22.

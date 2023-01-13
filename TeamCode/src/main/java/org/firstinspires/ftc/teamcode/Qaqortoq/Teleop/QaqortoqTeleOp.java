@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Qaqortoq.Subsystems.Driving.QaqortoqComponent;
 import org.firstinspires.ftc.teamcode.Qaqortoq.Subsystems.Driving.QaqortoqDrivetrain;
+import org.firstinspires.ftc.teamcode.SeansMotionController.Drive.SeansComponent;
 
 
 /**
@@ -14,7 +15,7 @@ import org.firstinspires.ftc.teamcode.Qaqortoq.Subsystems.Driving.QaqortoqDrivet
 public class QaqortoqTeleOp extends OpMode {
 
     private QaqortoqDrivetrain robot;
-    private QaqortoqComponent component;
+    private SeansComponent component;
     private boolean isReady = false;
     boolean isLiftHigh = false;
     boolean isLiftUp = false;
@@ -49,7 +50,7 @@ public class QaqortoqTeleOp extends OpMode {
         robot = new QaqortoqDrivetrain(hardwareMap);
         robot.runUsingEncoders();
 
-        component = new QaqortoqComponent(hardwareMap);
+        component = new SeansComponent(hardwareMap);
 
         isReady = true;
 //        component.grab();
@@ -90,11 +91,11 @@ public class QaqortoqTeleOp extends OpMode {
         //----------------------------------------------=+(Grabber)+=----------------------------------------------\\
         if (gamepad1.left_bumper && !clawsOpen && !leftBumperState) {
 //            component.release();
-            component.setClaw(0.48);
+            component.setClaw(0.525);
             clawsOpen = true;
         } else if (gamepad1.left_bumper && clawsOpen && !leftBumperState) {
 //            component.grab();
-            component.setClaw(0.525);
+            component.setClaw(0.56);
             clawsOpen = false;
         }
 
@@ -115,8 +116,8 @@ public class QaqortoqTeleOp extends OpMode {
             double targetInCm = lastHeight / 537.7 * (2 * Math.PI * 1.801);
             component.holdLift(targetInCm);
         }
-        telemetry.addData("Lift Left", component.leftLift.getCurrentPosition());
-        telemetry.addData("Lift Right", component.rightLift.getCurrentPosition());
+//        telemetry.addData("Lift Left", component.leftLift.getCurrentPosition());
+//        telemetry.addData("Lift Right", component.rightLift.getCurrentPosition());
         //----------------------------------------------=+(Lift)+=----------------------------------------------\\
 
 
