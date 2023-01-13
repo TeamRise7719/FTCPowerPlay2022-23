@@ -15,6 +15,8 @@ public class ServoPositions extends OpMode {
     double pos = 0.5;
     boolean aState = false;
     boolean bState = false;
+    boolean xState = false;
+    boolean tuningClaw = false;
 
     @Override
     public void init() {
@@ -31,7 +33,18 @@ public class ServoPositions extends OpMode {
         }
         aState = gamepad1.a;
         bState = gamepad1.b;
-        c.setClaw(pos);
+
+        if (gamepad1.x && !xState) {
+            pos = 0.5;
+            tuningClaw = !tuningClaw;
+        }
+        xState = gamepad1.x;
+        if (tuningClaw) {
+            c.setClaw(pos);
+        } else {
+            c.setArm(pos);
+        }
         telemetry.addData("Grabber",c.grabber.getPosition());
+        telemetry.addData("Arm",c.rightArm.getPosition());
     }
 }
