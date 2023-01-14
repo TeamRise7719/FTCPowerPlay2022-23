@@ -18,7 +18,7 @@ public class Odometry {
     private Encoder perp;
 
     /*final*/public static double TRACKWIDTH = 33.2;//34.65;//38.65;//Testbot
-    final static double FORWARD_OFFSET = 4.2;//-4.2;//4.5;//Testbot
+    final static double FORWARD_OFFSET = 4.278;//-4.2;//4.5;//Testbot
     final static double COUNTS_PER_REV = 8192;//Encoder Counts
     final static double WHEEL_RADIUS = 1.75;//cm
     //Multipliers are: Actual Distance / Measured Distance

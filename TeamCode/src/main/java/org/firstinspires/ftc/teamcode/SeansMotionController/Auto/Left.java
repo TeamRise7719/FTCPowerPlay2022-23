@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.SeansMotionController.Auto;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -26,8 +27,7 @@ import java.util.ArrayList;
 /**
  * Created by Sean Cardosi on 1/13/23.
  */
-@TeleOp(name = "Left", group = "Auto")
-
+@Autonomous(name = "Left", group = "Auto")
 public class Left extends LinearOpMode {
 
     OpenCvCamera camera;
