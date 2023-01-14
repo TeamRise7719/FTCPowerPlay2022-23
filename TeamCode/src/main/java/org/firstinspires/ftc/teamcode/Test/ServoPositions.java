@@ -15,7 +15,7 @@ public class ServoPositions extends OpMode {
     double pos = 0.5;
     boolean aState = false;
     boolean bState = false;
-    boolean xState = false;
+    boolean rightBumpState = false;
     boolean tuningClaw = false;
 
     @Override
@@ -34,11 +34,11 @@ public class ServoPositions extends OpMode {
         aState = gamepad1.a;
         bState = gamepad1.b;
 
-        if (gamepad1.x && !xState) {
+        if (gamepad1.right_bumper && !rightBumpState) {
             pos = 0.5;
             tuningClaw = !tuningClaw;
         }
-        xState = gamepad1.x;
+        rightBumpState = gamepad1.right_bumper;
         if (tuningClaw) {
             c.setClaw(pos);
         } else {

@@ -68,8 +68,8 @@ public class QaqortoqTeleOp extends OpMode {
     @Override
     public void start() {
         super.start();
-        component.setClaw(0.52);
-        component.setArm(0.59);//Set arm to front 45 position
+        component.setClaw(0.68);
+        component.setArm(0.465);//Set arm to front 45 position
         is45 = true;
         isFront = true;
     }
@@ -91,11 +91,11 @@ public class QaqortoqTeleOp extends OpMode {
         //----------------------------------------------=+(Grabber)+=----------------------------------------------\\
         if (gamepad1.left_bumper && !clawsOpen && !leftBumperState) {
 //            component.release();
-            component.setClaw(0.525);
+            component.setClaw(0.535);
             clawsOpen = true;
         } else if (gamepad1.left_bumper && clawsOpen && !leftBumperState) {
 //            component.grab();
-            component.setClaw(0.56);
+            component.setClaw(0.68);
             clawsOpen = false;
         }
 
@@ -126,7 +126,7 @@ public class QaqortoqTeleOp extends OpMode {
             isUp = true;
             is45 = false;
             is90 = false;
-            component.setArm(0.435);
+            component.setArm(0.55);
         }
 
         if (gamepad2.right_bumper && !rightBumper2state) {
@@ -135,17 +135,17 @@ public class QaqortoqTeleOp extends OpMode {
                     is45 = true;
                     is90 = false;
                     if (isFront) {
-                        component.setArm(0.28);
+                        component.setArm(0.465);
                     } else if (isBack) {
-                        component.setArm(0.59);
+                        component.setArm(0.63);
                     }
                 } else if (is45) {//Swap to 90 position
                     is45 = false;
                     is90 = true;
                     if (isFront) {
-                        component.setArm(0.35);
+                        component.setArm(0.495);
                     } else if (isBack) {
-                        component.setArm(0.53);
+                        component.setArm(0.6);
                     }
                 }
             } else {//Go from up to 90 position
@@ -153,9 +153,9 @@ public class QaqortoqTeleOp extends OpMode {
                 is90 = true;
                 is45 = false;
                 if (isFront) {
-                    component.setArm(0.35);
+                    component.setArm(0.495);
                 } else if (isBack) {
-                    component.setArm(0.53);
+                    component.setArm(0.6);
                 }
             }
         }
@@ -166,17 +166,17 @@ public class QaqortoqTeleOp extends OpMode {
                 isFront = false;
                 isBack = true;
                 if (is90) {
-                    component.setArm(0.55);
+                    component.setArm(0.6);
                 } else if (is45) {
-                    component.setArm(0.625);
+                    component.setArm(0.63);
                 }
             } else if (isBack) {//Change everything to the front side
                 isFront = true;
                 isBack = false;
                 if (is90) {
-                    component.setArm(0.34);
+                    component.setArm(0.495);
                 } else if (is45) {
-                    component.setArm(0.27);
+                    component.setArm(0.465);
                 }
             }
         }
