@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Qaqortoq.Teleop;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.GlobalVariables;
 import org.firstinspires.ftc.teamcode.Qaqortoq.Subsystems.Driving.QaqortoqComponent;
 import org.firstinspires.ftc.teamcode.Qaqortoq.Subsystems.Driving.QaqortoqDrivetrain;
 import org.firstinspires.ftc.teamcode.SeansMotionController.Drive.SeansComponent;
@@ -68,8 +69,8 @@ public class QaqortoqTeleOp extends OpMode {
     @Override
     public void start() {
         super.start();
-        component.setClaw(0.68);
-        component.setArm(0.465);//Set arm to front 45 position
+        component.setClaw(GlobalVariables.closed);
+        component.setArm(GlobalVariables.front45);//Set arm to front 45 position
         is45 = true;
         isFront = true;
     }
@@ -91,11 +92,11 @@ public class QaqortoqTeleOp extends OpMode {
         //----------------------------------------------=+(Grabber)+=----------------------------------------------\\
         if (gamepad1.left_bumper && !clawsOpen && !leftBumperState) {
 //            component.release();
-            component.setClaw(0.535);
+            component.setClaw(GlobalVariables.open);
             clawsOpen = true;
         } else if (gamepad1.left_bumper && clawsOpen && !leftBumperState) {
 //            component.grab();
-            component.setClaw(0.68);
+            component.setClaw(GlobalVariables.closed);
             clawsOpen = false;
         }
 
@@ -126,7 +127,7 @@ public class QaqortoqTeleOp extends OpMode {
             isUp = true;
             is45 = false;
             is90 = false;
-            component.setArm(0.55);
+            component.setArm(GlobalVariables.up);
         }
 
         if (gamepad2.right_bumper && !rightBumper2state) {
@@ -135,17 +136,17 @@ public class QaqortoqTeleOp extends OpMode {
                     is45 = true;
                     is90 = false;
                     if (isFront) {
-                        component.setArm(0.465);
+                        component.setArm(GlobalVariables.front45);
                     } else if (isBack) {
-                        component.setArm(0.63);
+                        component.setArm(GlobalVariables.back45);
                     }
                 } else if (is45) {//Swap to 90 position
                     is45 = false;
                     is90 = true;
                     if (isFront) {
-                        component.setArm(0.495);
+                        component.setArm(GlobalVariables.front90);
                     } else if (isBack) {
-                        component.setArm(0.6);
+                        component.setArm(GlobalVariables.back90);
                     }
                 }
             } else {//Go from up to 90 position
@@ -153,9 +154,9 @@ public class QaqortoqTeleOp extends OpMode {
                 is90 = true;
                 is45 = false;
                 if (isFront) {
-                    component.setArm(0.495);
+                    component.setArm(GlobalVariables.front90);
                 } else if (isBack) {
-                    component.setArm(0.6);
+                    component.setArm(GlobalVariables.back90);
                 }
             }
         }
@@ -166,17 +167,17 @@ public class QaqortoqTeleOp extends OpMode {
                 isFront = false;
                 isBack = true;
                 if (is90) {
-                    component.setArm(0.6);
+                    component.setArm(GlobalVariables.back90);
                 } else if (is45) {
-                    component.setArm(0.63);
+                    component.setArm(GlobalVariables.back45);
                 }
             } else if (isBack) {//Change everything to the front side
                 isFront = true;
                 isBack = false;
                 if (is90) {
-                    component.setArm(0.495);
+                    component.setArm(GlobalVariables.front90);
                 } else if (is45) {
-                    component.setArm(0.465);
+                    component.setArm(GlobalVariables.front45);
                 }
             }
         }
