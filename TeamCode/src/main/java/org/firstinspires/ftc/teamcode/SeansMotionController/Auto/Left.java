@@ -211,7 +211,7 @@ public class Left extends LinearOpMode {
 
         path.add(new HeadingControlledWaypoint(-8, -20, Math.toRadians(0),true,1));
         path.add(new HeadingControlledWaypoint(-8, -140, Math.toRadians(180),false,3));
-        path.add(new HeadingControlledWaypoint(-4, -145, Math.toRadians(135),true,1));
+        path.add(new HeadingControlledWaypoint(2, -143, Math.toRadians(135),true,1));
         path.add(new Wait(3100));
 
         path.add(new HeadingControlledWaypoint(-3, -93, Math.toRadians(180),false,1));
@@ -219,8 +219,8 @@ public class Left extends LinearOpMode {
         path.add(new Wait(1000));
 
         path.add(new HeadingControlledWaypoint(-8, -130, Math.toRadians(180),false,3));
-        path.add(new HeadingControlledWaypoint(-1, -147, Math.toRadians(135),true,1));
-        path.add(new Wait(2000));
+        path.add(new HeadingControlledWaypoint(5, -145, Math.toRadians(135),true,1));
+        path.add(new Wait(3000));
 
         if (tagOfInterest.id == 1) {
             path.add(new HeadingControlledWaypoint(-8, -93, Math.toRadians(180),false,1));

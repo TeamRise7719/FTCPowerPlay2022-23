@@ -22,6 +22,6 @@ public class ArmZero extends OpMode {
 
     @Override
     public void loop() {
-        c.setArm(GlobalVariables.front45);
+        c.setArm(GlobalVariables.back45);
     }
 }
