@@ -1,11 +1,21 @@
 package org.firstinspires.ftc.teamcode.Qaqortoq.Autonomous;
 
+import androidx.core.math.MathUtils;
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.teamcode.GlobalVariables;
 import org.firstinspires.ftc.teamcode.Qaqortoq.Subsystems.AprilTags.AprilTagDetectionPipeline;
 import org.firstinspires.ftc.teamcode.Qaqortoq.Subsystems.Sensing.SeansEncLibrary;
+import org.firstinspires.ftc.teamcode.SeansMotionController.Control.MotionController;
+import org.firstinspires.ftc.teamcode.SeansMotionController.Drive.SeanDrivetrain;
+import org.firstinspires.ftc.teamcode.SeansMotionController.Drive.SeansComponent;
+import org.firstinspires.ftc.teamcode.SeansMotionController.Util.ActionPoint;
+import org.firstinspires.ftc.teamcode.SeansMotionController.Util.HeadingControlledWaypoint;
+import org.firstinspires.ftc.teamcode.SeansMotionController.Util.StopWaypoint;
+import org.firstinspires.ftc.teamcode.SeansMotionController.Util.Waypoint;
 import org.openftc.apriltag.AprilTagDetection;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
@@ -13,7 +23,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.ArrayList;
 
-@Autonomous(name = " Vision Auto Left Cones", group = " Vision Autos")
+@Autonomous(name = "Right", group = "Auto")
 public class leftAuto extends LinearOpMode {
     OpenCvCamera camera;
     AprilTagDetectionPipeline aprilTagDetectionPipeline;
@@ -136,9 +146,17 @@ public class leftAuto extends LinearOpMode {
             telemetry.update();
         }
 
+        MotionController c =  new MotionController(hardwareMap);
+        SeanDrivetrain d = new SeanDrivetrain(hardwareMap);
+        SeansComponent component = new SeansComponent(hardwareMap);
+        component.init();
+        d.resetHeading();
+
         //-------------------------------+=(Auto)=+-------------------------------\\
 
 
+        component.setClaw(GlobalVariables.closed);
+        ArrayList<Waypoint> path = new ArrayList<>();
 
         // Actually do something useful *
         if (tagOfInterest.id == Tag1){//Position 1: The left-most parking zone
@@ -146,7 +164,8 @@ public class leftAuto extends LinearOpMode {
              * Insert auto code here for position 1
              */
 
-
+            path.add(new HeadingControlledWaypoint(-68,-8, Math.toRadians(180),false, 3));
+            path.add(new StopWaypoint(-68, -69, Math.toRadians(180)));
 
             /*
              * Negative values will turn counterclockwise or strafe left or go backwards depending on
@@ -157,13 +176,17 @@ public class leftAuto extends LinearOpMode {
              * Insert auto code here for position 1
              */
 
-
+            path.add(new HeadingControlledWaypoint(-8, -8, Math.toRadians(180), false, 3));
+            path.add(new StopWaypoint(-8, -69, Math.toRadians(180)));
 
 
         } else if (tagOfInterest.id == Tag3) {//Position 3: The right-most parking zone
             /*
              * Insert auto code here for position 1
              */
+
+            path.add(new HeadingControlledWaypoint(54, -8, Math.toRadians(180), false,  3));
+            path.add(new StopWaypoint( 54, -69, Math.toRadians(180)));
 
         } else {
             /*

@@ -5,11 +5,11 @@ package org.firstinspires.ftc.teamcode;
  */
 public class GlobalVariables {
 
-    public static double front45 = 0.2;
-    public static double front90 = 0.27;
-    public static double up = 0.365;
-    public static double back90 = 0.46;
-    public static double back45 = 0.53;
+    public static double front45 = 0.395;
+    public static double front90 = 0.42;
+    public static double up = 0.475;
+    public static double back90 = 0.53;
+    public static double back45 = 0.555;
 
 //    public static double front45 = 0.465;
 //    public static double front90 = 0.495;
