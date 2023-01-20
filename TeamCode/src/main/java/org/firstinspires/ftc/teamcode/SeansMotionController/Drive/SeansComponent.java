@@ -1,13 +1,14 @@
 package org.firstinspires.ftc.teamcode.SeansMotionController.Drive;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Qaqortoq.Subsystems.Sensing.SeansSynchronousPID;
-
+import org.firstinspires.ftc.teamcode.SeansMotionController.Util.Encoder;
 
 /**
  * Created by Sean Cardosi on 12/20/22.
@@ -18,14 +19,16 @@ public class SeansComponent {
     public DcMotor rightLift;
     public Servo leftArm;
     public Servo rightArm;
-    //    AnalogInput stringPotentiometer;
+    final static double COUNTS_PER_REV = 8192;//Encoder Counts
+    final static double SPOOL_RADIUS = 1.884;//cm
     public Servo grabber;
+    public Encoder liftEncoder;
     SeansSynchronousPID liftPID1;
     double LIFT_P1 = 0.055;
     double LIFT_I1 = 0.0;
     double LIFT_D1 = 0.0;
     SeansSynchronousPID liftPID2;
-    double LIFT_P2 = 0.001;
+    double LIFT_P2 = 0.055;//0.001
     double LIFT_I2 = 0.0;
     double LIFT_D2 = 0.0;
 
@@ -43,6 +46,9 @@ public class SeansComponent {
         leftArm.setDirection(Servo.Direction.REVERSE);
         rightArm = hardwareMap.servo.get("right");
         rightArm.setDirection(Servo.Direction.FORWARD);
+        liftEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "liftR"));
+        liftEncoder.setDirection(Encoder.Direction.FORWARD);
+
 
 //        stringPotentiometer = hardwareMap.analogInput.get("stringEnc");
 
@@ -85,13 +91,14 @@ public class SeansComponent {
     }
 
     public boolean liftTo(double cm) {
-        double curr = rightLift.getCurrentPosition();
-        double COUNTS_PER_REV = 537.7;//Encoder Counts
-        double target = cm * COUNTS_PER_REV / (2 * Math.PI * 1.801);
+        double curr = liftEncoder.getCurrentPosition();
+        curr = encoderTicksToCentimeters(curr);
+        double target = cm;
         double error = curr - target;
         double liftPower = liftPID1.calculateUseError(error);
         leftLift.setPower(liftPower);
         rightLift.setPower(liftPower);
+
 
         if (Math.abs(curr - target) < 2) {
             return true;
@@ -100,18 +107,15 @@ public class SeansComponent {
     }
 
     public boolean holdLift(double cm) {
-        double curr = rightLift.getCurrentPosition();
-        double COUNTS_PER_REV = 537.7;//Encoder Counts
-        double target = cm * COUNTS_PER_REV / (2 * Math.PI * 1.801);
-        double error = curr - target;
+        double curr = liftEncoder.getCurrentPosition();
+        curr = encoderTicksToCentimeters(curr);
+        double target = cm;
+        double error = target - curr;
         double liftPower = liftPID2.calculateUseError(error);
         leftLift.setPower(liftPower);
         rightLift.setPower(liftPower);
 
-        if (Math.abs(curr - target) < 2) {
-            return true;
-        }
-        return false;
+        return Math.abs(target - curr) < 2;
     }
 
 //    public double getStringPosition() {
@@ -120,6 +124,10 @@ public class SeansComponent {
 
     public void getTelemetry(Telemetry telemetry) {
 //        telemetry.addData("StringPosition",getStringPosition());
+    }
+
+    public static double encoderTicksToCentimeters(double ticks) {
+        return SPOOL_RADIUS * 2.0 * Math.PI * ticks / COUNTS_PER_REV;
     }
 
 }

@@ -114,11 +114,11 @@ public class QaqortoqTeleOp extends OpMode {
             component.rightLift.setPower(-1.0);
             lastHeight = component.rightLift.getCurrentPosition();
         } else {
-            double targetInCm = lastHeight / 537.7 * (2 * Math.PI * 1.801);
+            double targetInCm = SeansComponent.encoderTicksToCentimeters(lastHeight);
             component.holdLift(targetInCm);
         }
-//        telemetry.addData("Lift Left", component.leftLift.getCurrentPosition());
-//        telemetry.addData("Lift Right", component.rightLift.getCurrentPosition());
+        telemetry.addData("Lift Power", component.rightLift.getPower());
+        telemetry.addData("Lift Right", component.liftEncoder.getCurrentPosition());
         //----------------------------------------------=+(Lift)+=----------------------------------------------\\
 
 

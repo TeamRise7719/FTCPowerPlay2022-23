@@ -200,6 +200,8 @@ public class Left extends LinearOpMode {
             telemetry.update();            sleep(20);
         }
 
+        camera.closeCameraDevice();
+
         component.setClaw(GlobalVariables.closed);//Close
 
         ArrayList<Waypoint> path = new ArrayList<>();
