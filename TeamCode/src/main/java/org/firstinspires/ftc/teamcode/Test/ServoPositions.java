@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Test;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.GlobalVariables;
 import org.firstinspires.ftc.teamcode.SeansMotionController.Drive.SeansComponent;
 
 /**
@@ -35,7 +36,7 @@ public class ServoPositions extends OpMode {
         bState = gamepad1.b;
 
         if (gamepad1.right_bumper && !rightBumpState) {
-            pos = 0.64;
+            pos = GlobalVariables.closed;
             tuningClaw = !tuningClaw;
         }
         rightBumpState = gamepad1.right_bumper;
@@ -44,7 +45,7 @@ public class ServoPositions extends OpMode {
         } else {
             c.setArm(pos);
         }
-        telemetry.addData("Grabber",c.grabber.getPosition());
+        telemetry.addData("Grabber",c.leftGrabber.getPosition());
         telemetry.addData("Arm",c.rightArm.getPosition());
     }
 }

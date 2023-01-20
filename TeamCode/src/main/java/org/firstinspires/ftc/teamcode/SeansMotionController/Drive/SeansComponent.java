@@ -21,7 +21,8 @@ public class SeansComponent {
     public Servo rightArm;
     final static double COUNTS_PER_REV = 8192;//Encoder Counts
     final static double SPOOL_RADIUS = 1.884;//cm
-    public Servo grabber;
+    public Servo leftGrabber;
+    public Servo rightGrabber;
     public Encoder liftEncoder;
     SeansSynchronousPID liftPID1;
     double LIFT_P1 = 0.055;
@@ -52,8 +53,10 @@ public class SeansComponent {
 
 //        stringPotentiometer = hardwareMap.analogInput.get("stringEnc");
 
-        grabber = hardwareMap.servo.get("claw");
-        grabber.setDirection(Servo.Direction.REVERSE);
+        leftGrabber = hardwareMap.servo.get("clawL");
+        leftGrabber.setDirection(Servo.Direction.REVERSE);
+        rightGrabber = hardwareMap.servo.get("clawR");
+        rightGrabber.setDirection(Servo.Direction.FORWARD);
 
         liftPID1 = new SeansSynchronousPID(LIFT_P1,LIFT_I1,LIFT_D1);
         liftPID1.setOutputRange(-1.0,1.0);
@@ -82,7 +85,8 @@ public class SeansComponent {
     }
 
     public void setClaw(double a) {
-        grabber.setPosition(a);
+        leftGrabber.setPosition(a);
+        rightGrabber.setPosition(a);
     }
 
     public void moveArm(double position) {
