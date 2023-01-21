@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Qaqortoq.Subsystems.Driving;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -13,8 +14,8 @@ import org.firstinspires.ftc.teamcode.Qaqortoq.Subsystems.Sensing.SeansSynchrono
  */
 public class QaqortoqComponent {
 
-    public DcMotor leftLift;
-    public DcMotor rightLift;
+    public DcMotorEx leftLift;
+    public DcMotorEx rightLift;
     public Servo leftArm;
     public Servo rightArm;
     //    AnalogInput stringPotentiometer;
@@ -31,10 +32,10 @@ public class QaqortoqComponent {
     public QaqortoqComponent(HardwareMap hardwareMap) {
 
 
-        leftLift = hardwareMap.dcMotor.get("perpEncoder");
+        leftLift = hardwareMap.get(DcMotorEx.class, "perpEncoder");
         leftLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        rightLift = hardwareMap.dcMotor.get("liftR");
+        rightLift = hardwareMap.get(DcMotorEx.class,"liftR");
         rightLift.setDirection(DcMotorSimple.Direction.REVERSE);
         rightLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 

@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Qaqortoq.Teleop;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 import org.firstinspires.ftc.teamcode.GlobalVariables;
 import org.firstinspires.ftc.teamcode.Qaqortoq.Subsystems.Driving.QaqortoqComponent;
@@ -17,6 +18,7 @@ public class QaqortoqTeleOp extends OpMode {
 
     private QaqortoqDrivetrain robot;
     private SeansComponent component;
+    VoltageSensor s;
     private boolean isReady = false;
     boolean isLiftHigh = false;
     boolean isLiftUp = false;
@@ -60,6 +62,8 @@ public class QaqortoqTeleOp extends OpMode {
         isReady = true;
 //        component.grab();
         component.init();
+        s = hardwareMap.voltageSensor.iterator().next();
+
     }
 
     @Override
@@ -73,7 +77,6 @@ public class QaqortoqTeleOp extends OpMode {
     @Override
     public void start() {
         super.start();
-        //component.setClaw(GlobalVariables.closed);
         component.leftGrabber.setPosition(GlobalVariables.closeL);
         component.rightGrabber.setPosition(GlobalVariables.closeR);
         component.setArm(GlobalVariables.front45);//Set arm to front 45 position
@@ -97,14 +100,10 @@ public class QaqortoqTeleOp extends OpMode {
 
         //----------------------------------------------=+(Grabber)+=----------------------------------------------\\
         if (gamepad1.left_bumper && !clawsOpen && !leftBumperState) {
-//            component.release();
-            //component.setClaw(GlobalVariables.open);
             component.rightGrabber.setPosition(GlobalVariables.openR);
             component.leftGrabber.setPosition(GlobalVariables.openL);
             clawsOpen = true;
         } else if (gamepad1.left_bumper && clawsOpen && !leftBumperState) {
-//            component.grab();
-            //component.setClaw(GlobalVariables.closed);
             component.rightGrabber.setPosition(GlobalVariables.closeR);
             component.leftGrabber.setPosition(GlobalVariables.closeL);
             clawsOpen = false;
@@ -117,10 +116,16 @@ public class QaqortoqTeleOp extends OpMode {
 
         //----------------------------------------------=+(Lift)+=----------------------------------------------\\
         if (gamepad2.right_stick_y > 0.0) {
+            high = true;
+            medium = true;
+            low = true;
             component.leftLift.setPower(1.0);
             component.rightLift.setPower(1.0);
             lastHeight = component.rightLift.getCurrentPosition();
         } else if (gamepad2.right_stick_y < 0.0) {
+            high = true;
+            medium = true;
+            low = true;
             component.leftLift.setPower(-1.0);
             component.rightLift.setPower(-1.0);
             lastHeight = component.rightLift.getCurrentPosition();
@@ -128,30 +133,41 @@ public class QaqortoqTeleOp extends OpMode {
             double targetInCm = SeansComponent.encoderTicksToCentimeters(lastHeight);
             component.holdLift(targetInCm);
         }
-        telemetry.addData("Lift Power", component.rightLift.getPower());
+        telemetry.addData("Lift R", component.rightLift.getPower());
+        telemetry.addData("LiftL", component.leftLift.getPower());
         telemetry.addData("Lift Right", component.liftEncoder.getCurrentPosition());
+        s.getVoltage();
+        telemetry.addData("Voltage", s.getVoltage());
         //----------------------------------------------=+(Lift)+=----------------------------------------------\\
         if(gamepad2.a){
             //Low junction 36
             low = false;
+            medium = true;
+            high = true;
         }
 
         if(!low){
-            low = component.holdLift(36);
+            low = component.liftTo(21.6);
         }
 
         if(gamepad2.b){
             //Medium Junction 62
-
+            medium = false;
+            high = true;
+            low = true;
         }
-
+        if(!medium){
+            medium = component.liftTo(47);
+        }
         if(gamepad2.y){
             //Tall Junction 87
-
-        }//else if(gamepad2.x){
-//            lift down
-//            component.liftTo(1);
-//        }
+            high = false;
+            medium = true;
+            low = true;
+        }
+        if(!high){
+            high = component.liftTo(68);
+        }
 
         //----------------------------------------------=+(Arm)+=----------------------------------------------\\
         if (gamepad2.dpad_up && !clawsOpen) {
