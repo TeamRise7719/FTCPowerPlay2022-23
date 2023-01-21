@@ -26,4 +26,9 @@ public class GlobalVariables {
 
     public static double closed = 0.64;
     public static double open = 0.55;
+
+    public static double closeL = 0.53;
+    public static double closeR = 0.51;
+    public static double openL = 0.56;
+    public static double openR = 0.53;
 }

@@ -69,7 +69,9 @@ public class QaqortoqTeleOp extends OpMode {
     @Override
     public void start() {
         super.start();
-        component.setClaw(GlobalVariables.closed);
+        //component.setClaw(GlobalVariables.closed);
+        component.leftGrabber.setPosition(GlobalVariables.closeL);
+        component.rightGrabber.setPosition(GlobalVariables.closeR);
         component.setArm(GlobalVariables.front45);//Set arm to front 45 position
         is45 = true;
         isFront = true;
@@ -92,17 +94,22 @@ public class QaqortoqTeleOp extends OpMode {
         //----------------------------------------------=+(Grabber)+=----------------------------------------------\\
         if (gamepad1.left_bumper && !clawsOpen && !leftBumperState) {
 //            component.release();
-            component.setClaw(GlobalVariables.open);
+            //component.setClaw(GlobalVariables.open);
+            component.rightGrabber.setPosition(GlobalVariables.openR);
+            component.leftGrabber.setPosition(GlobalVariables.openL);
             clawsOpen = true;
         } else if (gamepad1.left_bumper && clawsOpen && !leftBumperState) {
 //            component.grab();
-            component.setClaw(GlobalVariables.closed);
+            //component.setClaw(GlobalVariables.closed);
+            component.rightGrabber.setPosition(GlobalVariables.closeR);
+            component.leftGrabber.setPosition(GlobalVariables.closeL);
             clawsOpen = false;
         }
-
         leftBumperState = gamepad1.left_bumper;
-        //----------------------------------------------=+(Grabber)+=----------------------------------------------\\
 
+        telemetry.addData("ClawR", component.rightGrabber.getPosition());
+        telemetry.addData("ClawL", component.leftGrabber.getPosition());
+        //----------------------------------------------=+(Grabber)+=----------------------------------------------\\
 
         //----------------------------------------------=+(Lift)+=----------------------------------------------\\
         if (gamepad2.right_stick_y > 0.0) {

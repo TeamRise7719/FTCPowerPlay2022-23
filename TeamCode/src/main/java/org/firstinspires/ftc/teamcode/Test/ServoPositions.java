@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.SeansMotionController.Drive.SeansComponent
 public class ServoPositions extends OpMode {
 
     SeansComponent c;
-    double pos = 0.5;
+    double pos = 0.64;
     boolean aState = false;
     boolean bState = false;
     boolean rightBumpState = false;
@@ -41,11 +41,12 @@ public class ServoPositions extends OpMode {
         }
         rightBumpState = gamepad1.right_bumper;
         if (tuningClaw) {
-            c.setClaw(pos);
+            c.rightGrabber.setPosition(pos);
         } else {
             c.setArm(pos);
         }
         telemetry.addData("Grabber",c.leftGrabber.getPosition());
+        telemetry.addData("ClawR", c.rightGrabber.getPosition());
         telemetry.addData("Arm",c.rightArm.getPosition());
     }
 }
