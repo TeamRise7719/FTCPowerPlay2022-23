@@ -5,7 +5,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 import org.firstinspires.ftc.teamcode.GlobalVariables;
-import org.firstinspires.ftc.teamcode.Qaqortoq.Subsystems.Driving.QaqortoqComponent;
 import org.firstinspires.ftc.teamcode.Qaqortoq.Subsystems.Driving.QaqortoqDrivetrain;
 import org.firstinspires.ftc.teamcode.SeansMotionController.Drive.SeansComponent;
 
@@ -133,11 +132,8 @@ public class QaqortoqTeleOp extends OpMode {
             double targetInCm = SeansComponent.encoderTicksToCentimeters(lastHeight);
             component.holdLift(targetInCm);
         }
-        telemetry.addData("Lift R", component.rightLift.getPower());
-        telemetry.addData("LiftL", component.leftLift.getPower());
+        component.getTelemetry(telemetry);
         telemetry.addData("Lift Right", component.liftEncoder.getCurrentPosition());
-        s.getVoltage();
-        telemetry.addData("Voltage", s.getVoltage());
         //----------------------------------------------=+(Lift)+=----------------------------------------------\\
         if(gamepad2.a){
             //Low junction 36
