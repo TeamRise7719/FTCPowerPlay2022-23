@@ -29,7 +29,7 @@ public class SeansComponent {
     double LIFT_I1 = 0.0;
     double LIFT_D1 = 0.0;
     SeansSynchronousPID liftPID2;
-    double LIFT_P2 = 0.055;//0.001
+    double LIFT_P2 = 0.001;//0.001 0.055
     double LIFT_I2 = 0.0;
     double LIFT_D2 = 0.0;
 
