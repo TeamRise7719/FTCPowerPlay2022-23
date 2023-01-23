@@ -169,9 +169,9 @@ public class QaqortoqTeleOp extends OpMode {
 
         //----------------------------------------------=+(Arm)+=----------------------------------------------\\
         if (gamepad2.dpad_up && !clawsOpen) {
-            isUp = true;
-            is45 = false;
-            is90 = false;
+//            isUp = true;
+//            is45 = false;
+//            is90 = false;
             component.setArm(GlobalVariables.up);
         } else {
             component.setArm(lastPosition);
