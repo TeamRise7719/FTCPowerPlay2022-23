@@ -9,16 +9,14 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Qaqortoq.Subsystems.Sensing.SeansSynchronousPID;
 import org.firstinspires.ftc.teamcode.SeansMotionController.Util.Encoder;
-import org.openftc.revextensions2.ExpansionHubEx;
-import org.openftc.revextensions2.ExpansionHubMotor;
 
 /**
  * Created by Sean Cardosi on 12/20/22.
  */
 public class SeansComponent {
 
-    public ExpansionHubMotor leftLift;
-    public ExpansionHubMotor rightLift;
+    public DcMotor leftLift;
+    public DcMotor rightLift;
     public Servo leftArm;
     public Servo rightArm;
     final static double COUNTS_PER_REV = 8192;//Encoder Counts
@@ -34,16 +32,14 @@ public class SeansComponent {
     double LIFT_P2 = 0.001;//0.001 0.055
     double LIFT_I2 = 0.0;
     double LIFT_D2 = 0.0;
-    ExpansionHubEx hub;
 
     public SeansComponent(HardwareMap hardwareMap) {
 
-        hub = hardwareMap.get(ExpansionHubEx.class,"Expansion Hub 2");
 
-        leftLift = (ExpansionHubMotor) hardwareMap.dcMotor.get("perpEncoder");
+        leftLift = hardwareMap.dcMotor.get("perpEncoder");
         leftLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        rightLift = (ExpansionHubMotor) hardwareMap.dcMotor.get("liftR");
+        rightLift = hardwareMap.dcMotor.get("liftR");
         rightLift.setDirection(DcMotorSimple.Direction.REVERSE);
         rightLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
@@ -132,8 +128,6 @@ public class SeansComponent {
 
     public void getTelemetry(Telemetry telemetry) {
 //        telemetry.addData("StringPosition",getStringPosition());
-        telemetry.addData("Left Lift", leftLift.getCurrentDraw(ExpansionHubEx.CurrentDrawUnits.AMPS));
-        telemetry.addData("Right Lift", leftLift.getCurrentDraw(ExpansionHubEx.CurrentDrawUnits.AMPS));
     }
 
     public static double encoderTicksToCentimeters(double ticks) {
