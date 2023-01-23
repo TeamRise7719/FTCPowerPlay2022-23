@@ -173,6 +173,8 @@ public class QaqortoqTeleOp extends OpMode {
             is45 = false;
             is90 = false;
             component.setArm(GlobalVariables.up);
+        } else {
+            component.setArm(lastPosition);
         }
 
         if (gamepad2.right_bumper && !rightBumper2state) {
@@ -229,9 +231,6 @@ public class QaqortoqTeleOp extends OpMode {
             lastPosition = component.rightArm.getPosition();
         }
         leftBumper2State = gamepad2.left_bumper;
-        if (!isUp) {
-            component.setArm(lastPosition);
-        }
         //----------------------------------------------=+(Arm)+=----------------------------------------------\\
     }
 }
