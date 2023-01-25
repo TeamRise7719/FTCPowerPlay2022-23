@@ -243,4 +243,12 @@ public class SeanDrivetrain {
         List<Double> speeds = Arrays.asList(lf.getPower(),lr.getPower(),rf.getPower(),rr.getPower());
         return Collections.max(speeds);
     }
+
+    public void stopMotors() {
+        lf.setPower(0);
+        lr.setPower(0);
+        rf.setPower(0);
+        rr.setPower(0);
+
+    }
 }

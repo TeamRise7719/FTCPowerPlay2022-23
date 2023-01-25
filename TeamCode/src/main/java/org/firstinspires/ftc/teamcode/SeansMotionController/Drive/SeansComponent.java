@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.GlobalVariables;
 import org.firstinspires.ftc.teamcode.Qaqortoq.Subsystems.Sensing.SeansSynchronousPID;
 import org.firstinspires.ftc.teamcode.SeansMotionController.Util.Encoder;
 
@@ -125,6 +126,15 @@ public class SeansComponent {
 //    public double getStringPosition() {
 //        return stringPotentiometer.getVoltage();
 //    }
+
+    public void open() {
+        leftGrabber.setPosition(GlobalVariables.openL);
+        rightGrabber.setPosition(GlobalVariables.openR);
+    }
+    public void close() {
+        leftGrabber.setPosition(GlobalVariables.closeL);
+        rightGrabber.setPosition(GlobalVariables.closeR);
+    }
 
     public void getTelemetry(Telemetry telemetry) {
 //        telemetry.addData("StringPosition",getStringPosition());

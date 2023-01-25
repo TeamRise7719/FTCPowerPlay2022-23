@@ -100,109 +100,115 @@ public class Left extends LinearOpMode {
             e1.reset();
             component.setArm(GlobalVariables.back90);
             while (e1.seconds() < 4) {}
-            component.setClaw(GlobalVariables.open);
+//            component.setClaw(GlobalVariables.open);
+            component.open();
+
             e1.reset();
 
             while (e1.seconds() < 0.8) {}
-            component.setClaw(GlobalVariables.closed);
+//            component.setClaw(GlobalVariables.closed);
+            component.close();
             component.setArm(GlobalVariables.front45);
             e1.reset();
 
             while (e1.seconds() < 0.85) {}
-            component.setClaw(GlobalVariables.open);
-
+//            component.setClaw(GlobalVariables.open);
+            component.open();
             e1.reset();
             while (e1.seconds() < 2) {}
-            component.setClaw(GlobalVariables.closed);
-
+//            component.setClaw(GlobalVariables.closed);
+            component.close();
             e1.reset();
             while (e1.seconds() < 1) {}
             component.setArm(GlobalVariables.back90);
 
             e1.reset();
             while (e1.seconds() < 4) {}
-            component.setClaw(GlobalVariables.open);
-
+//            component.setClaw(GlobalVariables.open);
+            component.open();
             e1.reset();
             while (e1.seconds() < 0.25) {}
-            component.setClaw(GlobalVariables.closed);
+//            component.setClaw(GlobalVariables.closed);
+            component.close();
             component.setArm(GlobalVariables.front45);
         };
 
-        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
-        aprilTagDetectionPipeline = new AprilTagDetectionPipeline(tagsize, fx, fy, cx, cy);
+        waitForStart();
+//        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+//        camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Side Camera"), cameraMonitorViewId);
+//        aprilTagDetectionPipeline = new AprilTagDetectionPipeline(tagsize, fx, fy, cx, cy);
+//
+//        camera.setPipeline(aprilTagDetectionPipeline);
+//        camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
+//            @Override
+//            public void onOpened() {
+//                camera.startStreaming(800,448, OpenCvCameraRotation.UPRIGHT);
+//            }
+//
+//            @Override
+//            public void onError(int errorCode) {}
+//        });
+//
+//        telemetry.setMsTransmissionInterval(50);
+//
+//        while (!isStarted() && !isStopRequested()) {
+//            ArrayList<AprilTagDetection> currentDetections = aprilTagDetectionPipeline.getLatestDetections();
+//
+//            if(currentDetections.size() != 0) {
+//                boolean tagFound = false;
+//
+//                for(AprilTagDetection tag : currentDetections) {
+//                    /*if(tag.id == 1) {
+//                        tagOfInterest = tag;
+//                        tagFound = true;
+//                        break;
+//                    }*/
+//                    if (tag.id == Tag1 || tag.id == Tag2 || tag.id == Tag3) {
+//                        tagOfInterest = tag;
+//                        tagFound = true;
+//                        break;
+//                    }
+//                }
+//
+//                if(tagFound) {
+//                    if (tagOfInterest.id == Tag1) {
+//                        telemetry.addLine("Position 1");
+//
+//                    } else if (tagOfInterest.id == Tag2) {
+//                        telemetry.addLine("Position 2");
+//                    } else if (tagOfInterest.id == Tag3) {
+//                        telemetry.addLine("Position 3");
+//                    } else {
+//                        telemetry.addLine("Something went wrong");
+//                    }
+//                    tagToTelemetry(tagOfInterest);
+//                } else {
+//                    telemetry.addLine("Don't see tag:(");
+//
+//                    if(tagOfInterest == null) {
+//                        telemetry.addLine("(A tag has never been seen)");
+//                    } else {
+//                        telemetry.addLine("\nBut we HAVE seen a tag before; last seen at:");
+//                        tagToTelemetry(tagOfInterest);
+//                    }
+//                }
+//            } else {
+//                telemetry.addLine("Don't see tag:(");
+//
+//                if(tagOfInterest == null) {
+//                    telemetry.addLine("(A tag has never been seen)");
+//                } else {
+//                    telemetry.addLine("\nBut we HAVE seen a tag before; last seen at:");
+//                    tagToTelemetry(tagOfInterest);
+//                }
+//            }
+//            telemetry.update();            sleep(20);
+//        }
+//
+//        camera.closeCameraDevice();
 
-        camera.setPipeline(aprilTagDetectionPipeline);
-        camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
-            @Override
-            public void onOpened() {
-                camera.startStreaming(800,448, OpenCvCameraRotation.UPRIGHT);
-            }
-
-            @Override
-            public void onError(int errorCode) {}
-        });
-
-        telemetry.setMsTransmissionInterval(50);
-
-        while (!isStarted() && !isStopRequested()) {
-            ArrayList<AprilTagDetection> currentDetections = aprilTagDetectionPipeline.getLatestDetections();
-
-            if(currentDetections.size() != 0) {
-                boolean tagFound = false;
-
-                for(AprilTagDetection tag : currentDetections) {
-                    /*if(tag.id == 1) {
-                        tagOfInterest = tag;
-                        tagFound = true;
-                        break;
-                    }*/
-                    if (tag.id == Tag1 || tag.id == Tag2 || tag.id == Tag3) {
-                        tagOfInterest = tag;
-                        tagFound = true;
-                        break;
-                    }
-                }
-
-                if(tagFound) {
-                    if (tagOfInterest.id == Tag1) {
-                        telemetry.addLine("Position 1");
-
-                    } else if (tagOfInterest.id == Tag2) {
-                        telemetry.addLine("Position 2");
-                    } else if (tagOfInterest.id == Tag3) {
-                        telemetry.addLine("Position 3");
-                    } else {
-                        telemetry.addLine("Something went wrong");
-                    }
-                    tagToTelemetry(tagOfInterest);
-                } else {
-                    telemetry.addLine("Don't see tag:(");
-
-                    if(tagOfInterest == null) {
-                        telemetry.addLine("(A tag has never been seen)");
-                    } else {
-                        telemetry.addLine("\nBut we HAVE seen a tag before; last seen at:");
-                        tagToTelemetry(tagOfInterest);
-                    }
-                }
-            } else {
-                telemetry.addLine("Don't see tag:(");
-
-                if(tagOfInterest == null) {
-                    telemetry.addLine("(A tag has never been seen)");
-                } else {
-                    telemetry.addLine("\nBut we HAVE seen a tag before; last seen at:");
-                    tagToTelemetry(tagOfInterest);
-                }
-            }
-            telemetry.update();            sleep(20);
-        }
-
-        camera.closeCameraDevice();
-
-        component.setClaw(GlobalVariables.closed);//Close
+//        component.setClaw(GlobalVariables.closed);//Close
+        component.close();
 
         ArrayList<Waypoint> path = new ArrayList<>();
         ArrayList<ActionPoint> thingsToDo = new ArrayList<>();
@@ -223,17 +229,19 @@ public class Left extends LinearOpMode {
         path.add(new HeadingControlledWaypoint(5, -142, Math.toRadians(135),true,1));
         path.add(new Wait(3000));
 
-        if (tagOfInterest.id == 1) {
-            path.add(new HeadingControlledWaypoint(-8, -93, Math.toRadians(180),false,1));
-            path.add(new StopWaypoint(-64, -130, Math.toRadians(180)));
-        } else if (tagOfInterest.id == 2) {
-            path.add(new StopWaypoint(-5, -130, Math.toRadians(180)));
-        } else if (tagOfInterest.id == 3) {
-            path.add(new HeadingControlledWaypoint(-8, -93, Math.toRadians(180),false,1));
-            path.add(new StopWaypoint(56, -130, Math.toRadians(180)));
-        } else {
-            path.add(new StopWaypoint(-5, -130, Math.toRadians(180)));
-        }
+//        if (tagOfInterest.id == 1) {
+//            path.add(new HeadingControlledWaypoint(-8, -93, Math.toRadians(180),false,1));
+//            path.add(new StopWaypoint(-64, -130, Math.toRadians(180)));
+//        } else if (tagOfInterest.id == 2) {
+//            path.add(new StopWaypoint(-5, -130, Math.toRadians(180)));
+//        } else if (tagOfInterest.id == 3) {
+//            path.add(new HeadingControlledWaypoint(-8, -93, Math.toRadians(180),false,1));
+//            path.add(new StopWaypoint(56, -130, Math.toRadians(180)));
+//        } else {
+//            path.add(new StopWaypoint(-5, -130, Math.toRadians(180)));
+//        }
+
+        path.add(new StopWaypoint(-5, -130, Math.toRadians(180)));
 
         c.followPath(path,thingsToDo,40,true,this, telemetry);
     }
