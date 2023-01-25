@@ -218,7 +218,7 @@ public class Left extends LinearOpMode {
 
         path.add(new HeadingControlledWaypoint(-8, -20, Math.toRadians(0),true,1));
         path.add(new HeadingControlledWaypoint(-8, -140, Math.toRadians(180),false,3));
-        path.add(new HeadingControlledWaypoint(2, -142, Math.toRadians(135),true,1));
+        path.add(new HeadingControlledWaypoint(0, -140, Math.toRadians(135),true,1));
         path.add(new Wait(3100));
 
         path.add(new HeadingControlledWaypoint(-3, -98, Math.toRadians(180),false,1));
