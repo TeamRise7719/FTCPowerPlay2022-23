@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.SeansMotionController.Drive;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -41,7 +40,7 @@ public class SeansComponent {
         leftLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         rightLift = hardwareMap.dcMotor.get("liftR");
-        rightLift.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightLift.setDirection(DcMotor.Direction.REVERSE);
         rightLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         leftArm = hardwareMap.servo.get("left");
@@ -67,7 +66,8 @@ public class SeansComponent {
     }
 
     public void init() {
-        rightLift.setMode(DcMotor.RunMode.RESET_ENCODERS);
+        leftLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     public void moveLift(double power) {

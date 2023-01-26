@@ -57,7 +57,7 @@ public class Encoder {
         this.direction = Direction.FORWARD;
 
         this.lastPosition = 0;
-        this.motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        this.motor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
 
         this.velocityEstimates = new double[3];
         this.lastUpdateTime = clock.seconds();

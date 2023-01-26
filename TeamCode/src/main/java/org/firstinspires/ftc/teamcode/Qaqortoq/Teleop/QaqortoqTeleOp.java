@@ -17,7 +17,6 @@ public class QaqortoqTeleOp extends OpMode {
 
     private QaqortoqDrivetrain robot;
     private SeansComponent component;
-    VoltageSensor s;
     private boolean isReady = false;
     boolean isLiftHigh = false;
     boolean isLiftUp = false;
@@ -29,13 +28,6 @@ public class QaqortoqTeleOp extends OpMode {
     double lastHeight;
     boolean clawsOpen = false;
     boolean leftBumperState = true;
-    double positArm = 0.625;
-    double positClaw = 0.45;
-    double middle = 0.435;
-    double backDown = 0.28;
-    double backUp = 0.35;
-    double frontDown = 0.59;
-    double frontUp = 0.53;
     boolean is90 = false;
     boolean is45 = false;
     boolean isFront = false;
@@ -62,8 +54,6 @@ public class QaqortoqTeleOp extends OpMode {
         isReady = true;
 //        component.grab();
         component.init();
-        s = hardwareMap.voltageSensor.iterator().next();
-
     }
 
     @Override
@@ -134,7 +124,6 @@ public class QaqortoqTeleOp extends OpMode {
             double targetInCm = SeansComponent.encoderTicksToCentimeters(lastHeight);
             component.holdLift(targetInCm);
         }
-        component.getTelemetry(telemetry);
         telemetry.addData("Lift Right", component.liftEncoder.getCurrentPosition());
         //----------------------------------------------=+(Lift)+=----------------------------------------------\\
         if(gamepad2.a){
