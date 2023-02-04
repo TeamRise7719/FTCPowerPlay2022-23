@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.SeansMotionController.Drive;
 
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -15,8 +14,8 @@ import org.firstinspires.ftc.teamcode.SeansMotionController.Util.Encoder;
  */
 public class SeansComponent {
 
-    public DcMotor leftLift;
-    public DcMotor rightLift;
+    public DcMotorEx leftLift;
+    public DcMotorEx rightLift;
     public Servo leftArm;
     public Servo rightArm;
     final static double COUNTS_PER_REV = 8192;//Encoder Counts
@@ -36,12 +35,12 @@ public class SeansComponent {
     public SeansComponent(HardwareMap hardwareMap) {
 
 
-        leftLift = hardwareMap.dcMotor.get("perpEncoder");
-        leftLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        leftLift = hardwareMap.get(DcMotorEx.class,"perpEncoder");
+        leftLift.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
 
-        rightLift = hardwareMap.dcMotor.get("liftR");
-        rightLift.setDirection(DcMotor.Direction.REVERSE);
-        rightLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightLift = hardwareMap.get(DcMotorEx.class,"liftR");
+        rightLift.setDirection(DcMotorEx.Direction.REVERSE);
+        rightLift.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
 
         leftArm = hardwareMap.servo.get("left");
         leftArm.setDirection(Servo.Direction.REVERSE);
@@ -66,8 +65,8 @@ public class SeansComponent {
     }
 
     public void init() {
-        leftLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rightLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightLift.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
+        leftLift.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     public void moveLift(double power) {
@@ -105,10 +104,7 @@ public class SeansComponent {
         rightLift.setPower(liftPower);
 
 
-        if (Math.abs(curr - target) < 2) {
-            return true;
-        }
-        return false;
+        return Math.abs(curr - target) < 2;
     }
 
     public boolean holdLift(double cm) {
@@ -138,6 +134,11 @@ public class SeansComponent {
 
     public void getTelemetry(Telemetry telemetry) {
 //        telemetry.addData("StringPosition",getStringPosition());
+    }
+
+    public void openM() {
+        leftGrabber.setPosition(GlobalVariables.openLMega);
+        rightGrabber.setPosition(GlobalVariables.openRMega);
     }
 
     public static double encoderTicksToCentimeters(double ticks) {

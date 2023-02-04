@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.SeansMotionController.Control;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 import org.firstinspires.ftc.teamcode.SeansMotionController.Util.Pose;
 
 import java.util.ArrayList;
@@ -27,19 +27,14 @@ public class Localizer {
 
     private Pose currentPose;//Current robot pose
     private List<Double> lastWheelPositions;//dxl,dxr,dxh
-    private double dxl = 0.0;
-    private double dxr = 0.0;
-    private double dxh = 0.0;
-    private double dxc = 0.0;
-    private double phi = 0.0;
-    private double dxp = 0.0;
-    final private double F = FORWARD_OFFSET;
-    final private double L = TRACKWIDTH;
-//    double totalPhi = 0;
-//    double totaldxh = 0;
-//    double totaldxp = 0;
-//    double totalF = 0;
-//    double i = 0;
+    public double dxl = 0.0;
+    public double dxr = 0.0;
+    public double dxh = 0.0;
+    public double dxc = 0.0;
+    public double phi = 0.0;
+    public double dxp = 0.0;
+    final public double F = FORWARD_OFFSET;
+    final public double L = TRACKWIDTH;
     public Odometry odometry;
 
     public Localizer(HardwareMap hardwareMap, Pose initialPose) {
@@ -51,27 +46,14 @@ public class Localizer {
         lastWheelPositions.add(0.0);
     }
 
-    public void updatePose(Telemetry telemetry) {
+    public void updatePose() {
         List<Double> wheelPositions = odometry.getWheelPositions();
         dxl = wheelPositions.get(0) - lastWheelPositions.get(0);
         dxr = wheelPositions.get(1) - lastWheelPositions.get(1);
         dxh = wheelPositions.get(2) - lastWheelPositions.get(2);
         phi = (dxl - dxr) / L;
         dxc = (dxl + dxr) / 2.0;
-        dxp = dxh - (F * phi);//TODO: I think this should be a "+" instead of a "-" as the y-axis is inverted
-//        telemetry.addData("Calculated Offset", dxh / phi);
-//        telemetry.update();
-//        totaldxh += dxh;
-//        totalPhi += phi;
-//        totaldxp += dxp;
-//        if (phi != 0) {
-//            totalF += dxh / phi;
-//            i++;
-//        }
-//        telemetry.addData("dxh:", totaldxh);
-//        telemetry.addData("phi:", totalPhi);
-//        telemetry.addData("dxp:", totaldxp);
-//        telemetry.addData("F", totalF / i);
+        dxp = dxh - (F * phi);
         double h = currentPose.getHeading();
         /*
         To avoid a divide by 0 error, an incredibly small value is added to phi.

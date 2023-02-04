@@ -1,23 +1,24 @@
 package org.firstinspires.ftc.teamcode.SeansMotionController.Control;
 
+import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Qaqortoq.Subsystems.Sensing.SeansSynchronousPID;
 import org.firstinspires.ftc.teamcode.SeansMotionController.Drive.SeanDrivetrain;
-import org.firstinspires.ftc.teamcode.SeansMotionController.Util.ActionPoint;
 import org.firstinspires.ftc.teamcode.SeansMotionController.Util.Angle;
 import org.firstinspires.ftc.teamcode.SeansMotionController.Util.HeadingControlledWaypoint;
 import org.firstinspires.ftc.teamcode.SeansMotionController.Util.LineSegment;
 import org.firstinspires.ftc.teamcode.SeansMotionController.Util.Point;
 import org.firstinspires.ftc.teamcode.SeansMotionController.Util.Pose;
+import org.firstinspires.ftc.teamcode.SeansMotionController.Util.StateChange;
 import org.firstinspires.ftc.teamcode.SeansMotionController.Util.StopWaypoint;
 import org.firstinspires.ftc.teamcode.SeansMotionController.Util.Wait;
 import org.firstinspires.ftc.teamcode.SeansMotionController.Util.Waypoint;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Sean Cardosi on 9/3/22.
@@ -26,16 +27,16 @@ public class MotionController {
 
     SeanDrivetrain drive;
     Localizer localizer;
-    final private double SPEED_SCALE = 1.0;//1.0 for full power
-    final private double DRIVE_P = 0.07;//0.1;//0.03;
-    final private double DRIVE_I = 0.0001;//0.0001;//0.000001;
-    final private double DRIVE_D = 0.57;//0.9;//0.04;
-    final private double TURN_P = 0.05;//0.1;//DRIVE_P;//0.01;
-    final private double TURN_I = 0.0;//0.0001;//DRIVE_I;//0.0;//0;
-    final private double TURN_D = 0.1;//0.4;//DRIVE_D;//0.0;//0.0;
+    final private double DRIVE_P = 0.035;//0.07;//0.1;//0.03;
+    final private double DRIVE_I = 0.0;//-0.00006;//0.0001;//0.000001;
+    final private double DRIVE_D = 0.50;//0.57;//0.9;//0.04;
+    final private double TURN_P = 0.05;//0.03;//0.1;//DRIVE_P;//0.01;
+    final private double TURN_I = 0.0;//0.0;//0.0001;//DRIVE_I;//0.0;//0;
+    final private double TURN_D = 0.37;//0.1;//0.4;//DRIVE_D;//0.0;//0.0;
     SeansSynchronousPID x;
     SeansSynchronousPID y;
     SeansSynchronousPID r;
+    List<LynxModule> allHubs;
 
     public MotionController(HardwareMap hardwareMap) {
         drive = new SeanDrivetrain(hardwareMap);
@@ -47,6 +48,11 @@ public class MotionController {
         x.setOutputRange(-100.0,100.0);
         y.setOutputRange(-100.0,100.0);
         r.setOutputRange(-100.0,100.0);
+
+        allHubs = hardwareMap.getAll(LynxModule.class);
+        for (LynxModule hub : allHubs) {
+            hub.setBulkCachingMode(LynxModule.BulkCachingMode.MANUAL);
+        }
     }
 
 
@@ -64,8 +70,11 @@ public class MotionController {
      * Runs to a waypoint. Does not consider velocity, PID, or curvature.
      * @param target
      */
-    public void simpleRunToPoint(Waypoint target, double PIDActivationDistance, Telemetry telemetry) {
-        localizer.updatePose(telemetry);
+    public void simpleRunToPoint(Waypoint target, double PIDActivationDistance) {
+//        for (LynxModule hub : allHubs) {
+//            hub.clearBulkCache();
+//        }
+//        localizer.updatePose(telemetry);
         Pose robotPose = localizer.getPose();
         Pose relTarget = relativeDistanceToPoint(robotPose, target);
         double forwardAngle = target.minus(asPoint(robotPose)).atan();
@@ -76,26 +85,29 @@ public class MotionController {
         double desiredAngle = target instanceof HeadingControlledWaypoint ? ((HeadingControlledWaypoint) target).getTargetHeading(): continuousAngle;
         Pose p = new Pose(relTarget.getX(), relTarget.getY(), Angle.angleWrap(desiredAngle - robotPose.getHeading()));
 
-        double distance = Math.abs(asPoint(robotPose).distance(asPoint(relTarget)));
-        telemetry.addData("Error", p);
-        drive.setMotorPowers(-p.getX(),-p.getY(),p.getHeading() * (distance + PIDActivationDistance), SPEED_SCALE, telemetry);
+        double distance = Math.abs(asPoint(robotPose).distance(asPoint(target)));
+//        double xPower = x.calculateUseError(p.getX() * distance);
+//        double yPower = y.calculateUseError(p.getY() * distance);
+//        double rPower = r.calculateUseError(p.getHeading() * (distance + PIDActivationDistance));
+        drive.setMotorPowers(-p.getX(), -p.getY(), p.getHeading() * (distance + PIDActivationDistance), target.speed);
     }
 
     /**
      * Runs to a waypoint using PID
      * @param target
      */
-    public void advancedRunToPoint(Waypoint target, double PIDActivationDistance, boolean accuratePathFollowing, LinearOpMode opMode, boolean holdTarget, Telemetry telemetry) {
+    public void advancedRunToPoint(Waypoint target, double PIDActivationDistance, LinearOpMode opMode, boolean holdTarget) {
         double distance = 0;
-//        boolean onHeading = false;
-//        boolean closeEnough = false;
         boolean onTarget = false;
         boolean timesUp = false;
 
         ElapsedTime eTime = new ElapsedTime();
         eTime.reset();
         do {
-            localizer.updatePose(telemetry);
+            for (LynxModule hub : allHubs) {
+                hub.clearBulkCache();
+            }
+            localizer.updatePose();
             Pose robotPose = localizer.getPose();
             Pose relTarget = relativeDistanceToPoint(robotPose, target);
             double forwardAngle = target.minus(asPoint(robotPose)).atan();
@@ -111,17 +123,18 @@ public class MotionController {
             double yPower = y.calculateUseError(p.getY());
             double rPower = r.calculateUseError(p.getHeading() * (distance + PIDActivationDistance));
 
-            drive.setMotorPowers(-xPower, -yPower, rPower, SPEED_SCALE, telemetry);
+            drive.setMotorPowers(-xPower, -yPower, rPower, target.speed);
 
-            double holdTime = 0.15;//TODO: Find a reasonable value for this
+            double holdTime = 0.1;//TODO: Find a reasonable value for this
             if (holdTarget) {
-                holdTime = 0.25;//0.25
+                holdTime = 0.2;//0.25
             }
 
-            onTarget = distance < 3.0 && Math.abs(p.getHeading()) < Math.toRadians(1);//Math.abs(drive.getMaxMotorPower()) < minPower;
-            if (!(target instanceof StopWaypoint)){
-                onTarget = distance < 4.5 && Math.abs(p.getHeading()) < Math.toRadians(5);//Math.abs(drive.getMaxMotorPower()) < minPower;
-            }
+//            onTarget = distance < 1.0 && Math.abs(p.getHeading()) < Math.toRadians(1);
+            onTarget = Math.abs(drive.getMaxMotorPower()) < 0.07;//TODO: Find a reasonable value that enables both accuracy and speed
+//            if (!(target instanceof StopWaypoint)){
+//                onTarget = distance < 4.5 && Math.abs(p.getHeading()) < Math.toRadians(5);
+//            }
 
 //            if (target instanceof Wait) {//TODO: Maybe do this
 //                holdTime = ((Wait) target).waitTime;
@@ -133,36 +146,31 @@ public class MotionController {
             if (onTarget && eTime.seconds() > holdTime) {
                 timesUp = true;
             }
-            telemetry.addData("Current Pose", robotPose);
-            telemetry.update();
         } while (!opMode.isStopRequested() && !timesUp);
-        drive.setMotorPowers(0,0,0,0,telemetry);
+        drive.setMotorPowers(0,0,0,0);
     }
 
     /**
      * Follows a provided path.
      * @param path An ArrayList of different types of Waypoints
-     * @param thingsToDo An ArrayList of ActionPoints
      * @param PIDActivationDistance The distance in centimeters from the target to start using PID
-     * @param accuratePathFollowing Whether or not each non-normal Waypoint should be accurately landed on
      * @param opMode Usually "this"
-     * @param telemetry Telemetry - May be removed in the future
      */
-    public void followPath(ArrayList<Waypoint> path, ArrayList<ActionPoint> thingsToDo, double PIDActivationDistance, boolean accuratePathFollowing, LinearOpMode opMode, Telemetry telemetry) {
+    public void followPath(ArrayList<Waypoint> path, double PIDActivationDistance, LinearOpMode opMode) {
         int waypointIndex = 0;
-        int actionIndex = thingsToDo.size() > 0 ? 0 : -1;
         boolean resetTimer = false;
         ElapsedTime waitTime = new ElapsedTime();
         while (waypointIndex < path.size() && !opMode.isStopRequested()) {
-            localizer.updatePose(telemetry);
+            for (LynxModule hub : allHubs) {
+                hub.clearBulkCache();
+            }
+            localizer.updatePose();
             Pose robot = localizer.getPose();
             Waypoint currentWaypoint = path.get(waypointIndex);
-            //Do the actions
-            if (actionIndex != -1 && actionIndex < thingsToDo.size()) {
-                if (asPoint(thingsToDo.get(actionIndex)).distance(asPoint(robot)) < thingsToDo.get(actionIndex).getActivationDistance()){//If distance to actionpoint is less than activation distance... activate
-                    thingsToDo.get(actionIndex).startThread();
-                    actionIndex++;
-                }
+            if (currentWaypoint instanceof StateChange) {
+                ((StateChange) currentWaypoint).thread.setState(((StateChange) currentWaypoint).state);
+                waypointIndex++;
+                continue;
             }
             if (currentWaypoint instanceof Wait) {
                 if (!resetTimer) {
@@ -177,26 +185,27 @@ public class MotionController {
                         break;
                     }
                 }
-                //TODO: Maybe do this
+                //TODO: Maybe do this... hold position during Wait
 //                advancedRunToPoint(currentWaypoint, PIDActivationDistance, accuratePathFollowing, opMode, false, telemetry);
-                drive.setMotorPowers(0,0,0,SPEED_SCALE,telemetry);//Should stop extraneous motion
+                drive.setMotorPowers(0,0,0,currentWaypoint.speed);//Should stop extraneous motion
                 continue;//Keep repeating loop until time is up.
             }
             if (waypointIndex < path.size() - 1 && Math.abs(asPoint(robot).distance(asPoint(currentWaypoint))) < PIDActivationDistance) {
                 //Past target... sort of. Get there and go to next one.
                 if (!(currentWaypoint instanceof StopWaypoint) && currentWaypoint instanceof HeadingControlledWaypoint && ((HeadingControlledWaypoint) currentWaypoint).isStopping) {
-                    advancedRunToPoint(currentWaypoint, PIDActivationDistance, accuratePathFollowing, opMode, true, telemetry);
+                    advancedRunToPoint(currentWaypoint, PIDActivationDistance, opMode, true);
+                    waypointIndex++;
+                    continue;
                 } else if (!(currentWaypoint instanceof StopWaypoint) && currentWaypoint instanceof HeadingControlledWaypoint && !((HeadingControlledWaypoint) currentWaypoint).isStopping) {
-                    simpleRunToPoint(currentWaypoint, PIDActivationDistance, telemetry);
-                }
-                if (!(currentWaypoint instanceof StopWaypoint) && currentWaypoint instanceof HeadingControlledWaypoint && Math.abs(asPoint(robot).distance(asPoint(currentWaypoint))) < currentWaypoint.minAccuracy && !((HeadingControlledWaypoint) currentWaypoint).isStopping) {
+                    simpleRunToPoint(currentWaypoint, PIDActivationDistance);
+                    if (Math.abs(asPoint(robot).distance(asPoint(currentWaypoint))) < currentWaypoint.minAccuracy) {
+                        waypointIndex++;
+                    }
+                    continue;
+                } else if (!(currentWaypoint instanceof HeadingControlledWaypoint)) {// Is a normal waypoint... rarely will get used... it might not even work anymore
                     waypointIndex++;
-                    currentWaypoint = path.get(waypointIndex);
-                } else {
-                    waypointIndex++;
-                    currentWaypoint = path.get(waypointIndex);
+                    continue;
                 }
-                continue;
             }
 
             //What type of waypoint is needed?
@@ -208,9 +217,8 @@ public class MotionController {
                 Point p;
                 if (intersections.size() > 0) {
                     p = intersections.get(0);
-                    target = new HeadingControlledWaypoint(p.getX(), p.getY(),((StopWaypoint) currentWaypoint).getTargetHeading(), false,PIDActivationDistance);
+                    target = new HeadingControlledWaypoint(p.getX(), p.getY(),((StopWaypoint) currentWaypoint).getTargetHeading(), currentWaypoint.speed, false,PIDActivationDistance);
                 } else {
-//                    break;//Temporary measure.
                     target = currentWaypoint;
                 }
             } else {
@@ -219,12 +227,11 @@ public class MotionController {
             }
 
             if (target instanceof StopWaypoint) {
-                advancedRunToPoint(target, PIDActivationDistance, true, opMode,true,telemetry);
+                advancedRunToPoint(target, PIDActivationDistance, opMode,true);
                 break;//StopWaypoint should be the last in the path
             } else {
-                simpleRunToPoint(target, PIDActivationDistance, telemetry);
+                simpleRunToPoint(target, PIDActivationDistance);
             }
-            telemetry.update();
         }
     }
 
@@ -235,5 +242,4 @@ public class MotionController {
     public Point asPoint(Waypoint waypoint) {
         return new Point(waypoint.getX(), waypoint.getY());
     }
-
 }

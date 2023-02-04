@@ -6,14 +6,17 @@ package org.firstinspires.ftc.teamcode.SeansMotionController.Util;
 public class Waypoint extends Point{
 
     public double minAccuracy;
+    public double speed;
 
-    public Waypoint(double x, double y, double minAccuracy) {
+    public Waypoint(double x, double y, double speed, double minAccuracy) {
         super(x,y);
+        this.speed = speed;
         this.minAccuracy = minAccuracy;
     }
 
-    public Waypoint(Point point, double minAccuracy) {
+    public Waypoint(Point point, double speed, double minAccuracy) {
         super(point.getX(), point.getY());
+        this.speed = speed;
         this.minAccuracy = minAccuracy;
     }
 

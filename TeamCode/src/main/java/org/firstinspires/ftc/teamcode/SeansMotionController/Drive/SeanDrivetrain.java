@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.SeansMotionController.Drive;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -22,7 +23,7 @@ import java.util.List;
  */
 public class SeanDrivetrain {
 
-    private final DcMotor lf, lr, rf, rr;
+    private final DcMotorEx lf, lr, rf, rr;
 
     private final BNO055IMU imu;
 
@@ -33,31 +34,31 @@ public class SeanDrivetrain {
     public SeanDrivetrain(final HardwareMap hardwareMap) {
 
         //configuring the components
-        lr = hardwareMap.dcMotor.get("backLeft");
-        lf = hardwareMap.dcMotor.get("frontLeft");
-        lr.setDirection(DcMotor.Direction.REVERSE);
-        lf.setDirection(DcMotor.Direction.REVERSE);
-        lr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        lf.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        lr = hardwareMap.get(DcMotorEx.class,"backLeft");
+        lf = hardwareMap.get(DcMotorEx.class,"frontLeft");
+        lr.setDirection(DcMotorEx.Direction.REVERSE);
+        lf.setDirection(DcMotorEx.Direction.REVERSE);
+        lr.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        lf.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
 //        lr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 //        lf.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-//        lr.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-//        lf.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        lr.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        lf.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        lr.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        lf.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//        lr.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
+//        lf.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
 
-        rr = hardwareMap.dcMotor.get("backRight");
-        rf = hardwareMap.dcMotor.get("frontRight");
-        rr.setDirection(DcMotor.Direction.FORWARD);
-        rf.setDirection(DcMotor.Direction.FORWARD);
-        rr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rf.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rr = hardwareMap.get(DcMotorEx.class,"backRight");
+        rf = hardwareMap.get(DcMotorEx.class,"frontRight");
+        rr.setDirection(DcMotorEx.Direction.FORWARD);
+        rf.setDirection(DcMotorEx.Direction.FORWARD);
+        rr.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        rf.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
 //        rr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 //        rf.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-//        rr.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-//        rf.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rr.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rf.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rr.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rf.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//        rr.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
+//        rf.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
 
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit            = BNO055IMU.AngleUnit.RADIANS;
@@ -154,13 +155,12 @@ public class SeanDrivetrain {
 
     public void drive(Gamepad gamepad1, Telemetry telemetry) {
         loop();
-        localizer.updatePose(telemetry);
+        localizer.updatePose();
 
         final double gx = gamepad1.left_stick_x;
         final double gy = -gamepad1.left_stick_y;
         final double r = (gamepad1.right_stick_x);
 //        final double direction = Math.atan2(x, y) + getHeading();
-        //TODO: Create a way to reset the encoder heading.
         double heading = -getHeading();
         final double speed = Math.min(1.0, Math.sqrt(gx * gx + gy * gy));
         double x = gx * Math.cos(heading) - gy * Math.sin(heading);
@@ -192,12 +192,12 @@ public class SeanDrivetrain {
             rf.setPower(rf_);
             rr.setPower(rr_);
         }
-
-        telemetry.addData("Speeds","LeftFront: %f \n RightFront: %f \n LeftBack: %f \n Right Back: %f", lf_, rf_, lr_, rr_);
-        telemetry.addData("RAW Gyro: ",getRawHeading());
-        telemetry.addData("HeadingRadians: ",getHeading());
-        telemetry.addData("HeadingDegrees: ",Math.toDegrees(getHeading()));
-        telemetry.addData("Offset: ",headingOffset);
+//
+//        telemetry.addData("Speeds","LeftFront: %f \n RightFront: %f \n LeftBack: %f \n Right Back: %f", lf_, rf_, lr_, rr_);
+//        telemetry.addData("RAW Gyro: ",getRawHeading());
+//        telemetry.addData("HeadingRadians: ",getHeading());
+//        telemetry.addData("HeadingDegrees: ",Math.toDegrees(getHeading()));
+//        telemetry.addData("Offset: ",headingOffset);
 //        telemetry.update();
     }
 
@@ -207,15 +207,9 @@ public class SeanDrivetrain {
      * @param y
      * @param r
      * @param scale
-     * @param telemetry
      */
-    public void setMotorPowers(double x, double y, double r, double scale, Telemetry telemetry) {
-//        double l = Math.max(Math.abs(x) + Math.abs(y) + Math.abs(r),1);
-//        //TODO: See if this change works
-//        double lf_ = (x + y + r) / l / scale;
-//        double lr_ = (x - y + r) / l / scale;
-//        double rf_ = (x - y - r) / l / scale;
-//        double rr_ = (x + y - r) / l / scale;
+    public void setMotorPowers(double x, double y, double r, double scale) {
+
         double lf_ = (x + y + r);
         double lr_ = (x - y + r);
         double rf_ = (x - y - r);
@@ -228,27 +222,26 @@ public class SeanDrivetrain {
             rf_ /= l;
             rr_ /= l;
         }
-        lf_ /= scale;
-        lr_ /= scale;
-        rf_ /= scale;
-        rr_ /= scale;
+        lf_ *= scale;
+        lr_ *= scale;
+        rf_ *= scale;
+        rr_ *= scale;
         lf.setPower(lf_);
         lr.setPower(lr_);
         rf.setPower(rf_);
         rr.setPower(rr_);
-        telemetry.addData("Speeds","LeftFront: %f \n RightFront: %f \n LeftBack: %f \n Right Back: %f", lf_, rf_, lr_, rr_);
+//        telemetry.addData("Speeds","LeftFront: %f \n RightFront: %f \n LeftBack: %f \n Right Back: %f", lf_, rf_, lr_, rr_);
     }
-
-    public double getMaxMotorPower() {
-        List<Double> speeds = Arrays.asList(lf.getPower(),lr.getPower(),rf.getPower(),rr.getPower());
-        return Collections.max(speeds);
-    }
-
     public void stopMotors() {
         lf.setPower(0);
         lr.setPower(0);
         rf.setPower(0);
         rr.setPower(0);
 
+    }
+
+    public double getMaxMotorPower() {
+        List<Double> speeds = Arrays.asList(Math.abs(lf.getPower()),Math.abs(lr.getPower()),Math.abs(rf.getPower()),Math.abs(rr.getPower()));
+        return Collections.max(speeds);
     }
 }

@@ -1,12 +1,16 @@
 package org.firstinspires.ftc.teamcode.Qaqortoq.Teleop;
 
+import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 import org.firstinspires.ftc.teamcode.GlobalVariables;
 import org.firstinspires.ftc.teamcode.Qaqortoq.Subsystems.Driving.QaqortoqDrivetrain;
+import org.firstinspires.ftc.teamcode.SeansMotionController.Control.Localizer;
 import org.firstinspires.ftc.teamcode.SeansMotionController.Drive.SeansComponent;
+
+import java.util.List;
 
 
 /**
@@ -42,6 +46,10 @@ public class QaqortoqTeleOp extends OpMode {
     boolean medium = true;
     boolean high = true;
 
+    Localizer l;
+
+    List<LynxModule> allHubs;
+
     @Override
     public void init() {
 
@@ -54,6 +62,10 @@ public class QaqortoqTeleOp extends OpMode {
         isReady = true;
 //        component.grab();
         component.init();
+        allHubs = hardwareMap.getAll(LynxModule.class);
+        for (LynxModule hub : allHubs) {
+            hub.setBulkCachingMode(LynxModule.BulkCachingMode.MANUAL);
+        }
     }
 
     @Override
@@ -77,6 +89,12 @@ public class QaqortoqTeleOp extends OpMode {
 
     @Override
     public void loop() {
+        for (LynxModule hub : allHubs) {
+            hub.clearBulkCache();
+        }
+        l.updatePose();
+        telemetry.addData("Pose","X: %f, Y: %f",l.getX(),l.getY());
+        telemetry.addData("PoseHeading","Heading: %f", Math.toDegrees(l.getHeading()));
         component.getTelemetry(telemetry);
 
 

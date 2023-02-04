@@ -55,8 +55,4 @@ public class Odometry {
                 encoderTicksToCentimeters(perp.getCorrectedVelocity()) * Y_MULTIPLIER
         );
     }
-
-//    public void resetEncoders() {
-//
-//    }
 }
