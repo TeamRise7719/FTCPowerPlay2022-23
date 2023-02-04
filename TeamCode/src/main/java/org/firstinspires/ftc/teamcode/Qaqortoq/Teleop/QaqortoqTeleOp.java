@@ -9,6 +9,7 @@ import org.firstinspires.ftc.teamcode.GlobalVariables;
 import org.firstinspires.ftc.teamcode.Qaqortoq.Subsystems.Driving.QaqortoqDrivetrain;
 import org.firstinspires.ftc.teamcode.SeansMotionController.Control.Localizer;
 import org.firstinspires.ftc.teamcode.SeansMotionController.Drive.SeansComponent;
+import org.firstinspires.ftc.teamcode.SeansMotionController.Util.Pose;
 
 import java.util.List;
 
@@ -56,6 +57,7 @@ public class QaqortoqTeleOp extends OpMode {
         //Initialize robot
         robot = new QaqortoqDrivetrain(hardwareMap);
         robot.runUsingEncoders();
+        l = new Localizer(hardwareMap, new Pose(0,0,0));
 
         component = new SeansComponent(hardwareMap);
 
