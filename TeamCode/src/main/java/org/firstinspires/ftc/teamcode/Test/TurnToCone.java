@@ -42,7 +42,7 @@ public class TurnToCone extends LinearOpMode {
 
             if (!Double.isNaN(coneDetector.redConeCenterX())) {
                 if (Math.abs(error) > 15) {
-                    drive.setMotorPowers(0, 0, r, 1, telemetry);
+                    drive.setMotorPowers(0, 0, r, 1);
                     telemetry.addData("Error",error);
                 } else {
                     drive.stopMotors();

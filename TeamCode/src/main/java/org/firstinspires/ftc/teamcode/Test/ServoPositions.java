@@ -36,7 +36,7 @@ public class ServoPositions extends OpMode {
         bState = gamepad1.b;
 
         if (gamepad1.right_bumper && !rightBumpState) {
-            pos = GlobalVariables.closed;
+            c.close();
             tuningClaw = !tuningClaw;
         }
         rightBumpState = gamepad1.right_bumper;
