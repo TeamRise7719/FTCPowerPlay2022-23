@@ -168,7 +168,7 @@ public class Left extends LinearOpMode {
         path.add(new HeadingControlledWaypoint(-8, -50, Math.toRadians(0),1.0,false,8));
         path.add(new StateChange(armState,"FRONT135"));
         path.add(new HeadingControlledWaypoint(-8, -100, Math.toRadians(0),1.0,false,8));
-        path.add(new HeadingControlledWaypoint(14, -142, Math.toRadians(-45),0.7,true,0));
+        path.add(new HeadingControlledWaypoint(17, -141, Math.toRadians(-45),0.7,true,0));
         path.add(new StateChange(armState,"OPEN"));
 //
         path.add(new Wait(200));
@@ -178,7 +178,7 @@ public class Left extends LinearOpMode {
         path.add(new StateChange(liftState,"RAISE11_5"));
         path.add(new HeadingControlledWaypoint(8, -128, Math.toRadians(0),1.0,false,8));
         path.add(new StateChange(armState,"OPENM"));
-        path.add(new HeadingControlledWaypoint(-63, -144, Math.toRadians(0),1.0,true,0));
+        path.add(new HeadingControlledWaypoint(-66, -144, Math.toRadians(0),1.0,true,0));
         path.add(new StateChange(armState,"CLOSE"));
         path.add(new Wait(200));
         path.add(new StateChange(armState,"FRONT135"));
@@ -186,7 +186,7 @@ public class Left extends LinearOpMode {
         path.add(new StateChange(liftState,"RAISE42"));
         path.add(new HeadingControlledWaypoint(-52, -126, Math.toRadians(0),1.0,false,8));
         path.add(new HeadingControlledWaypoint(-15, -130, Math.toRadians(0),1.0,false,8));
-        path.add(new HeadingControlledWaypoint(13.5, -141, Math.toRadians(-45),0.6,true,0));
+        path.add(new HeadingControlledWaypoint(15, -139, Math.toRadians(-45),0.6,true,0));
         path.add(new StateChange(armState,"OPEN"));
 
         path.add(new Wait(200));
@@ -204,7 +204,7 @@ public class Left extends LinearOpMode {
         path.add(new StateChange(liftState,"RAISE42"));
         path.add(new HeadingControlledWaypoint(-52, -126, Math.toRadians(0),1.0,false,8));
         path.add(new HeadingControlledWaypoint(-15, -130, Math.toRadians(0),1.0,false,8));
-        path.add(new HeadingControlledWaypoint(14.5, -141, Math.toRadians(-45),0.6,true,0));
+        path.add(new HeadingControlledWaypoint(16, -138, Math.toRadians(-45),0.6,true,0));
         path.add(new StateChange(armState,"OPEN"));
 
         path.add(new Wait(200));
@@ -222,7 +222,7 @@ public class Left extends LinearOpMode {
         path.add(new StateChange(liftState,"RAISE42"));
         path.add(new HeadingControlledWaypoint(-52, -123, Math.toRadians(0),1.0,false,8));
         path.add(new HeadingControlledWaypoint(-15, -127, Math.toRadians(0),1.0,false,8));
-        path.add(new HeadingControlledWaypoint(14.5, -140, Math.toRadians(-45),0.6,true,0));
+        path.add(new HeadingControlledWaypoint(16, -138, Math.toRadians(-45),0.6,true,0));
         path.add(new StateChange(armState,"OPEN"));
 
         path.add(new Wait(200));
@@ -240,7 +240,7 @@ public class Left extends LinearOpMode {
         path.add(new StateChange(liftState,"RAISE42"));
         path.add(new HeadingControlledWaypoint(-52, -117, Math.toRadians(0),1.0,false,10));
         path.add(new HeadingControlledWaypoint(-8, -127, Math.toRadians(0),1.0,false,10));
-        path.add(new HeadingControlledWaypoint(14.5, -139, Math.toRadians(-45),0.6,true,0));
+        path.add(new HeadingControlledWaypoint(16, -137, Math.toRadians(-45),0.6,true,0));
         path.add(new StateChange(armState,"OPEN"));
 
         path.add(new Wait(200));
