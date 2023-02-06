@@ -146,35 +146,35 @@ public class QaqortoqTeleOp extends OpMode {
         }
         telemetry.addData("Lift Right", component.liftEncoder.getCurrentPosition());
         //----------------------------------------------=+(Lift)+=----------------------------------------------\\
-        if(gamepad2.a){
-            //Low junction 36
-            low = false;
-            medium = true;
-            high = true;
-        }
-
-        if(!low){
-            low = component.liftTo(21.6);
-        }
-
-        if(gamepad2.b){
-            //Medium Junction 62
-            medium = false;
-            high = true;
-            low = true;
-        }
-        if(!medium){
-            medium = component.liftTo(47);
-        }
-        if(gamepad2.y){
-            //Tall Junction 87
-            high = false;
-            medium = true;
-            low = true;
-        }
-        if(!high){
-            high = component.liftTo(68);
-        }
+//        if(gamepad2.a){
+//            //Low junction 36
+//            low = false;
+//            medium = true;
+//            high = true;
+//        }
+//
+//        if(!low){
+//            low = component.liftTo(21.6);
+//        }
+//
+//        if(gamepad2.b){
+//            //Medium Junction 62
+//            medium = false;
+//            high = true;
+//            low = true;
+//        }
+//        if(!medium){
+//            medium = component.liftTo(47);
+//        }
+//        if(gamepad2.y){
+//            //Tall Junction 87
+//            high = false;
+//            medium = true;
+//            low = true;
+//        }
+//        if(!high){
+//            high = component.liftTo(68);
+//        }
 
         //----------------------------------------------=+(Arm)+=----------------------------------------------\\
         if (gamepad2.dpad_up && !clawsOpen) {
