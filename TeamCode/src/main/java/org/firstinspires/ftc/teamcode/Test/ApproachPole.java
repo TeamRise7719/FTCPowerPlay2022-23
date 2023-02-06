@@ -22,7 +22,7 @@ public class ApproachPole extends LinearOpMode {
     double FOCAL_LENGTH = 540;
     double PHYSICAL_WIDTH = 2.5;//cm
     //    MotionController c;
-    double sideTarget = 180;//pixels
+    double sideTarget = 160;//pixels
     double forwardTarget = 10;//cm
     SeansSynchronousPID pid;
     double P = 0.01;
