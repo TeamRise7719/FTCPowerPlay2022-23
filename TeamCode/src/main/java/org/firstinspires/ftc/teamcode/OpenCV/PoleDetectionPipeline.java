@@ -34,7 +34,7 @@ public class PoleDetectionPipeline extends OpenCvPipeline {
     Scalar poleLower = new Scalar(60,135,10);
     Scalar poleHigher = new Scalar(190,180,105);
     Telemetry telemetry;
-    RotatedRect rotatedRect;
+    RotatedRect rotatedRect = new RotatedRect();
 
     double PHYSICAL_DISTANCE = 15;//cm
     double PHYSICAL_WIDTH = 2.5;//cm
