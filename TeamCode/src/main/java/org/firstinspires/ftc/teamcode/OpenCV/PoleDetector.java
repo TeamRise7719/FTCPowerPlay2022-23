@@ -20,7 +20,7 @@ public class PoleDetector {
     public PoleDetector(LinearOpMode opMode, Telemetry telemetry) {
         //initialize webcam
         this.telemetry = telemetry;
-        webcam = OpenCvCameraFactory.getInstance().createWebcam(opMode.hardwareMap.get(WebcamName.class, "Webcam 1"));
+        webcam = OpenCvCameraFactory.getInstance().createWebcam(opMode.hardwareMap.get(WebcamName.class, "Front Camera"));
     }
 
     public void findPole() {
@@ -30,7 +30,7 @@ public class PoleDetector {
             @Override
             public void onOpened() {
                 webcam.setPipeline(opencv);
-                webcam.startStreaming(640, 480, OpenCvCameraRotation.UPRIGHT);
+                webcam.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
             }
 
             @Override
