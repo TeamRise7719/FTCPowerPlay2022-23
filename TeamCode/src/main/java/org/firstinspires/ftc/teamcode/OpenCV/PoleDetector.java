@@ -38,7 +38,7 @@ public class PoleDetector {
         });
     }
     public double rectWidth(){
-        return opencv.rectWidth();
+        return Math.min(opencv.rotatedRect.size.width,opencv.rotatedRect.size.height);
     }
 
     public double centerX() {
