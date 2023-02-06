@@ -52,4 +52,8 @@ public class PoleDetector {
     public void stopCamera() {
         webcam.stopStreaming();
     }
+
+    public double distance() {
+        return opencv.D;
+    }
 }

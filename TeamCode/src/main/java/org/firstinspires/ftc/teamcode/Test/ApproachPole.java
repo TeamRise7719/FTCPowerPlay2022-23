@@ -60,9 +60,9 @@ public class ApproachPole extends LinearOpMode {
             l.updatePose();
             Pose pose = l.getPose();
             if (!Double.isNaN(d.rectWidth())) {
-                double D = (PHYSICAL_WIDTH * FOCAL_LENGTH) / d.rectWidth();
+//                double D = (PHYSICAL_WIDTH * FOCAL_LENGTH) / d.rectWidth();
                 double sideError = sideTarget - d.centerX();
-                double forwardError = forwardTarget - D;
+                double forwardError = forwardTarget - d.distance();
                 double rError = 0 - pose.getHeading();
                 drive.setMotorPowers(-sideError,-forwardError,rError,1.0);
             } else {
