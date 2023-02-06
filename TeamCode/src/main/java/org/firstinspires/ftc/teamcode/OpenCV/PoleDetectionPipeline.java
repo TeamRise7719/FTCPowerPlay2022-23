@@ -34,7 +34,12 @@ public class PoleDetectionPipeline extends OpenCvPipeline {
     Scalar poleLower = new Scalar(60,135,10);
     Scalar poleHigher = new Scalar(190,180,105);
     Telemetry telemetry;
-    RotatedRect rotatedRect = new RotatedRect();
+    RotatedRect rotatedRect;
+
+    double PHYSICAL_DISTANCE = 15;//cm
+    double PHYSICAL_WIDTH = 2.5;//cm
+
+    double FOCAL_LENGTH = 540;
 
     public PoleDetectionPipeline(Telemetry telemetry) {
         this.telemetry = telemetry;
@@ -71,6 +76,14 @@ public class PoleDetectionPipeline extends OpenCvPipeline {
 //
 //        telemetry.addData("H-value at 10cm ", 10 * 2.5 / ((poleRect.width * 0.367)));
 //        telemetry.update();
+
+        double F = (rotatedRect.size.width * PHYSICAL_DISTANCE) / PHYSICAL_WIDTH;
+        telemetry.addData("Calculated Camera Focal Length",F);
+
+        double D = (PHYSICAL_WIDTH * FOCAL_LENGTH) / rotatedRect.size.width;
+        telemetry.addData("Distance to Pole", D);
+
+        telemetry.update();
 
         contours.clear();
         yCrCb.release();

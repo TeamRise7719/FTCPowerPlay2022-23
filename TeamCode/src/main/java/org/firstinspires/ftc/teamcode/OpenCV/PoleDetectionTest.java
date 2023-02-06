@@ -24,15 +24,7 @@ public class PoleDetectionTest extends LinearOpMode {
 
         waitForStart();
 
-        while (!isStopRequested()) {
-            double F = (d.rectWidth() * PHYSICAL_DISTANCE) / PHYSICAL_WIDTH;
-            telemetry.addData("Calculated Camera Focal Length",F);
-
-            double D = (PHYSICAL_WIDTH * FOCAL_LENGTH) / d.rectWidth();
-            telemetry.addData("Distance to Pole", D);
-
-            telemetry.update();
-        }
+        while (!isStopRequested()) {}
 
     }
 }
