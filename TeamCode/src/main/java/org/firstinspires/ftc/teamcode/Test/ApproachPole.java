@@ -64,7 +64,7 @@ public class ApproachPole extends LinearOpMode {
                 double sideError = sideTarget - d.centerX();
                 double forwardError = forwardTarget - d.distance();
                 double rError = 0 - pose.getHeading();
-                drive.setMotorPowers(-sideError,-forwardError,rError,1.0);
+                drive.setMotorPowers(-forwardError,-sideError,rError,1.0);
             } else {
                 drive.stopMotors();
             }
