@@ -36,13 +36,18 @@ public class PoleDetectionPipeline extends OpenCvPipeline {
     Telemetry telemetry;
     RotatedRect rotatedRect = new RotatedRect();
 
-    double PHYSICAL_DISTANCE = 15;//cm
+    double PHYSICAL_FORWARD_DISTANCE = 15;//cm
     double PHYSICAL_WIDTH = 2.5;//cm
+    double FORWARD_FOCAL_LENGTH = 540;
 
-    double FOCAL_LENGTH = 540;
+    double PHYSICAL_SIDE_DISTANCE = 15;//cm
 
-    double D = 0;
-    double F = 0;
+    double SIDE_FOCAL_LENGTH = 540;
+
+    double DF = 0;
+    double FF = 0;
+    double FS = 0;
+    double DS = 0;
 
     public PoleDetectionPipeline(Telemetry telemetry) {
         this.telemetry = telemetry;
@@ -80,11 +85,20 @@ public class PoleDetectionPipeline extends OpenCvPipeline {
 //        telemetry.addData("H-value at 10cm ", 10 * 2.5 / ((poleRect.width * 0.367)));
 //        telemetry.update();
 
-        F = (Math.min(rotatedRect.size.width,rotatedRect.size.height) * PHYSICAL_DISTANCE) / PHYSICAL_WIDTH;
-        telemetry.addData("Calculated Camera Focal Length",F);
+        FF = (Math.min(rotatedRect.size.width,rotatedRect.size.height) * PHYSICAL_FORWARD_DISTANCE) / PHYSICAL_WIDTH;
+        telemetry.addData("Calculated Camera Forward Focal Length", FF);
 
-        D = (PHYSICAL_WIDTH * FOCAL_LENGTH) / Math.min(rotatedRect.size.width,rotatedRect.size.height);
-        telemetry.addData("Distance to Pole", D);
+        DF = (PHYSICAL_WIDTH * FORWARD_FOCAL_LENGTH) / Math.min(rotatedRect.size.width,rotatedRect.size.height);
+        telemetry.addData("Hypotenuse Distance to Pole", DF);
+
+        FS = ((160 - (poleRect.x + poleRect.x / 2.0)) * PHYSICAL_SIDE_DISTANCE) / PHYSICAL_WIDTH;
+        telemetry.addData("Calculated Camera Side Focal Length", FS);
+
+        DS = (PHYSICAL_WIDTH * SIDE_FOCAL_LENGTH) / (160 - (poleRect.x + poleRect.x / 2.0));
+        telemetry.addData("Side Distance to Pole", DS);
+
+
+        telemetry.addData("Probable Forward Distance", Math.sqrt(Math.pow(DF,2) - Math.pow(DS,2)));
 
         telemetry.update();
 
@@ -99,6 +113,6 @@ public class PoleDetectionPipeline extends OpenCvPipeline {
     }
 
     public double distance() {
-        return D;
+        return DF;
     }
 }
