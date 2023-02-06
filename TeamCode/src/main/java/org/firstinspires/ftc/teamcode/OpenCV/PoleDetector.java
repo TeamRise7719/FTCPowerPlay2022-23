@@ -37,6 +37,9 @@ public class PoleDetector {
             public void onError(int errorCode) {}
         });
     }
+    public double rectWidth(){
+        return opencv.rectWidth();
+    }
 
     public double centerX() {
         return opencv.poleRect.x;

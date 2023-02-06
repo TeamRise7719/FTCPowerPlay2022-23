@@ -34,6 +34,7 @@ public class PoleDetectionPipeline extends OpenCvPipeline {
     Scalar poleLower = new Scalar(60,135,10);
     Scalar poleHigher = new Scalar(190,180,105);
     Telemetry telemetry;
+    RotatedRect rotatedRect;
 
     public PoleDetectionPipeline(Telemetry telemetry) {
         this.telemetry = telemetry;
@@ -50,7 +51,7 @@ public class PoleDetectionPipeline extends OpenCvPipeline {
         Imgproc.findContours(binaryMat, contours, new Mat(), Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);
         contours.removeIf(c -> Imgproc.boundingRect(c).y + (Imgproc.boundingRect(c).height / 2.0) < 5);
         Imgproc.drawContours(input, contours, -1, CONTOUR_COLOR);
-        RotatedRect rotatedRect = new RotatedRect();
+        rotatedRect = new RotatedRect();
 
         if (!contours.isEmpty()) {
             MatOfPoint biggestPole = Collections.max(contours,Comparator.comparingDouble(t0 -> Imgproc.boundingRect(t0).height));
@@ -65,15 +66,19 @@ public class PoleDetectionPipeline extends OpenCvPipeline {
             }
         }
 
-        telemetry.addData("Distance: ", 1.0 / ((poleRect.width * 0.0095 * 0.367) / (2.5)));
-        telemetry.addData("Better Distance: ", 1.0 / (((Math.min(rotatedRect.size.width, rotatedRect.size.height)) * 0.0095 * 0.367) / (2.5)));
-
-        telemetry.addData("H-value at 10cm ", 10 * 2.5 / ((poleRect.width * 0.367)));
-        telemetry.update();
+//        telemetry.addData("Distance: ", 1.0 / ((poleRect.width * 0.0095 * 0.367) / (2.5)));
+//        telemetry.addData("Better Distance: ", 1.0 / (((Math.min(rotatedRect.size.width, rotatedRect.size.height)) * 0.0095 * 0.367) / (2.5)));
+//
+//        telemetry.addData("H-value at 10cm ", 10 * 2.5 / ((poleRect.width * 0.367)));
+//        telemetry.update();
 
         contours.clear();
         yCrCb.release();
         binaryMat.release();
         return input;
+    }
+
+    public double rectWidth() {
+        return rotatedRect.size.width;
     }
 }
