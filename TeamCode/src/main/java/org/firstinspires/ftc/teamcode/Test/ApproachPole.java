@@ -19,15 +19,13 @@ import java.util.List;
 public class ApproachPole extends LinearOpMode {
 
     PoleDetector d;
-    double FOCAL_LENGTH = 540;
-    double PHYSICAL_WIDTH = 2.5;//cm
     //    MotionController c;
     double sideTarget = 0;//pixels
     double forwardTarget = 10;//cm
-    SeansSynchronousPID pid;
-    double P = 0.01;
-    double I = 0.0;
-    double D = 0.0;
+    SeansSynchronousPID forwardPID;
+    SeansSynchronousPID sidePID;
+    double forwardP = 0.01;
+    double sideP = 0.01;
     List<LynxModule> allHubs;
     Localizer l;
     SeanDrivetrain drive;
@@ -39,7 +37,8 @@ public class ApproachPole extends LinearOpMode {
 //        c = new MotionController(hardwareMap);
         l = new Localizer(hardwareMap,new Pose(0,0,0));
         drive = new SeanDrivetrain(hardwareMap);
-        pid = new SeansSynchronousPID(P,I,D);
+        forwardPID = new SeansSynchronousPID(forwardP,0,0);
+        sidePID = new SeansSynchronousPID(sideP,0,0);
         allHubs = hardwareMap.getAll(LynxModule.class);
         for (LynxModule hub : allHubs) {
             hub.setBulkCachingMode(LynxModule.BulkCachingMode.MANUAL);
@@ -60,9 +59,9 @@ public class ApproachPole extends LinearOpMode {
             l.updatePose();
             Pose pose = l.getPose();
             if (!Double.isNaN(d.rectWidth())) {
-                double sideError = pid.calculateUseError(sideTarget - d.sideDistance());
-                double forwardError = pid.calculateUseError(forwardTarget - d.distance());
-                double rError = pid.calculateUseError(0 - pose.getHeading() * 10);
+                double sideError = sidePID.calculateUseError(sideTarget - d.centerX());
+                double forwardError = forwardPID.calculateUseError(forwardTarget - d.distance());
+                double rError = forwardPID.calculateUseError(0 - pose.getHeading() * 10);
                 drive.setMotorPowers(-forwardError,-sideError,rError,1.0);
             } else {
                 drive.stopMotors();
