@@ -91,10 +91,14 @@ public class PoleDetectionPipeline extends OpenCvPipeline {
         DF = (PHYSICAL_WIDTH * FORWARD_FOCAL_LENGTH) / Math.min(rotatedRect.size.width,rotatedRect.size.height);
         telemetry.addData("Hypotenuse Distance to Pole", DF);
 
-        FS = ((160 - (poleRect.x + Math.min(rotatedRect.size.width,rotatedRect.size.height) / 2.0)) * PHYSICAL_SIDE_DISTANCE) / PHYSICAL_WIDTH;
+        FS = ((160 - (poleRect.x + poleRect.x) / 2.0) * PHYSICAL_SIDE_DISTANCE) / PHYSICAL_WIDTH;
         telemetry.addData("Calculated Camera Side Focal Length", FS);
 
-        DS = (PHYSICAL_WIDTH * SIDE_FOCAL_LENGTH) / (160 - (poleRect.x + Math.min(rotatedRect.size.width,rotatedRect.size.height) / 2.0));
+        if ((160 - (poleRect.x + poleRect.x) / 2.0) != 0) {
+            DS = ((160 - (poleRect.x + poleRect.x) / 2.0) * PHYSICAL_WIDTH) / (PHYSICAL_WIDTH * SIDE_FOCAL_LENGTH);
+        } else {
+            DS = 0;
+        }
         telemetry.addData("Side Distance to Pole", DS);
 
 

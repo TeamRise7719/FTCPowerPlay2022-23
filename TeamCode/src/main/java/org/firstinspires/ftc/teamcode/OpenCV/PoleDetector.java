@@ -56,4 +56,8 @@ public class PoleDetector {
     public double distance() {
         return opencv.DF;
     }
+
+    public double sideDistance() {
+        return opencv.DS;
+    }
 }

@@ -22,7 +22,7 @@ public class ApproachPole extends LinearOpMode {
     double FOCAL_LENGTH = 540;
     double PHYSICAL_WIDTH = 2.5;//cm
     //    MotionController c;
-    double sideTarget = 160;//pixels
+    double sideTarget = 0;//pixels
     double forwardTarget = 10;//cm
     SeansSynchronousPID pid;
     double P = 0.01;
@@ -60,7 +60,7 @@ public class ApproachPole extends LinearOpMode {
             l.updatePose();
             Pose pose = l.getPose();
             if (!Double.isNaN(d.rectWidth())) {
-                double sideError = pid.calculateUseError(sideTarget - d.centerX());
+                double sideError = pid.calculateUseError(sideTarget - d.sideDistance());
                 double forwardError = pid.calculateUseError(forwardTarget - d.distance());
                 double rError = pid.calculateUseError(0 - pose.getHeading() * 10);
                 drive.setMotorPowers(-forwardError,-sideError,rError,1.0);
