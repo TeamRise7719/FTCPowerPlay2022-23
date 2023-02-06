@@ -95,7 +95,7 @@ public class PoleDetectionPipeline extends OpenCvPipeline {
         telemetry.addData("Calculated Camera Side Focal Length", FS);
 
         if ((160 - (poleRect.x + poleRect.x) / 2.0) != 0) {
-            DS = ((160 - (poleRect.x + poleRect.x) / 2.0) * PHYSICAL_WIDTH) / (PHYSICAL_WIDTH * SIDE_FOCAL_LENGTH);
+            DS = (PHYSICAL_WIDTH * SIDE_FOCAL_LENGTH) / (160 - (poleRect.x + poleRect.x) / 2.0);
         } else {
             DS = 0;
         }
