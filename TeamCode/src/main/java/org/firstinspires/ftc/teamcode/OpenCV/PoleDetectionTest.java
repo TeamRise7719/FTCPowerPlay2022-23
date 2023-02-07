@@ -11,7 +11,7 @@ public class PoleDetectionTest extends LinearOpMode {
 
     PoleDetector d;
 
-    double PHYSICAL_DISTANCE = 15;//cm
+    double PHYSICAL_DISTANCE = 27.75;//cm
     double PHYSICAL_WIDTH = 2.5;//cm
 
     double FOCAL_LENGTH = 540;

@@ -25,7 +25,7 @@ public class ApproachPole extends LinearOpMode {
     SeansSynchronousPID forwardPID;
     SeansSynchronousPID sidePID;
     double forwardP = 0.01;
-    double sideP = 0.01;
+    double sideP = 0.0001;
     List<LynxModule> allHubs;
     Localizer l;
     SeanDrivetrain drive;
