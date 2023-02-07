@@ -89,7 +89,7 @@ public class PoleDetectionPipeline extends OpenCvPipeline {
         DF = (PHYSICAL_WIDTH * FORWARD_FOCAL_LENGTH) / Math.min(rotatedRect.size.width,rotatedRect.size.height);
         telemetry.addData("Forward Distance to Pole", DF);
 
-        halfFOV = Math.atan(PHYSICAL_SIDE_DISTANCE / DF / ((rotatedRect.center.x - 160) / 160) * 180 / Math.PI);
+        halfFOV = Math.atan(PHYSICAL_SIDE_DISTANCE / DF / ((rotatedRect.center.x - 160) / 160)) * 180 / Math.PI;
         telemetry.addData("FOV/2", halfFOV);
 
         DS = (DF * Math.tan(Math.toRadians(HALF_FOV))) * ((rotatedRect.center.x - 160) / 160);
