@@ -60,9 +60,16 @@ public class ApproachPole extends LinearOpMode {
             Pose pose = l.getPose();
             if (!Double.isNaN(d.rectWidth())) {
 //                double sideError = sidePID.calculateUseError(sideTarget - d.centerX());
-                double sideError = forwardPID.calculateUseError(sideTarget - d.centerX());
+                double sideError = forwardPID.calculateUseError(sideTarget - d.sideDistance());
                 double forwardError = forwardPID.calculateUseError(forwardTarget - d.distance());
-                double rError = forwardPID.calculateUseError(-pose.getHeading() * 10);
+
+
+                double rError = forwardPID.calculateUseError(Math.toDegrees(-pose.getHeading()));
+                /*
+                Comment out the above rError and drive.setMotorPowers and uncomment the below rError and drive.setMotorPowers if you test giving power in x,y,and rotation
+                 */
+
+//                double rError = forwardPID.calculateUseError(Math.toDegrees(Math.atan2(d.distance(),d.sideDistance())));
                 drive.setMotorPowers(-forwardError,-sideError,rError,1.0);
             } else {
                 drive.stopMotors();
