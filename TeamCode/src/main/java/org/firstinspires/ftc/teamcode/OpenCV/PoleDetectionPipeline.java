@@ -39,14 +39,12 @@ public class PoleDetectionPipeline extends OpenCvPipeline {
     double PHYSICAL_FORWARD_DISTANCE = 15;//cm
     double PHYSICAL_WIDTH = 2.5;//cm
     double FORWARD_FOCAL_LENGTH = 540;
-
     double PHYSICAL_SIDE_DISTANCE = 15;//cm
-
-    double SIDE_FOCAL_LENGTH = 540;
+    double HALF_FOV = 39;//degrees
 
     double DF = 0;
     double FF = 0;
-    double FS = 0;
+    double halfFOV = 0;
     double DS = 0;
 
     public PoleDetectionPipeline(Telemetry telemetry) {
@@ -89,20 +87,16 @@ public class PoleDetectionPipeline extends OpenCvPipeline {
         telemetry.addData("Calculated Camera Forward Focal Length", FF);
 
         DF = (PHYSICAL_WIDTH * FORWARD_FOCAL_LENGTH) / Math.min(rotatedRect.size.width,rotatedRect.size.height);
-        telemetry.addData("Hypotenuse Distance to Pole", DF);
+        telemetry.addData("Forward Distance to Pole", DF);
 
-        FS = (Math.abs(160 - (poleRect.x + poleRect.x) / 2.0) * PHYSICAL_SIDE_DISTANCE) / PHYSICAL_WIDTH;
-        telemetry.addData("Calculated Camera Side Focal Length", FS);
+        halfFOV = Math.atan(PHYSICAL_SIDE_DISTANCE / DF / ((rotatedRect.center.x - 160) / 160) * 180 / Math.PI);
+        telemetry.addData("FOV/2", halfFOV);
 
-        if ((160 - (poleRect.x + poleRect.x) / 2.0) != 0) {
-            DS = (PHYSICAL_WIDTH * SIDE_FOCAL_LENGTH) / Math.abs(160 - (poleRect.x + poleRect.x) / 2.0);
-        } else {
-            DS = 0;
-        }
+        DS = (DF * Math.tan(Math.toRadians(halfFOV))) * ((rotatedRect.center.x - 160) / 160);
         telemetry.addData("Side Distance to Pole", DS);
 
 
-        telemetry.addData("Probable Forward Distance", Math.sqrt(Math.pow(DF,2) - Math.pow(DS,2)));
+//        telemetry.addData("Probable Forward Distance", Math.sqrt(Math.pow(DF,2) - Math.pow(DS,2)));
 
         telemetry.update();
 
