@@ -24,7 +24,8 @@ public class ApproachPole extends LinearOpMode {
     double forwardTarget = 10;//cm
     SeansSynchronousPID forwardPID;
     SeansSynchronousPID sidePID;
-    double forwardP = 0.01;
+    double forwardP = 0.011;
+    double forwardD = 0.001;
 //    double sideP = 0.0001;
     List<LynxModule> allHubs;
     Localizer l;
@@ -37,7 +38,7 @@ public class ApproachPole extends LinearOpMode {
 //        c = new MotionController(hardwareMap);
         l = new Localizer(hardwareMap,new Pose(0,0,0));
         drive = new SeanDrivetrain(hardwareMap);
-        forwardPID = new SeansSynchronousPID(forwardP,0,0);
+        forwardPID = new SeansSynchronousPID(forwardP,0,forwardD);
 //        sidePID = new SeansSynchronousPID(sideP,0,0);
         allHubs = hardwareMap.getAll(LynxModule.class);
         for (LynxModule hub : allHubs) {

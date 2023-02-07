@@ -36,11 +36,11 @@ public class PoleDetectionPipeline extends OpenCvPipeline {
     Telemetry telemetry;
     RotatedRect rotatedRect = new RotatedRect();
 
-    double PHYSICAL_FORWARD_DISTANCE = 15;//cm
+    double PHYSICAL_FORWARD_DISTANCE = 25;//cm
     double PHYSICAL_WIDTH = 2.5;//cm
-    double FORWARD_FOCAL_LENGTH = 540;
-    double PHYSICAL_SIDE_DISTANCE = 15;//cm
-    double HALF_FOV = 39;//degrees
+    double FORWARD_FOCAL_LENGTH = 376;
+    double PHYSICAL_SIDE_DISTANCE = 12;//cm
+    double HALF_FOV = 29;//degrees
 
     double DF = 0;
     double FF = 0;
