@@ -25,7 +25,7 @@ public class ApproachPole extends LinearOpMode {
     SeansSynchronousPID forwardPID;
     SeansSynchronousPID sidePID;
     double forwardP = 0.01;
-    double sideP = 0.0001;
+//    double sideP = 0.0001;
     List<LynxModule> allHubs;
     Localizer l;
     SeanDrivetrain drive;
@@ -38,7 +38,7 @@ public class ApproachPole extends LinearOpMode {
         l = new Localizer(hardwareMap,new Pose(0,0,0));
         drive = new SeanDrivetrain(hardwareMap);
         forwardPID = new SeansSynchronousPID(forwardP,0,0);
-        sidePID = new SeansSynchronousPID(sideP,0,0);
+//        sidePID = new SeansSynchronousPID(sideP,0,0);
         allHubs = hardwareMap.getAll(LynxModule.class);
         for (LynxModule hub : allHubs) {
             hub.setBulkCachingMode(LynxModule.BulkCachingMode.MANUAL);
@@ -59,9 +59,10 @@ public class ApproachPole extends LinearOpMode {
             l.updatePose();
             Pose pose = l.getPose();
             if (!Double.isNaN(d.rectWidth())) {
-                double sideError = sidePID.calculateUseError(sideTarget - d.centerX());
+//                double sideError = sidePID.calculateUseError(sideTarget - d.centerX());
+                double sideError = forwardPID.calculateUseError(sideTarget - d.centerX());
                 double forwardError = forwardPID.calculateUseError(forwardTarget - d.distance());
-                double rError = forwardPID.calculateUseError(0 - pose.getHeading() * 10);
+                double rError = forwardPID.calculateUseError(-pose.getHeading() * 10);
                 drive.setMotorPowers(-forwardError,-sideError,rError,1.0);
             } else {
                 drive.stopMotors();
