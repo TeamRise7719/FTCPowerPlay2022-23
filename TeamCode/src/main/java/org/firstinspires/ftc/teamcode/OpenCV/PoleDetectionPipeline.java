@@ -44,7 +44,7 @@ public class PoleDetectionPipeline extends OpenCvPipeline {
 
     double DF = 0;
     double FF = 0;
-    double halfFOV = 0.1;
+    double halfFOV = 0;
     double DS = 0;
 
     public PoleDetectionPipeline(Telemetry telemetry) {

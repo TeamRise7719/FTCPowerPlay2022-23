@@ -27,6 +27,9 @@ public class QaqortoqDrivetrain {
     private double headingOffset = 0.0;
     private Orientation angles;
 
+    boolean holdHeading = false;
+    boolean aPushed = false;
+
     public QaqortoqDrivetrain(final HardwareMap hardwareMap) {
 
         //configuring the components
@@ -152,7 +155,19 @@ public class QaqortoqDrivetrain {
 
         final double gx = gamepad1.left_stick_x;
         final double gy = -gamepad1.left_stick_y;
-        final double r = (gamepad1.right_stick_x);
+        double r;
+
+        if (gamepad1.a && !aPushed) {
+            holdHeading = !holdHeading;
+        }
+        aPushed = gamepad1.a;
+
+
+        if (!holdHeading) {
+            r = (gamepad1.right_stick_x);
+        } else {
+            r = Math.toDegrees(headingOffset - getHeading());
+        }
 //        final double direction = Math.atan2(x, y) + getHeading();
         //TODO: Create a way to reset the encoder heading.
         double heading = -getHeading();
