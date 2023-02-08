@@ -10,6 +10,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+import org.firstinspires.ftc.teamcode.Qaqortoq.Subsystems.Sensing.SeansSynchronousPID;
+import org.firstinspires.ftc.teamcode.SeansMotionController.Util.Angle;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -166,7 +168,12 @@ public class QaqortoqDrivetrain {
         if (!holdHeading) {
             r = (gamepad1.right_stick_x);
         } else {
-            r = Math.toDegrees(headingOffset - getHeading());
+            double forwardAngle = 0;
+            double backwardAngle = Math.PI;
+            double angleToForward = Angle.angleWrap(forwardAngle + getHeading());
+            double angleToBackward = Angle.angleWrap(backwardAngle + getHeading());
+            double continuousAngle = Math.abs(angleToForward) < Math.abs(angleToBackward) ? forwardAngle : backwardAngle;
+            r = Math.toDegrees(continuousAngle);
         }
 //        final double direction = Math.atan2(x, y) + getHeading();
         //TODO: Create a way to reset the encoder heading.
