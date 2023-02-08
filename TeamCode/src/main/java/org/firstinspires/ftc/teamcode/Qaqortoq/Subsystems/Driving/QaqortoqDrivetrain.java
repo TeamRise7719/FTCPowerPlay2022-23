@@ -32,6 +32,8 @@ public class QaqortoqDrivetrain {
     boolean holdHeading = false;
     boolean aPushed = false;
 
+    SeansSynchronousPID pid;
+
     public QaqortoqDrivetrain(final HardwareMap hardwareMap) {
 
         //configuring the components
@@ -73,6 +75,7 @@ public class QaqortoqDrivetrain {
         imu.initialize(parameters);
         angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS);
 
+        pid = new SeansSynchronousPID(0.05,0,0.37);
     }
 
     private void setMotorMode(DcMotor.RunMode mode, DcMotor... motors) {
@@ -173,7 +176,7 @@ public class QaqortoqDrivetrain {
             double angleToForward = Angle.angleWrap(forwardAngle + getHeading());
             double angleToBackward = Angle.angleWrap(backwardAngle + getHeading());
             double continuousAngle = Math.abs(angleToForward) < Math.abs(angleToBackward) ? forwardAngle : backwardAngle;
-            r = Math.toDegrees(continuousAngle);
+            r = pid.calculateUseError(Math.toDegrees(continuousAngle));
         }
 //        final double direction = Math.atan2(x, y) + getHeading();
         //TODO: Create a way to reset the encoder heading.
