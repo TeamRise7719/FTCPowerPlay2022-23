@@ -160,26 +160,25 @@ public class QaqortoqDrivetrain {
 
         final double gx = gamepad1.left_stick_x;
         final double gy = -gamepad1.left_stick_y;
-        double r;
+        double r = (gamepad1.right_stick_x);
 
-        if (gamepad1.a && !aPushed) {
-            holdHeading = !holdHeading;
-        }
-        aPushed = gamepad1.a;
-
-
-        if (!holdHeading) {
-            r = (gamepad1.right_stick_x);
-        } else {
-            double forwardAngle = 0;
-            double backwardAngle = Math.PI;
-            double angleToForward = Angle.angleWrap(forwardAngle + getHeading());
-            double angleToBackward = Angle.angleWrap(backwardAngle + getHeading());
-            double continuousAngle = Math.abs(angleToForward) < Math.abs(angleToBackward) ? forwardAngle : backwardAngle;
-            r = pid.calculateUseError(Math.toDegrees(continuousAngle));
-        }
+//        if (gamepad1.a && !aPushed) {
+//            holdHeading = !holdHeading;
+//        }
+//        aPushed = gamepad1.a;
+//
+//
+//        if (!holdHeading) {
+//            r = (gamepad1.right_stick_x);
+//        } else {
+//            double forwardAngle = 0;
+//            double backwardAngle = Math.PI;
+//            double angleToForward = Angle.angleWrap(forwardAngle + getHeading());
+//            double angleToBackward = Angle.angleWrap(backwardAngle + getHeading());
+//            double continuousAngle = Math.abs(angleToForward) < Math.abs(angleToBackward) ? forwardAngle : backwardAngle;
+//            r = pid.calculateUseError(Math.toDegrees(continuousAngle));
+//        }
 //        final double direction = Math.atan2(x, y) + getHeading();
-        //TODO: Create a way to reset the encoder heading.
         double heading = -getHeading();
         final double speed = Math.min(1.0, Math.sqrt(gx * gx + gy * gy));
         double x = gx * Math.cos(heading) - gy * Math.sin(heading);
