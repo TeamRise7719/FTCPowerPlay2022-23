@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.Qaqortoq.Subsystems.Sensing.SeansSynchrono
 @TeleOp
 public class ArmMotorPIDTuning extends OpMode {
 
-    double P = 0.1;//Start with a very low P and increase until fast with no bouncing
+    double P = 1.0;//Start with a very low P and increase until fast with no bouncing
     //We don't need "I" for an arm
     double D = 0.0;//If arm is slow or can't really reach the target after tuning P, then increase P and add some D
     //If the arm can't hold its position after tuning, let me know and I'll make a PIDF controller
@@ -37,7 +37,7 @@ public class ArmMotorPIDTuning extends OpMode {
     public void loop() {
         double currentVoltage = pot.getVoltage();
         //If changing P does not seem to affect the voltage, change this to not be negative
-        if (gamepad1.left_stick_y > 0.0 ||gamepad1.left_stick_y < 0.0) {
+        if (gamepad1.left_stick_y > 0.0 || gamepad1.left_stick_y < 0.0) {
             armMotor.setPower(gamepad1.left_stick_y);
         } else {
             double power = -pid.calculate(currentVoltage);
