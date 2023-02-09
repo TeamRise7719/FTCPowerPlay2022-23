@@ -37,9 +37,12 @@ public class ArmMotorPIDTuning extends OpMode {
     public void loop() {
         double currentVoltage = pot.getVoltage();
         //If changing P does not seem to affect the voltage, change this to not be negative
-        double power = -pid.calculate(currentVoltage);
-        armMotor.setPower(power);
-
+        if (gamepad1.left_stick_y > 0.0 ||gamepad1.left_stick_y < 0.0) {
+            armMotor.setPower(gamepad1.left_stick_y);
+        } else {
+            double power = -pid.calculate(currentVoltage);
+            armMotor.setPower(power);
+        }
         telemetry.addData("Target Voltage",targetVoltage);
         telemetry.addData("Current Voltage",currentVoltage);
         telemetry.addData("Max Voltage",pot.getMaxVoltage());
