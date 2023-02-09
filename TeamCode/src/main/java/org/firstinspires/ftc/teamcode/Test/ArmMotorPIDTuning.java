@@ -27,7 +27,7 @@ public class ArmMotorPIDTuning extends OpMode {
     public void init() {
 
         pot = hardwareMap.analogInput.get("pot");
-        armMotor = hardwareMap.get(DcMotorEx.class, "left");
+        armMotor = hardwareMap.get(DcMotorEx.class, "armMotor");
         pid = new SeansSynchronousPID(P,0.0,D);
         pid.setOutputRange(-1.0,1.0);
         pid.setSetpoint(targetVoltage);
