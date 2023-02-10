@@ -190,6 +190,7 @@ public class CameraTeleOp extends OpMode {
         }
 
         if (gamepad2.right_bumper && !rightBumper2state) {
+            notified = false;
             if (!isUp) {
                 if (is90) {//Swap to 45 position
                     is45 = true;
@@ -223,6 +224,7 @@ public class CameraTeleOp extends OpMode {
         rightBumper2state = gamepad2.right_bumper;
 
         if (gamepad2.left_bumper && !leftBumper2State && !clawsOpen) {
+            notified = false;
             if (isFront) {//Change everything to the back side
                 isFront = false;
                 isBack = true;
