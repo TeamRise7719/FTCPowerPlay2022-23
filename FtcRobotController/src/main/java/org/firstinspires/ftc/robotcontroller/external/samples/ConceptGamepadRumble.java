@@ -97,7 +97,6 @@ public class ConceptGamepadRumble extends LinearOpMode
 
     Gamepad.RumbleEffect customRumbleEffect;    // Use to build a custom rumble sequence.
     ElapsedTime runtime = new ElapsedTime();    // Use to determine when end game is starting.
-
     final double HALF_TIME = 60.0;              // Wait this many seconds before rumble-alert for half-time.
     final double TRIGGER_THRESHOLD  = 0.75;     // Squeeze more than 3/4 to get rumble.
 

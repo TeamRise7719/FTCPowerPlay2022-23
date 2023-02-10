@@ -30,6 +30,7 @@ public class PoleDetector {
             @Override
             public void onOpened() {
                 webcam.setPipeline(opencv);
+                webcam.setViewportRenderingPolicy(OpenCvCamera.ViewportRenderingPolicy.MAXIMIZE_EFFICIENCY);
                 webcam.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
             }
 
@@ -59,5 +60,12 @@ public class PoleDetector {
 
     public double sideDistance() {
         return opencv.DS;
+    }
+
+    public void showAverageFrameTime() {
+        telemetry.addData("Average Frame Process Time (ms)", webcam.getTotalFrameTimeMs());
+    }
+    public void showFPS() {
+        telemetry.addData("FPS", webcam.getFps());
     }
 }

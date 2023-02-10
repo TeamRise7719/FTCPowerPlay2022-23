@@ -60,10 +60,10 @@ public class ApproachPole extends LinearOpMode {
             l.updatePose();
             Pose pose = l.getPose();
             if (!Double.isNaN(d.rectWidth())) {
-//                double sideError = sidePID.calculateUseError(sideTarget - d.centerX());
                 double sideError = forwardPID.calculateUseError(sideTarget - d.sideDistance());
                 double forwardError = forwardPID.calculateUseError(forwardTarget - d.forwardDistance());
-
+                d.showAverageFrameTime();
+                d.showFPS();
 
                 double rError = forwardPID.calculateUseError(Math.toDegrees(-pose.getHeading()));
                 /*

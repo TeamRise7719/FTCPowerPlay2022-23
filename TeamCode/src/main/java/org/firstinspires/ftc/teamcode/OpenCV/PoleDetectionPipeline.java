@@ -96,6 +96,7 @@ public class PoleDetectionPipeline extends OpenCvPipeline {
         telemetry.addData("Side Distance to Pole", DS);
 
 
+
 //        telemetry.addData("Probable Forward Distance", Math.sqrt(Math.pow(DF,2) - Math.pow(DS,2)));
 
         telemetry.update();

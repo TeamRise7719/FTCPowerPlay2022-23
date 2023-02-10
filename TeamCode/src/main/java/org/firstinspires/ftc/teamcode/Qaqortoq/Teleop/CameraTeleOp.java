@@ -19,10 +19,10 @@ import java.util.List;
 
 
 /**
- * Created by Sean Cardosi on 8/28/22.
+ * Created by Sean Cardosi on 2/9/23.
  */
-@TeleOp(name = "TeleOp", group = "Octavius")
-public class QaqortoqTeleOp extends OpMode {
+@TeleOp(name = "CameraTeleOp", group = "TeleOp")
+public class CameraTeleOp extends OpMode {
 
     private QaqortoqDrivetrain robot;
     private SeansComponent component;
@@ -49,7 +49,9 @@ public class QaqortoqTeleOp extends OpMode {
     boolean low = true;
     boolean medium = true;
     boolean high = true;
+    TeleOpPoleDetector d;
     Localizer l;
+    boolean notified = false;
     List<LynxModule> allHubs;
 
     @Override
@@ -58,8 +60,10 @@ public class QaqortoqTeleOp extends OpMode {
         //Initialize robot
         robot = new QaqortoqDrivetrain(hardwareMap);
         robot.runUsingEncoders();
-        l = new Localizer(hardwareMap, new Pose(0,0,0));
+        l = new Localizer(hardwareMap, new Pose(0, 0, 0));
+        d = new TeleOpPoleDetector(this, telemetry);
         component = new SeansComponent(hardwareMap);
+        d.findPole();
         isReady = true;
 //        component.grab();
         component.init();
@@ -94,8 +98,8 @@ public class QaqortoqTeleOp extends OpMode {
             hub.clearBulkCache();
         }
         l.updatePose();
-        telemetry.addData("Pose","X: %f, Y: %f",l.getX(),l.getY());
-        telemetry.addData("PoseHeading","Heading: %f", Math.toDegrees(l.getHeading()));
+        telemetry.addData("Pose", "X: %f, Y: %f", l.getX(), l.getY());
+        telemetry.addData("PoseHeading", "Heading: %f", Math.toDegrees(l.getHeading()));
         component.getTelemetry(telemetry);
 
 
@@ -242,11 +246,38 @@ public class QaqortoqTeleOp extends OpMode {
         //----------------------------------------------=+(Arm)+=----------------------------------------------\\
 
 
-
         //----------------------------------------------=+(Pole Alignment Check)+=----------------------------------------------\\
         //TODO: Implement a rumble for a duration once when aligned and the claw is closed. Figure out how to keep the camera open to not delay teleop
+        if (!clawsOpen && !notified) {
+            if (isFront) {
+                if (is45) {
+                    if (d.frontForwardDistance() < GlobalVariables.forwardCameraError45 && d.frontSideDistance() < GlobalVariables.sideCameraError) {
+                        gamepad1.rumble(0.8, 0.8, 750);
+                        notified = true;
+                    }
+                } else if (is90) {
+                    if (d.frontForwardDistance() < GlobalVariables.forwardCameraError90 && d.frontSideDistance() < GlobalVariables.sideCameraError) {
+                        gamepad1.rumble(0.8, 0.8, 750);
+                        notified = true;
+                    }
+                }
+            } else if (isBack) {
+                if (is45) {
+                    if (d.backForwardDistance() < GlobalVariables.forwardCameraError45 && d.backSideDistance() < GlobalVariables.sideCameraError) {
+                        gamepad1.rumble(0.8, 0.8, 750);
+                        notified = true;
+                    }
+                } else if (is90) {
+                    if (d.backForwardDistance() < GlobalVariables.forwardCameraError90 && d.backSideDistance() < GlobalVariables.sideCameraError) {
+                        gamepad1.rumble(0.8, 0.8, 750);
+                        notified = true;
+                    }
+                }
+            }
+        }
+        if (clawsOpen) {
+            notified = false;
+        }
         //----------------------------------------------=+(Pole Alignment Check)+=----------------------------------------------\\
-
-
     }
 }
