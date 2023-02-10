@@ -32,6 +32,10 @@ public class QaqortoqDrivetrain {
     boolean holdHeading = false;
     boolean aPushed = false;
 
+    SeansSynchronousPID tiltPID;
+    double tiltP = 0.1;
+    double tiltError = 6;//degrees
+
     SeansSynchronousPID pid;
 
     public QaqortoqDrivetrain(final HardwareMap hardwareMap) {
@@ -76,6 +80,7 @@ public class QaqortoqDrivetrain {
         angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS);
 
         pid = new SeansSynchronousPID(0.05,0,0.37);
+        tiltPID = new SeansSynchronousPID(tiltP,0,0);
     }
 
     private void setMotorMode(DcMotor.RunMode mode, DcMotor... motors) {
@@ -184,6 +189,10 @@ public class QaqortoqDrivetrain {
         double x = gx * Math.cos(heading) - gy * Math.sin(heading);
         double y = gx * Math.sin(heading) + gy * Math.cos(heading);
 
+        //TODO: Figure out which angle this should be
+        if (Math.abs(angles.secondAngle) > tiltError) {
+            y = -tiltPID.calculateUseError(tiltError - angles.secondAngle);
+        }
 //        double l = Math.max(Math.abs(gy) + Math.abs(gx) + Math.abs(r),1);
         double lf_ = (y + x + r) /*/ l*/;//speed * Math.sin(direction + Math.PI / 4.0) + rotation;
         double lr_ = (y - x + r) /*/ l*/;//speed * Math.cos(direction + Math.PI / 4.0) - rotation;
