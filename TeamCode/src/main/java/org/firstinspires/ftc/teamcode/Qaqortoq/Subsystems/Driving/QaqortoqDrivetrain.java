@@ -34,7 +34,7 @@ public class QaqortoqDrivetrain {
 
     SeansSynchronousPID tiltPID;
     double tiltP = 0.1;
-    double tiltError = 15;//degrees
+    double tiltError = 10;//degrees
 
     SeansSynchronousPID pid;
 
