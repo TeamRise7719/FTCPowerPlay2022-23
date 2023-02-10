@@ -247,28 +247,27 @@ public class CameraTeleOp extends OpMode {
 
 
         //----------------------------------------------=+(Pole Alignment Check)+=----------------------------------------------\\
-        //TODO: Implement a rumble for a duration once when aligned and the claw is closed. Figure out how to keep the camera open to not delay teleop
         if (!clawsOpen && !notified) {
             if (isFront) {
                 if (is45) {
-                    if (d.frontForwardDistance() < GlobalVariables.forwardCameraError45 && d.frontSideDistance() < GlobalVariables.sideCameraError) {
+                    if (Math.abs(GlobalVariables.forwardCameraTarget45 - d.frontForwardDistance()) < GlobalVariables.forwardCameraError45 && Math.abs(d.frontSideDistance()) < GlobalVariables.sideCameraError) {
                         gamepad1.rumble(0.8, 0.8, 750);
                         notified = true;
                     }
-                } else if (is90) {
-                    if (d.frontForwardDistance() < GlobalVariables.forwardCameraError90 && d.frontSideDistance() < GlobalVariables.sideCameraError) {
+                } else if (is90 || isUp) {
+                    if (Math.abs(GlobalVariables.forwardCameraTarget90 - d.frontForwardDistance()) < GlobalVariables.forwardCameraError90 && Math.abs(d.frontSideDistance()) < GlobalVariables.sideCameraError) {
                         gamepad1.rumble(0.8, 0.8, 750);
                         notified = true;
                     }
                 }
             } else if (isBack) {
                 if (is45) {
-                    if (d.backForwardDistance() < GlobalVariables.forwardCameraError45 && d.backSideDistance() < GlobalVariables.sideCameraError) {
+                    if (Math.abs(GlobalVariables.forwardCameraTarget45 - d.backForwardDistance()) < GlobalVariables.forwardCameraError45 && Math.abs(d.backSideDistance()) < GlobalVariables.sideCameraError) {
                         gamepad1.rumble(0.8, 0.8, 750);
                         notified = true;
                     }
-                } else if (is90) {
-                    if (d.backForwardDistance() < GlobalVariables.forwardCameraError90 && d.backSideDistance() < GlobalVariables.sideCameraError) {
+                } else if (is90 || isUp) {
+                    if (Math.abs(GlobalVariables.forwardCameraTarget90 - d.backForwardDistance()) < GlobalVariables.forwardCameraError90 && Math.abs(d.backSideDistance()) < GlobalVariables.sideCameraError) {
                         gamepad1.rumble(0.8, 0.8, 750);
                         notified = true;
                     }

@@ -19,10 +19,12 @@ public class GlobalVariables {
     public static double openRMega = 0.545;
 
 
-    public static double forwardCameraError45 = 10;//cm
-    public static double forwardCameraError90 = 15;//cm
+    public static double forwardCameraError45 = 3;//cm
+    public static double forwardCameraError90 = 3;//cm
     public static double sideCameraError = 2;//cm
 
+    public static double forwardCameraTarget45 = 10;//cm
+    public static double forwardCameraTarget90 = 15;//cm
 
 
 
