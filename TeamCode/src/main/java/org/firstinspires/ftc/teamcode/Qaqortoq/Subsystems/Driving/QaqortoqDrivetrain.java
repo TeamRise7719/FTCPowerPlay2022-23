@@ -190,8 +190,8 @@ public class QaqortoqDrivetrain {
         double y = gx * Math.sin(heading) + gy * Math.cos(heading);
 
         //TODO: Figure out which angle this should be
-        if (Math.abs(angles.secondAngle) > tiltError) {
-            y = tiltPID.calculateUseError(Math.signum(angles.secondAngle) * (tiltError - Math.abs(angles.secondAngle)));
+        if (Math.toDegrees(Math.abs(angles.secondAngle)) > tiltError) {
+            y = tiltPID.calculateUseError(Math.signum(angles.secondAngle) * (tiltError - Math.toDegrees(Math.abs(angles.secondAngle))));
         }
 //        double l = Math.max(Math.abs(gy) + Math.abs(gx) + Math.abs(r),1);
         double lf_ = (y + x + r) /*/ l*/;//speed * Math.sin(direction + Math.PI / 4.0) + rotation;
