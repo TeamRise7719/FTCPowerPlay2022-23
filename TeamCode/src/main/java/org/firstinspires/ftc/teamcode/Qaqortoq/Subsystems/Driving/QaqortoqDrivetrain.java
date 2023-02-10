@@ -191,7 +191,7 @@ public class QaqortoqDrivetrain {
 
         //TODO: Figure out which angle this should be
         if (Math.abs(angles.secondAngle) > tiltError) {
-            y = -tiltPID.calculateUseError(tiltError - angles.secondAngle);
+            y = tiltPID.calculateUseError(Math.signum(angles.secondAngle) * (tiltError - Math.abs(angles.secondAngle)));
         }
 //        double l = Math.max(Math.abs(gy) + Math.abs(gx) + Math.abs(r),1);
         double lf_ = (y + x + r) /*/ l*/;//speed * Math.sin(direction + Math.PI / 4.0) + rotation;
