@@ -190,6 +190,7 @@ public class QaqortoqDrivetrain {
         double y = gx * Math.sin(heading) + gy * Math.cos(heading);
 
         //TODO: Figure out which angle this should be
+        //Comment out this if statement if you no like anti-tip
         if (Math.toDegrees(Math.abs(angles.secondAngle)) > tiltError) {
             y = -tiltPID.calculateUseError(Math.signum(angles.secondAngle) * (tiltError - Math.toDegrees(Math.abs(angles.secondAngle))));
         }
