@@ -11,6 +11,7 @@ public class GlobalVariables {
     public static double up = 0.48;
     public static double back90 = 0.59;
     public static double back45 = 0.64;
+    public static double back135 = 0.535;
     public static double closeL = 0.53;
     public static double closeR = 0.51;
     public static double openL = 0.56;
