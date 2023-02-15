@@ -30,7 +30,6 @@ public class ArmMotorPIDTuning extends OpMode {
         armMotor = hardwareMap.get(DcMotorEx.class, "armMotor");
         pid = new SeansSynchronousPID(P,0.0,D);
         pid.setOutputRange(-1.0,1.0);
-        pid.setSetpoint(targetVoltage);
     }
 
     @Override
@@ -40,7 +39,7 @@ public class ArmMotorPIDTuning extends OpMode {
         if (gamepad1.left_stick_y > 0.0 || gamepad1.left_stick_y < 0.0) {
             armMotor.setPower(gamepad1.left_stick_y);
         } else {
-            double power = -pid.calculate(targetVoltage - currentVoltage);
+            double power = -pid.calculateUseError(targetVoltage - currentVoltage);
             armMotor.setPower(power);
         }
         telemetry.addData("Target Voltage",targetVoltage);
