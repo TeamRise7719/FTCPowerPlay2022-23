@@ -40,7 +40,7 @@ public class ArmMotorPIDTuning extends OpMode {
         if (gamepad1.left_stick_y > 0.0 || gamepad1.left_stick_y < 0.0) {
             armMotor.setPower(gamepad1.left_stick_y);
         } else {
-            double power = -pid.calculate(currentVoltage);
+            double power = -pid.calculate(targetVoltage - currentVoltage);
             armMotor.setPower(power);
         }
         telemetry.addData("Target Voltage",targetVoltage);
