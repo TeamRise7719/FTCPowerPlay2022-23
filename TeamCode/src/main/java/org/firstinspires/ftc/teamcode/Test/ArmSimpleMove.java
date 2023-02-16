@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.GlobalVariables;
 import org.firstinspires.ftc.teamcode.Qaqortoq.Subsystems.Sensing.SeansSynchronousPID;
@@ -27,8 +28,9 @@ public class ArmSimpleMove extends OpMode {
     double targetVoltage = 1.284;
     boolean clawsOpen = false;
     boolean leftBumperState = true;
-    private SeansComponent component;
 
+    public Servo leftGrabber;
+    public Servo rightGrabber;
     @Override
     public void init() {
 
@@ -38,15 +40,17 @@ public class ArmSimpleMove extends OpMode {
         armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         pid = new SeansSynchronousPID(P,0.0,D);
         pid.setOutputRange(-1.0,1.0);
-        component = new SeansComponent(hardwareMap);
-        component.init();
+        leftGrabber = hardwareMap.servo.get("clawL");
+        leftGrabber.setDirection(Servo.Direction.REVERSE);
+        rightGrabber = hardwareMap.servo.get("clawR");
+        rightGrabber.setDirection(Servo.Direction.FORWARD);
     }
 
     @Override
     public void start() {
         super.start();
-        component.leftGrabber.setPosition(GlobalVariables.closeL);
-        component.rightGrabber.setPosition(GlobalVariables.closeR);
+        leftGrabber.setPosition(GlobalVariables.closeL);
+        rightGrabber.setPosition(GlobalVariables.closeR);
     }
 
 
@@ -62,12 +66,12 @@ public class ArmSimpleMove extends OpMode {
             targetVoltage = 0.62;
         }
         if (gamepad1.left_bumper && !clawsOpen && !leftBumperState) {
-            component.rightGrabber.setPosition(GlobalVariables.openR);
-            component.leftGrabber.setPosition(GlobalVariables.openL);
+            rightGrabber.setPosition(GlobalVariables.openR);
+            leftGrabber.setPosition(GlobalVariables.openL);
             clawsOpen = true;
         } else if (gamepad1.left_bumper && clawsOpen && !leftBumperState) {
-            component.rightGrabber.setPosition(GlobalVariables.closeR);
-            component.leftGrabber.setPosition(GlobalVariables.closeL);
+            rightGrabber.setPosition(GlobalVariables.closeR);
+            leftGrabber.setPosition(GlobalVariables.closeL);
             clawsOpen = false;
         }
         leftBumperState = gamepad1.left_bumper;
