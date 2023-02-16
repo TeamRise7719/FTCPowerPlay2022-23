@@ -7,7 +7,9 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
+import org.firstinspires.ftc.teamcode.GlobalVariables;
 import org.firstinspires.ftc.teamcode.Qaqortoq.Subsystems.Sensing.SeansSynchronousPID;
+import org.firstinspires.ftc.teamcode.SeansMotionController.Drive.SeansComponent;
 
 /**
  * Created by Sean Cardosi on 2/15/23.
@@ -23,6 +25,9 @@ public class ArmSimpleMove extends OpMode {
     DcMotorEx armMotor;
     SeansSynchronousPID pid;
     double targetVoltage = 1.284;
+    boolean clawsOpen = false;
+    boolean leftBumperState = true;
+    private SeansComponent component;
 
     @Override
     public void init() {
@@ -33,7 +38,17 @@ public class ArmSimpleMove extends OpMode {
         armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         pid = new SeansSynchronousPID(P,0.0,D);
         pid.setOutputRange(-1.0,1.0);
+        component = new SeansComponent(hardwareMap);
+        component.init();
     }
+
+    @Override
+    public void start() {
+        super.start();
+        component.leftGrabber.setPosition(GlobalVariables.closeL);
+        component.rightGrabber.setPosition(GlobalVariables.closeR);
+    }
+
 
     @Override
     public void loop() {
@@ -46,6 +61,17 @@ public class ArmSimpleMove extends OpMode {
         } else if (gamepad1.dpad_right) {
             targetVoltage = 0.62;
         }
+        if (gamepad1.left_bumper && !clawsOpen && !leftBumperState) {
+            component.rightGrabber.setPosition(GlobalVariables.openR);
+            component.leftGrabber.setPosition(GlobalVariables.openL);
+            clawsOpen = true;
+        } else if (gamepad1.left_bumper && clawsOpen && !leftBumperState) {
+            component.rightGrabber.setPosition(GlobalVariables.closeR);
+            component.leftGrabber.setPosition(GlobalVariables.closeL);
+            clawsOpen = false;
+        }
+        leftBumperState = gamepad1.left_bumper;
+
         double power = pid.calculateUseError(targetVoltage - currentVoltage);
 
         armMotor.setPower(power);
