@@ -43,7 +43,7 @@ public class ArmSimpleMove extends OpMode {
         } else if (gamepad1.dpad_right) {
             targetVoltage = 0.62;
         }
-        double power = -pid.calculateUseError(targetVoltage - currentVoltage);
+        double power = pid.calculateUseError(targetVoltage - currentVoltage);
 
         armMotor.setPower(power);
         telemetry.addData("Target Voltage",targetVoltage);
