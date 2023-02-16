@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.teamcode.Qaqortoq.Subsystems.Sensing.SeansSynchronousPID;
@@ -14,7 +15,7 @@ import org.firstinspires.ftc.teamcode.Qaqortoq.Subsystems.Sensing.SeansSynchrono
 @TeleOp
 public class ArmSimpleMove extends OpMode {
 
-    double P = 1.0;//Start with a very low P and increase until fast with no bouncing
+    double P = 0.1;//Start with a very low P and increase until fast with no bouncing
     //We don't need "I" for an arm
     double D = 0.0;//If arm is slow or can't really reach the target after tuning P, then increase P and add some D
     //If the arm can't hold its position after tuning, let me know and I'll make a PIDF controller
@@ -28,6 +29,8 @@ public class ArmSimpleMove extends OpMode {
 
         pot = hardwareMap.analogInput.get("pot");
         armMotor = hardwareMap.get(DcMotorEx.class, "leftEncoder");
+        armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         pid = new SeansSynchronousPID(P,0.0,D);
         pid.setOutputRange(-1.0,1.0);
     }
