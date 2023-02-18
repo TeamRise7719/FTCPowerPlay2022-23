@@ -12,6 +12,8 @@ import org.firstinspires.ftc.teamcode.OpenCV.PoleDetector;
 import org.firstinspires.ftc.teamcode.OpenCV.TeleOpPoleDetector;
 import org.firstinspires.ftc.teamcode.Qaqortoq.Subsystems.Driving.QaqortoqDrivetrain;
 import org.firstinspires.ftc.teamcode.SeansMotionController.Control.Localizer;
+import org.firstinspires.ftc.teamcode.SeansMotionController.Control.PIDCoefficients;
+import org.firstinspires.ftc.teamcode.SeansMotionController.Control.PIDController;
 import org.firstinspires.ftc.teamcode.SeansMotionController.Drive.SeansComponent;
 import org.firstinspires.ftc.teamcode.SeansMotionController.Util.Pose;
 
@@ -42,6 +44,8 @@ public class QaqortoqTeleOp extends OpMode {
     boolean leftBumper2State = false;
     double lastPosition;
     Localizer l;
+    double armTarget = 0.284;
+    PIDController armPID;
     List<LynxModule> allHubs;
 
     @Override
@@ -55,6 +59,7 @@ public class QaqortoqTeleOp extends OpMode {
         isReady = true;
 //        component.grab();
         component.init();
+        armPID = new PIDController(new PIDCoefficients(2.4,0,0));
         allHubs = hardwareMap.getAll(LynxModule.class);
         for (LynxModule hub : allHubs) {
             hub.setBulkCachingMode(LynxModule.BulkCachingMode.MANUAL);
@@ -79,6 +84,7 @@ public class QaqortoqTeleOp extends OpMode {
         is45 = true;
         isFront = true;
         onWayUp = true;
+        armTarget = 0.284;
     }
 
     @Override
@@ -148,10 +154,13 @@ public class QaqortoqTeleOp extends OpMode {
         //----------------------------------------------=+(Arm)+=----------------------------------------------\\
         if (gamepad2.dpad_up && !clawsOpen) {
             isUp = true;
-            component.setArm(GlobalVariables.up);
+//            component.setArm(GlobalVariables.up);
+            armTarget = GlobalVariables.up;
         } else {
             isUp = false;
-            component.setArm(lastPosition);
+//            component.setArm(lastPosition);
+            armTarget = lastPosition;
+
         }
 
         if (gamepad2.right_bumper && !rightBumper2state && !isUp) {
@@ -161,18 +170,26 @@ public class QaqortoqTeleOp extends OpMode {
                     is90 = true;
                     is135 = false;
                     if (isFront) {
-                        component.setArm(GlobalVariables.front90);
+//                        component.setArm(GlobalVariables.front90);
+                        armTarget = GlobalVariables.front90;
+                        lastPosition = GlobalVariables.front90;
                     } else if (isBack) {
-                        component.setArm(GlobalVariables.back90);
+//                        component.setArm(GlobalVariables.back90);
+                        armTarget = GlobalVariables.back90;
+                        lastPosition = GlobalVariables.back90;
                     }
                 } else if (is90) {//Swap to 135 position
                     is45 = false;
                     is90 = false;
                     is135 = true;
                     if (isFront) {
-                        component.setArm(GlobalVariables.front135);
+//                        component.setArm(GlobalVariables.front135);
+                        armTarget = GlobalVariables.front135;
+                        lastPosition = GlobalVariables.front135;
                     } else if (isBack) {
-                        component.setArm(GlobalVariables.back135);
+//                        component.setArm(GlobalVariables.back135);
+                        armTarget = GlobalVariables.back135;
+                        lastPosition = GlobalVariables.back135;
                     }
                 } else if (is135) {//Go down to 90
                     onWayDown = true;
@@ -181,9 +198,13 @@ public class QaqortoqTeleOp extends OpMode {
                     is90 = true;
                     is135 = false;
                     if (isFront) {
-                        component.setArm(GlobalVariables.front90);
+//                        component.setArm(GlobalVariables.front90);
+                        armTarget = GlobalVariables.front90;
+                        lastPosition = GlobalVariables.front90;
                     } else if (isBack) {
-                        component.setArm(GlobalVariables.back90);
+//                        component.setArm(GlobalVariables.back90);
+                        armTarget = GlobalVariables.back90;
+                        lastPosition = GlobalVariables.back90;
                     }
                 }
             } else if (onWayDown) {
@@ -194,31 +215,43 @@ public class QaqortoqTeleOp extends OpMode {
                     onWayUp = true;
                     onWayDown = false;
                     if (isFront) {
-                        component.setArm(GlobalVariables.front90);
+//                        component.setArm(GlobalVariables.front90);
+                        armTarget = GlobalVariables.front90;
+                        lastPosition = GlobalVariables.front90;
                     } else if (isBack) {
-                        component.setArm(GlobalVariables.back90);
+//                        component.setArm(GlobalVariables.back90);
+                        armTarget = GlobalVariables.back90;
+                        lastPosition = GlobalVariables.back90;
                     }
                 } else if (is90) {//Swap to 45 position
                     is45 = true;
                     is90 = false;
                     is135 = false;
                     if (isFront) {
-                        component.setArm(GlobalVariables.front45);
+//                        component.setArm(GlobalVariables.front45);
+                        armTarget = GlobalVariables.front45;
+                        lastPosition = GlobalVariables.front45;
                     } else if (isBack) {
-                        component.setArm(GlobalVariables.back45);
+//                        component.setArm(GlobalVariables.back45);
+                        armTarget = GlobalVariables.back45;
+                        lastPosition = GlobalVariables.back45;
                     }
                 } else if (is135) {//Go down to 90
                     is45 = false;
                     is90 = true;
                     is135 = false;
                     if (isFront) {
-                        component.setArm(GlobalVariables.front90);
+//                        component.setArm(GlobalVariables.front90);
+                        armTarget = GlobalVariables.front90;
+                        lastPosition = GlobalVariables.front90;
                     } else if (isBack) {
-                        component.setArm(GlobalVariables.back90);
+//                        component.setArm(GlobalVariables.back90);
+                        armTarget = GlobalVariables.back90;
+                        lastPosition = GlobalVariables.back90;
                     }
                 }
             }
-            lastPosition = component.rightArm.getPosition();
+//            lastPosition = component.rightArm.getPosition();
         }
         rightBumper2state = gamepad2.right_bumper;
 
@@ -227,27 +260,41 @@ public class QaqortoqTeleOp extends OpMode {
                 isFront = false;
                 isBack = true;
                 if (is90) {
-                    component.setArm(GlobalVariables.back90);
+//                    component.setArm(GlobalVariables.back90);
+                    armTarget = GlobalVariables.back90;
+                    lastPosition = GlobalVariables.back90;
                 } else if (is45) {
-                    component.setArm(GlobalVariables.back45);
+//                    component.setArm(GlobalVariables.back45);
+                    armTarget = GlobalVariables.back45;
+                    lastPosition = GlobalVariables.back45;
                 } else if (is135) {
-                    component.setArm(GlobalVariables.back135);
+//                    component.setArm(GlobalVariables.back135);
+                    armTarget = GlobalVariables.back135;
+                    lastPosition = GlobalVariables.back135;
                 }
             } else if (isBack) {//Change everything to the front side
                 isFront = true;
                 isBack = false;
                 if (is90) {
-                    component.setArm(GlobalVariables.front90);
+//                    component.setArm(GlobalVariables.front90);
+                    armTarget = GlobalVariables.front90;
+                    lastPosition = GlobalVariables.front90;
                 } else if (is45) {
-                    component.setArm(GlobalVariables.front45);
+//                    component.setArm(GlobalVariables.front45);
+                    armTarget = GlobalVariables.front45;
+                    lastPosition = GlobalVariables.front45;
                 } else if (is135) {
-                    component.setArm(GlobalVariables.front135);
+//                    component.setArm(GlobalVariables.front135);
+                    armTarget = GlobalVariables.front135;
+                    lastPosition = GlobalVariables.front135;
                 }
             }
-            lastPosition = component.rightArm.getPosition();
+//            lastPosition = component.rightArm.getPosition();
         }
         leftBumper2State = gamepad2.left_bumper;
 
+
+        component.setArm(armPID.calculate(armTarget,component.pot.getVoltage()));
 
 
 
