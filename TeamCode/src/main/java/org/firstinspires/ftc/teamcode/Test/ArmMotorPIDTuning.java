@@ -7,6 +7,8 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.teamcode.Qaqortoq.Subsystems.Sensing.SeansSynchronousPID;
+import org.firstinspires.ftc.teamcode.SeansMotionController.Control.PIDCoefficients;
+import org.firstinspires.ftc.teamcode.SeansMotionController.Control.PIDController;
 
 /**
  * Created by Sean Cardosi on 2/7/23.
@@ -14,22 +16,22 @@ import org.firstinspires.ftc.teamcode.Qaqortoq.Subsystems.Sensing.SeansSynchrono
 @TeleOp
 public class ArmMotorPIDTuning extends OpMode {
 
-    double P = 1.0;//Start with a very low P and increase until fast with no bouncing
+    double P = 2.4;//Start with a very low P and increase until fast with no bouncing
     //We don't need "I" for an arm
     double D = 0.0;//If arm is slow or can't really reach the target after tuning P, then increase P and add some D
     //If the arm can't hold its position after tuning, let me know and I'll make a PIDF controller
     AnalogInput pot;
     DcMotorEx armMotor;
     double targetVoltage = 1.0;//Change to the voltage the potentiometer reads when the arm is in the desired position.
-    SeansSynchronousPID pid;
+    PIDController pid;
 
     @Override
     public void init() {
 
         pot = hardwareMap.analogInput.get("pot");
         armMotor = hardwareMap.get(DcMotorEx.class, "leftEncoder");
-        pid = new SeansSynchronousPID(P,0.0,D);
-        pid.setOutputRange(-1.0,1.0);
+        pid = new PIDController(new PIDCoefficients(P,0, D));
+
     }
 
     @Override
@@ -39,7 +41,7 @@ public class ArmMotorPIDTuning extends OpMode {
         if (gamepad1.left_stick_y > 0.0 || gamepad1.left_stick_y < 0.0) {
             armMotor.setPower(gamepad1.left_stick_y);
         } else {
-            double power = -pid.calculateUseError(targetVoltage - currentVoltage);
+            double power = pid.calculate(targetVoltage , currentVoltage);
             armMotor.setPower(power);
         }
         telemetry.addData("Target Voltage",targetVoltage);
