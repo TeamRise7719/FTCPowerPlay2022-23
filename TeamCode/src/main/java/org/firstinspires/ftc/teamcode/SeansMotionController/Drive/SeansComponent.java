@@ -47,6 +47,7 @@ public class SeansComponent {
         liftEncoder.setDirection(Encoder.Direction.FORWARD);
 
         armMotor = hardwareMap.get(DcMotorEx.class, "leftEncoder");
+        armMotor.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
 
 
 //        stringPotentiometer = hardwareMap.analogInput.get("stringEnc");
@@ -68,6 +69,7 @@ public class SeansComponent {
     public void init() {
         rightLift.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
         leftLift.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
+        armMotor.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     public void moveLift(double power) {
