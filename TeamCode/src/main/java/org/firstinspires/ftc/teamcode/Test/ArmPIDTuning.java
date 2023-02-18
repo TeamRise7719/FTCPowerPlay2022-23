@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Test;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.CRServo;
 
@@ -9,16 +10,18 @@ import org.firstinspires.ftc.teamcode.Qaqortoq.Subsystems.Sensing.SeansSynchrono
 /**
  * Created by Sean Cardosi on 1/28/23.
  */
+
+@TeleOp(name = "Arm PID Test", group = "Tests")
 public class ArmPIDTuning extends OpMode {
 
-    double P = 0.0;//Start with a very low P and increase until fast with no bouncing
+    double P = 1;//Start with a very low P and increase until fast with no bouncing
     //We don't need "I" for an arm
     double D = 0.0;//If arm is slow or can't really reach the target after tuning P, then increase P and add some D
     //If the arm can't hold its position after tuning, let me know and I'll make a PIDF controller
     AnalogInput pot;
     CRServo leftArm;
     CRServo rightArm;
-    double targetVoltage = 1.0;//Change to the voltage the potentiometer reads when the arm is in the desired position.
+    double targetVoltage = 2.3;//Change to the voltage the potentiometer reads when the arm is in the desired position.
     SeansSynchronousPID pid;
 
     @Override
@@ -44,5 +47,8 @@ public class ArmPIDTuning extends OpMode {
         telemetry.addData("Target",targetVoltage);
         telemetry.addData("Current",currentVoltage);
         telemetry.addData("Error",targetVoltage - currentVoltage);
+        telemetry.addData("LArm", leftArm.getPower());
+        telemetry.update();
+
     }
 }

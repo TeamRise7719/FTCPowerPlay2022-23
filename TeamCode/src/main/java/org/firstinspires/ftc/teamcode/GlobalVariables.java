@@ -25,7 +25,7 @@ public class GlobalVariables {
     public static double sideCameraError = 2;//cm
 
     public static double forwardCameraTarget45 = 10;//cm
-    public static double forwardCameraTarget90 = 15;//cm
+    public static double forwardCameraTarget90 = 21;//cm
 
 
 

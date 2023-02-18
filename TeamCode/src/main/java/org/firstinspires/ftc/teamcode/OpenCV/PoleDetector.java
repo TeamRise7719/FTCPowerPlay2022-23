@@ -20,7 +20,7 @@ public class PoleDetector {
     public PoleDetector(LinearOpMode opMode, Telemetry telemetry) {
         //initialize webcam
         this.telemetry = telemetry;
-        webcam = OpenCvCameraFactory.getInstance().createWebcam(opMode.hardwareMap.get(WebcamName.class, "Front Camera"));
+        webcam = OpenCvCameraFactory.getInstance().createWebcam(opMode.hardwareMap.get(WebcamName.class, "Webcam 1"));
     }
 
     public void findPole() {
@@ -31,15 +31,12 @@ public class PoleDetector {
             public void onOpened() {
                 webcam.setPipeline(opencv);
                 webcam.setViewportRenderingPolicy(OpenCvCamera.ViewportRenderingPolicy.MAXIMIZE_EFFICIENCY);
-                webcam.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
+                webcam.startStreaming(640, 480, OpenCvCameraRotation.UPRIGHT);
             }
 
             @Override
             public void onError(int errorCode) {}
         });
-    }
-    public double rectWidth(){
-        return Math.min(opencv.rotatedRect.size.width,opencv.rotatedRect.size.height);
     }
 
     public double centerX() {
