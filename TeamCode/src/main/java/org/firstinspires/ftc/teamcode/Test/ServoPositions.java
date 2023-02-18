@@ -47,6 +47,6 @@ public class ServoPositions extends OpMode {
         }
         telemetry.addData("Left Claw",c.leftGrabber.getPosition());
         telemetry.addData("Right Claw", c.rightGrabber.getPosition());
-        telemetry.addData("Arm",c.rightArm.getPosition());
+//        telemetry.addData("Arm",c.rightArm.getPosition());
     }
 }
