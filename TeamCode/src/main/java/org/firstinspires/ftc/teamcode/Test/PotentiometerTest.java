@@ -8,8 +8,7 @@ import com.qualcomm.robotcore.hardware.AnalogInput;
  * Created by Sean Cardosi on 1/27/23.
  */
 @TeleOp
-public class
-PotentiometerTest extends OpMode {
+public class PotentiometerTest extends OpMode {
 
     AnalogInput pot;
 
