@@ -197,19 +197,21 @@ public class QaqortoqTeleOp extends OpMode {
                         lastPosition = GlobalVariables.back90;
                         armFFAngle = 0;
                     }
-                } else if (is90) {//Swap to 135 position
+                } else if (is90) {//Swap to 45 position
                     is45 = false;
                     is90 = false;
+                    onWayDown = true;
+                    onWayUp = false;
                     if (isFront) {
 //                        component.setArm(GlobalVariables.front135);
-                        armTarget = GlobalVariables.front135;
-                        lastPosition = GlobalVariables.front135;
-                        armFFAngle = 225;
+                        armTarget = GlobalVariables.front45;
+                        lastPosition = GlobalVariables.front45;
+                        armFFAngle = 135;
                     } else if (isBack) {
 //                        component.setArm(GlobalVariables.back135);
-                        armTarget = GlobalVariables.back135;
-                        lastPosition = GlobalVariables.back135;
-                        armFFAngle = 315;
+                        armTarget = GlobalVariables.back45;
+                        lastPosition = GlobalVariables.back45;
+                        armFFAngle = 405;
                     }
                 }
             } else if (onWayDown) {
