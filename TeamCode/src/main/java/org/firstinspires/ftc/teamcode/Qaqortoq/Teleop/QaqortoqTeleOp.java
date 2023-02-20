@@ -47,7 +47,7 @@ public class QaqortoqTeleOp extends OpMode {
     List<LynxModule> allHubs;
     double armFFAngle = 135;
     double kcos = -0.1;
-    double armP = 0.9;
+    double armP = 0.65;
     double armI = 0.0;
     double armD = 0.02;
     AnalogInput pot;
