@@ -325,6 +325,8 @@ public class QaqortoqTeleOp extends OpMode {
                     armFFAngle = 225;
                 }
             }
+            onWayUp = !onWayUp;
+            onWayDown = !onWayDown;
 //            lastPosition = component.rightArm.getPosition();
         }
         leftBumper2State = gamepad2.left_bumper;
