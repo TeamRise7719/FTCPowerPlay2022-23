@@ -52,6 +52,11 @@ public class QaqortoqTeleOp extends OpMode {
     double armD = 0.02;
     AnalogInput pot;
     DcMotorEx armMotor;
+    PIDController goingUp;
+
+    double upP = 1.4;
+    double upI = 0.0;
+    double upD = 0.0;
 
     @Override
     public void init() {
@@ -68,6 +73,7 @@ public class QaqortoqTeleOp extends OpMode {
 //        component.grab();
         component.init();
         armPID = new PIDController(new PIDCoefficients(armP,armI,armD));
+        goingUp = new PIDController(new PIDCoefficients(upP,upI,upD));
         armMotor = hardwareMap.get(DcMotorEx.class, "leftEncoder");
         armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -333,7 +339,12 @@ public class QaqortoqTeleOp extends OpMode {
         telemetry.addData("Position", pot.getVoltage());
         telemetry.addData("Error", armTarget - pot.getVoltage());
         telemetry.addData("FF Output", ffOutput);
-        double pidOutput = armPID.calculate(armTarget,pot.getVoltage());
+        double pidOutput;
+        if (onWayUp) {
+            pidOutput = goingUp.calculate(armTarget, pot.getVoltage());
+        } else {
+            pidOutput = armPID.calculate(armTarget, pot.getVoltage());
+        }
         telemetry.addData("PID Output", pidOutput);
         telemetry.addData("Theoretical PIDF Output", pidOutput + ffOutput);
         telemetry.update();
