@@ -54,7 +54,7 @@ public class QaqortoqTeleOp extends OpMode {
     DcMotorEx armMotor;
     PIDController goingUp;
 
-    double upP = 1.4;
+    double upP = 1.7;
     double upI = 0.0;
     double upD = 0.0;
 
