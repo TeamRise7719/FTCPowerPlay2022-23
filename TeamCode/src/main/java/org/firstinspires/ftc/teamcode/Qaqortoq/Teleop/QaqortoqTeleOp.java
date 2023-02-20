@@ -42,13 +42,13 @@ public class QaqortoqTeleOp extends OpMode {
     boolean leftBumper2State = false;
     double lastPosition;
     Localizer l;
-    double armTarget = 0.284;
+    double armTarget = GlobalVariables.front45;
     PIDController armPID;
     List<LynxModule> allHubs;
     double armFFAngle = 135;
     double kcos = -0.1;
     double armP = 0.9;
-    double armI = 0.001;
+    double armI = 0.0;
     double armD = 0.02;
     AnalogInput pot;
     DcMotorEx armMotor;
@@ -101,7 +101,7 @@ public class QaqortoqTeleOp extends OpMode {
         is45 = true;
         isFront = true;
         onWayUp = true;
-        armTarget = 0.284;
+        armTarget = GlobalVariables.front45;
         armFFAngle = 135;//180 is the front 90 position
     }
 
