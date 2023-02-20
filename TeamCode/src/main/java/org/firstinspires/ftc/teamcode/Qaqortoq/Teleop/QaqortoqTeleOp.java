@@ -35,7 +35,6 @@ public class QaqortoqTeleOp extends OpMode {
     boolean isFront = false;
     boolean isBack = false;
     boolean isUp = false;
-    boolean is135 = false;
     boolean onWayDown = false;
     boolean onWayUp = false;
     boolean rightBumper2state = false;
@@ -47,7 +46,7 @@ public class QaqortoqTeleOp extends OpMode {
     List<LynxModule> allHubs;
     double armFFAngle = 135;
     double kcos = -0.1;
-    double armP = 0.7;//.9
+    double armP = 0.9;
     double armI = 0.0;
     double armD = 0.02;
     AnalogInput pot;
@@ -187,7 +186,6 @@ public class QaqortoqTeleOp extends OpMode {
                 if (is45) {//Swap to 90 position
                     is45 = false;
                     is90 = true;
-                    is135 = false;
                     if (isFront) {
 //                        component.setArm(GlobalVariables.front90);
                         armTarget = GlobalVariables.front90;
@@ -202,7 +200,6 @@ public class QaqortoqTeleOp extends OpMode {
                 } else if (is90) {//Swap to 135 position
                     is45 = false;
                     is90 = false;
-                    is135 = true;
                     if (isFront) {
 //                        component.setArm(GlobalVariables.front135);
                         armTarget = GlobalVariables.front135;
@@ -214,29 +211,11 @@ public class QaqortoqTeleOp extends OpMode {
                         lastPosition = GlobalVariables.back135;
                         armFFAngle = 315;
                     }
-                } else if (is135) {//Go down to 90
-                    onWayDown = true;
-                    onWayUp = false;
-                    is45 = false;
-                    is90 = true;
-                    is135 = false;
-                    if (isFront) {
-//                        component.setArm(GlobalVariables.front90);
-                        armTarget = GlobalVariables.front90;
-                        lastPosition = GlobalVariables.front90;
-                        armFFAngle = 180;
-                    } else if (isBack) {
-//                        component.setArm(GlobalVariables.back90);
-                        armTarget = GlobalVariables.back90;
-                        lastPosition = GlobalVariables.back90;
-                        armFFAngle = 360;
-                    }
                 }
             } else if (onWayDown) {
                 if (is45) {//Swap to 90 position
                     is45 = false;
                     is90 = true;
-                    is135 = false;
                     onWayUp = true;
                     onWayDown = false;
                     if (isFront) {
@@ -253,7 +232,6 @@ public class QaqortoqTeleOp extends OpMode {
                 } else if (is90) {//Swap to 45 position
                     is45 = true;
                     is90 = false;
-                    is135 = false;
                     if (isFront) {
 //                        component.setArm(GlobalVariables.front45);
                         armTarget = GlobalVariables.front45;
@@ -264,21 +242,6 @@ public class QaqortoqTeleOp extends OpMode {
                         armTarget = GlobalVariables.back45;
                         lastPosition = GlobalVariables.back45;
                         armFFAngle = 405;
-                    }
-                } else if (is135) {//Go down to 90
-                    is45 = false;
-                    is90 = true;
-                    is135 = false;
-                    if (isFront) {
-//                        component.setArm(GlobalVariables.front90);
-                        armTarget = GlobalVariables.front90;
-                        lastPosition = GlobalVariables.front90;
-                        armFFAngle = 180;
-                    } else if (isBack) {
-//                        component.setArm(GlobalVariables.back90);
-                        armTarget = GlobalVariables.back90;
-                        lastPosition = GlobalVariables.back90;
-                        armFFAngle = 360;
                     }
                 }
             }
@@ -300,11 +263,6 @@ public class QaqortoqTeleOp extends OpMode {
                     armTarget = GlobalVariables.back45;
                     lastPosition = GlobalVariables.back45;
                     armFFAngle = 405;
-                } else if (is135) {
-//                    component.setArm(GlobalVariables.back135);
-                    armTarget = GlobalVariables.back135;
-                    lastPosition = GlobalVariables.back135;
-                    armFFAngle = 315;
                 }
             } else if (isBack) {//Change everything to the front side
                 isFront = true;
@@ -319,11 +277,6 @@ public class QaqortoqTeleOp extends OpMode {
                     armTarget = GlobalVariables.front45;
                     lastPosition = GlobalVariables.front45;
                     armFFAngle = 135;
-                } else if (is135) {
-//                    component.setArm(GlobalVariables.front135);
-                    armTarget = GlobalVariables.front135;
-                    lastPosition = GlobalVariables.front135;
-                    armFFAngle = 225;
                 }
             }
             onWayUp = !onWayUp;
