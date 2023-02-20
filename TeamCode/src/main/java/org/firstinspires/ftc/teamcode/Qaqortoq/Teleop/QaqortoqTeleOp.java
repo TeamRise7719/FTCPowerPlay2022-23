@@ -1,15 +1,13 @@
 package org.firstinspires.ftc.teamcode.Qaqortoq.Teleop;
 
 import com.qualcomm.hardware.lynx.LynxModule;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.Gamepad;
-import com.qualcomm.robotcore.hardware.VoltageSensor;
+import com.qualcomm.robotcore.hardware.AnalogInput;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.teamcode.GlobalVariables;
-import org.firstinspires.ftc.teamcode.OpenCV.PoleDetector;
-import org.firstinspires.ftc.teamcode.OpenCV.TeleOpPoleDetector;
 import org.firstinspires.ftc.teamcode.Qaqortoq.Subsystems.Driving.QaqortoqDrivetrain;
 import org.firstinspires.ftc.teamcode.SeansMotionController.Control.Localizer;
 import org.firstinspires.ftc.teamcode.SeansMotionController.Control.PIDCoefficients;
@@ -47,11 +45,21 @@ public class QaqortoqTeleOp extends OpMode {
     double armTarget = 0.284;
     PIDController armPID;
     List<LynxModule> allHubs;
+    double armFFAngle = 135;
+    double kcos = -0.1;
+    double armP = 0.9;
+    double armI = 0.001;
+    double armD = 0.02;
+    AnalogInput pot;
+    DcMotorEx armMotor;
 
     @Override
     public void init() {
 
         //Initialize robot
+
+        pot = hardwareMap.analogInput.get("pot");
+
         robot = new QaqortoqDrivetrain(hardwareMap);
         robot.runUsingEncoders();
         l = new Localizer(hardwareMap, new Pose(0,0,0));
@@ -59,7 +67,10 @@ public class QaqortoqTeleOp extends OpMode {
         isReady = true;
 //        component.grab();
         component.init();
-        armPID = new PIDController(new PIDCoefficients(2.4,0,0));
+        armPID = new PIDController(new PIDCoefficients(armP,armI,armD));
+        armMotor = hardwareMap.get(DcMotorEx.class, "leftEncoder");
+        armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         allHubs = hardwareMap.getAll(LynxModule.class);
         for (LynxModule hub : allHubs) {
             hub.setBulkCachingMode(LynxModule.BulkCachingMode.MANUAL);
@@ -79,12 +90,13 @@ public class QaqortoqTeleOp extends OpMode {
         super.start();
         component.leftGrabber.setPosition(GlobalVariables.closeL);
         component.rightGrabber.setPosition(GlobalVariables.closeR);
-        component.setArm(GlobalVariables.front45);//Set arm to front 45 position
+//        component.setArm(GlobalVariables.front45);//Set arm to front 45 position
         lastPosition = GlobalVariables.front45;
         is45 = true;
         isFront = true;
         onWayUp = true;
         armTarget = 0.284;
+        armFFAngle = 135;//180 is the front 90 position
     }
 
     @Override
@@ -173,10 +185,12 @@ public class QaqortoqTeleOp extends OpMode {
 //                        component.setArm(GlobalVariables.front90);
                         armTarget = GlobalVariables.front90;
                         lastPosition = GlobalVariables.front90;
+                        armFFAngle = 180;
                     } else if (isBack) {
 //                        component.setArm(GlobalVariables.back90);
                         armTarget = GlobalVariables.back90;
                         lastPosition = GlobalVariables.back90;
+                        armFFAngle = 0;
                     }
                 } else if (is90) {//Swap to 135 position
                     is45 = false;
@@ -186,10 +200,12 @@ public class QaqortoqTeleOp extends OpMode {
 //                        component.setArm(GlobalVariables.front135);
                         armTarget = GlobalVariables.front135;
                         lastPosition = GlobalVariables.front135;
+                        armFFAngle = 225;
                     } else if (isBack) {
 //                        component.setArm(GlobalVariables.back135);
                         armTarget = GlobalVariables.back135;
                         lastPosition = GlobalVariables.back135;
+                        armFFAngle = 315;
                     }
                 } else if (is135) {//Go down to 90
                     onWayDown = true;
@@ -201,10 +217,12 @@ public class QaqortoqTeleOp extends OpMode {
 //                        component.setArm(GlobalVariables.front90);
                         armTarget = GlobalVariables.front90;
                         lastPosition = GlobalVariables.front90;
+                        armFFAngle = 180;
                     } else if (isBack) {
 //                        component.setArm(GlobalVariables.back90);
                         armTarget = GlobalVariables.back90;
                         lastPosition = GlobalVariables.back90;
+                        armFFAngle = 360;
                     }
                 }
             } else if (onWayDown) {
@@ -218,10 +236,12 @@ public class QaqortoqTeleOp extends OpMode {
 //                        component.setArm(GlobalVariables.front90);
                         armTarget = GlobalVariables.front90;
                         lastPosition = GlobalVariables.front90;
+                        armFFAngle = 180;
                     } else if (isBack) {
 //                        component.setArm(GlobalVariables.back90);
                         armTarget = GlobalVariables.back90;
                         lastPosition = GlobalVariables.back90;
+                        armFFAngle = 360;
                     }
                 } else if (is90) {//Swap to 45 position
                     is45 = true;
@@ -231,10 +251,12 @@ public class QaqortoqTeleOp extends OpMode {
 //                        component.setArm(GlobalVariables.front45);
                         armTarget = GlobalVariables.front45;
                         lastPosition = GlobalVariables.front45;
+                        armFFAngle = 135;
                     } else if (isBack) {
 //                        component.setArm(GlobalVariables.back45);
                         armTarget = GlobalVariables.back45;
                         lastPosition = GlobalVariables.back45;
+                        armFFAngle = 405;
                     }
                 } else if (is135) {//Go down to 90
                     is45 = false;
@@ -244,10 +266,12 @@ public class QaqortoqTeleOp extends OpMode {
 //                        component.setArm(GlobalVariables.front90);
                         armTarget = GlobalVariables.front90;
                         lastPosition = GlobalVariables.front90;
+                        armFFAngle = 180;
                     } else if (isBack) {
 //                        component.setArm(GlobalVariables.back90);
                         armTarget = GlobalVariables.back90;
                         lastPosition = GlobalVariables.back90;
+                        armFFAngle = 360;
                     }
                 }
             }
@@ -263,14 +287,17 @@ public class QaqortoqTeleOp extends OpMode {
 //                    component.setArm(GlobalVariables.back90);
                     armTarget = GlobalVariables.back90;
                     lastPosition = GlobalVariables.back90;
+                    armFFAngle = 360;
                 } else if (is45) {
 //                    component.setArm(GlobalVariables.back45);
                     armTarget = GlobalVariables.back45;
                     lastPosition = GlobalVariables.back45;
+                    armFFAngle = 405;
                 } else if (is135) {
 //                    component.setArm(GlobalVariables.back135);
                     armTarget = GlobalVariables.back135;
                     lastPosition = GlobalVariables.back135;
+                    armFFAngle = 315;
                 }
             } else if (isBack) {//Change everything to the front side
                 isFront = true;
@@ -279,22 +306,38 @@ public class QaqortoqTeleOp extends OpMode {
 //                    component.setArm(GlobalVariables.front90);
                     armTarget = GlobalVariables.front90;
                     lastPosition = GlobalVariables.front90;
+                    armFFAngle = 180;
                 } else if (is45) {
 //                    component.setArm(GlobalVariables.front45);
                     armTarget = GlobalVariables.front45;
                     lastPosition = GlobalVariables.front45;
+                    armFFAngle = 135;
                 } else if (is135) {
 //                    component.setArm(GlobalVariables.front135);
                     armTarget = GlobalVariables.front135;
                     lastPosition = GlobalVariables.front135;
+                    armFFAngle = 225;
                 }
             }
 //            lastPosition = component.rightArm.getPosition();
         }
         leftBumper2State = gamepad2.left_bumper;
-
-
-        component.setArm(armPID.calculate(armTarget,component.pot.getVoltage()));
+        double ffOutput;
+        if (armTarget != GlobalVariables.up) {
+            ffOutput = kcos * Math.cos((Math.toRadians(armFFAngle)));
+        } else {
+            ffOutput = 0.0;
+        }
+        telemetry.addData("Target", armTarget);
+        telemetry.addData("FFAngle", armFFAngle);
+        telemetry.addData("Position", pot.getVoltage());
+        telemetry.addData("Error", armTarget - pot.getVoltage());
+        telemetry.addData("FF Output", ffOutput);
+        double pidOutput = armPID.calculate(armTarget,pot.getVoltage());
+        telemetry.addData("PID Output", pidOutput);
+        telemetry.addData("Theoretical PIDF Output", pidOutput + ffOutput);
+        telemetry.update();
+        armMotor.setPower(pidOutput + ffOutput);
 
 
 

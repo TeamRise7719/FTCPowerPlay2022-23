@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.SeansMotionController.Drive;
 
 import com.qualcomm.robotcore.hardware.AnalogInput;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -17,8 +18,8 @@ public class SeansComponent {
 
     public DcMotorEx leftLift;
     public DcMotorEx rightLift;
-    public DcMotorEx armMotor;
-    public AnalogInput pot;
+//    public DcMotor armMotor;
+//    public AnalogInput pot;
     final static double COUNTS_PER_REV = 8192;//Encoder Counts
     final static double SPOOL_RADIUS = 1.884;//cm
     public Servo leftGrabber;
@@ -46,8 +47,8 @@ public class SeansComponent {
         liftEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "liftR"));
         liftEncoder.setDirection(Encoder.Direction.FORWARD);
 
-        armMotor = hardwareMap.get(DcMotorEx.class, "leftEncoder");
-        armMotor.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
+//        armMotor = hardwareMap.get(DcMotorEx.class, "leftEncoder");
+//        armMotor.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
 
 
 //        stringPotentiometer = hardwareMap.analogInput.get("stringEnc");
@@ -57,7 +58,7 @@ public class SeansComponent {
         rightGrabber = hardwareMap.servo.get("clawR");
         rightGrabber.setDirection(Servo.Direction.FORWARD);
 
-        pot = hardwareMap.analogInput.get("pot");
+//        pot = hardwareMap.analogInput.get("pot");
 
         liftPID1 = new SeansSynchronousPID(LIFT_P1,LIFT_I1,LIFT_D1);
         liftPID1.setOutputRange(-1.0,1.0);
@@ -69,7 +70,7 @@ public class SeansComponent {
     public void init() {
         rightLift.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
         leftLift.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
-        armMotor.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
+//        armMotor.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     public void moveLift(double power) {
@@ -82,9 +83,9 @@ public class SeansComponent {
         rightLift.setPower(0.01);
     }
 
-    public void setArm(double power) {
-        armMotor.setPower(power);
-    }
+//    public void setArm(double power) {
+//        armMotor.setPower(power);
+//    }
 
     public void setClaw(double a) {
         leftGrabber.setPosition(a);
@@ -127,6 +128,10 @@ public class SeansComponent {
     public void close() {
         leftGrabber.setPosition(GlobalVariables.closeL);
         rightGrabber.setPosition(GlobalVariables.closeR);
+    }
+
+    public void setArm(double blah) {
+
     }
 
     public void getTelemetry(Telemetry telemetry) {
