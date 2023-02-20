@@ -5,9 +5,11 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.teamcode.GlobalVariables;
 import org.firstinspires.ftc.teamcode.Qaqortoq.Subsystems.AprilTags.AprilTagDetectionPipeline;
 import org.firstinspires.ftc.teamcode.SeansMotionController.Control.MotionController;
 import org.firstinspires.ftc.teamcode.SeansMotionController.Drive.SeanDrivetrain;
+import org.firstinspires.ftc.teamcode.SeansMotionController.Drive.SeansComponent;
 import org.firstinspires.ftc.teamcode.SeansMotionController.Util.ArmState;
 import org.firstinspires.ftc.teamcode.SeansMotionController.Util.HeadingControlledWaypoint;
 import org.firstinspires.ftc.teamcode.SeansMotionController.Util.LiftState;
@@ -30,6 +32,7 @@ public class Left extends LinearOpMode {
 
     MotionController c;
     SeanDrivetrain d;
+    SeansComponent component;
     LiftState liftState;
     ArmState armState;
     OpenCvCamera camera;
@@ -62,8 +65,14 @@ public class Left extends LinearOpMode {
         c = new MotionController(hardwareMap);
         d = new SeanDrivetrain(hardwareMap);
         d.resetHeading();
+
         liftState = new LiftState("NOTHING",this,hardwareMap);
         armState = new ArmState("NOTHING",this,hardwareMap);
+
+        component = new SeansComponent(hardwareMap);
+        component.init();
+        component.odoServo.setPosition(GlobalVariables.odoDown);
+
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Side Camera"), cameraMonitorViewId);

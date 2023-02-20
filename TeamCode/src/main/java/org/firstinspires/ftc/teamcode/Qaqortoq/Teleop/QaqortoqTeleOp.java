@@ -103,6 +103,7 @@ public class QaqortoqTeleOp extends OpMode {
         onWayUp = true;
         armTarget = GlobalVariables.front45;
         armFFAngle = 135;//180 is the front 90 position
+        component.odoServo.setPosition(GlobalVariables.odoUp);
     }
 
     @Override

@@ -18,6 +18,9 @@ public class GlobalVariables {
     public static double openR = 0.53;
     public static double openLMega = 0.575;
     public static double openRMega = 0.545;
+    public static double odoDown = 0.6375;
+    public static double odoUp = 0.43;
+
 
 
     public static double forwardCameraError45 = 3;//cm
