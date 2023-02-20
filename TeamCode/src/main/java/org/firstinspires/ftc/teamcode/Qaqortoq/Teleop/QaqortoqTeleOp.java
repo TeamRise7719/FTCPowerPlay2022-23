@@ -198,7 +198,7 @@ public class QaqortoqTeleOp extends OpMode {
                         armFFAngle = 0;
                     }
                 } else if (is90) {//Swap to 45 position
-                    is45 = false;
+                    is45 = true;
                     is90 = false;
                     onWayDown = true;
                     onWayUp = false;
