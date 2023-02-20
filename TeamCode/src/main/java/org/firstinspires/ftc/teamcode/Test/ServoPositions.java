@@ -35,18 +35,8 @@ public class ServoPositions extends OpMode {
         aState = gamepad1.a;
         bState = gamepad1.b;
 
-        if (gamepad1.right_bumper && !rightBumpState) {
-            c.close();
-            tuningClaw = !tuningClaw;
-        }
-        rightBumpState = gamepad1.right_bumper;
-        if (tuningClaw) {
-            c.rightGrabber.setPosition(pos);
-        } else {
-//            c.setArm(pos);
-        }
-        telemetry.addData("Left Claw",c.leftGrabber.getPosition());
-        telemetry.addData("Right Claw", c.rightGrabber.getPosition());
+        c.odoServo.setPosition(pos);
+        telemetry.addData("Position",pos);
 //        telemetry.addData("Arm",c.rightArm.getPosition());
     }
 }

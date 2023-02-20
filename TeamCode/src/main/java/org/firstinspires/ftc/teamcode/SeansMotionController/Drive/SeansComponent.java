@@ -24,6 +24,7 @@ public class SeansComponent {
     final static double SPOOL_RADIUS = 1.884;//cm
     public Servo leftGrabber;
     public Servo rightGrabber;
+    public Servo odoServo;
     public Encoder liftEncoder;
     SeansSynchronousPID liftPID1;
     double LIFT_P1 = 0.055;
@@ -58,6 +59,7 @@ public class SeansComponent {
         rightGrabber = hardwareMap.servo.get("clawR");
         rightGrabber.setDirection(Servo.Direction.FORWARD);
 
+        odoServo = hardwareMap.servo.get("odoServo");
 //        pot = hardwareMap.analogInput.get("pot");
 
         liftPID1 = new SeansSynchronousPID(LIFT_P1,LIFT_I1,LIFT_D1);
