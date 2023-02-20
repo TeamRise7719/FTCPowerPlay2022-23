@@ -66,7 +66,7 @@ public class QaqortoqTeleOp extends OpMode {
         pot = hardwareMap.analogInput.get("pot");
 
         robot = new QaqortoqDrivetrain(hardwareMap);
-        robot.runUsingEncoders();
+//        robot.runUsingEncoders();
         l = new Localizer(hardwareMap, new Pose(0,0,0));
         component = new SeansComponent(hardwareMap);
         isReady = true;
