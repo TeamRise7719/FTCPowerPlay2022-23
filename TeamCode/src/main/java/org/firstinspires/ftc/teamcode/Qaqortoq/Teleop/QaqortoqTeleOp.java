@@ -126,16 +126,16 @@ public class QaqortoqTeleOp extends OpMode {
 
 
         //----------------------------------------------=+(Grabber)+=----------------------------------------------\\
-        if (gamepad1.left_bumper && !clawsOpen && !leftBumperState) {
+        if (gamepad1.y && !clawsOpen && !leftBumperState) {
             component.rightGrabber.setPosition(GlobalVariables.openR);
             component.leftGrabber.setPosition(GlobalVariables.openL);
             clawsOpen = true;
-        } else if (gamepad1.left_bumper && clawsOpen && !leftBumperState) {
+        } else if (gamepad1.y && clawsOpen && !leftBumperState) {
             component.rightGrabber.setPosition(GlobalVariables.closeR);
             component.leftGrabber.setPosition(GlobalVariables.closeL);
             clawsOpen = false;
         }
-        leftBumperState = gamepad1.left_bumper;
+        leftBumperState = gamepad1.y;
 
         telemetry.addData("ClawR", component.rightGrabber.getPosition());
         telemetry.addData("ClawL", component.leftGrabber.getPosition());
