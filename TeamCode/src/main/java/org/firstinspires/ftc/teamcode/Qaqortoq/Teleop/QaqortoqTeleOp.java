@@ -251,7 +251,7 @@ public class QaqortoqTeleOp extends OpMode {
         }
         rightBumper2state = gamepad2.right_bumper;
 
-        if (gamepad2.left_bumper && !leftBumper2State && !clawsOpen) {
+        if (gamepad2.x && !leftBumper2State && !clawsOpen) {
             if (isFront) {//Change everything to the back side
                 isFront = false;
                 isBack = true;
@@ -285,7 +285,8 @@ public class QaqortoqTeleOp extends OpMode {
             onWayDown = !onWayDown;
 //            lastPosition = component.rightArm.getPosition();
         }
-        leftBumper2State = gamepad2.left_bumper;
+        leftBumper2State = gamepad2.x;
+
         double ffOutput;
         if (armTarget != GlobalVariables.up) {
             ffOutput = kcos * Math.cos((Math.toRadians(armFFAngle)));
