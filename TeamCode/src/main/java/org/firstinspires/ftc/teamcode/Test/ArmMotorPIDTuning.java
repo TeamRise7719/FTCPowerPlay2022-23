@@ -17,9 +17,9 @@ import org.firstinspires.ftc.teamcode.SeansMotionController.Control.PIDControlle
 @TeleOp
 public class ArmMotorPIDTuning extends OpMode {
 
-    double P = 1.5;//Start with a very low P and increase until fast with no bouncing
+    double P = 1;//Start with a very low P and increase until fast with no bouncing
     //We don't need "I" for an arm
-    double D = 0.065;//If arm is slow or can't really reach the target after tuning P, then increase P and add some D
+    double D = 0.05;//If arm is slow or can't really reach the target after tuning P, then increase P and add some D
     //If the arm can't hold its position after tuning, let me know and I'll make a PIDF controller
     AnalogInput pot;
     DcMotorEx armMotor;
