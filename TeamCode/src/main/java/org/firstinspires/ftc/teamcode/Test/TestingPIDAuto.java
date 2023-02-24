@@ -30,8 +30,10 @@ public class TestingPIDAuto  extends LinearOpMode {
         component.init();
         component.odoServo.setPosition(GlobalVariables.odoDown);
 
+        waitForStart();
+
         ArrayList<Waypoint> path = new ArrayList<>();
-         path.add(new StopWaypoint(10,0,Math.toRadians(0),1));
+         path.add(new StopWaypoint(10,0, Math.toRadians(0),1));
         c.followPath(path,40,this);
     }
 }
