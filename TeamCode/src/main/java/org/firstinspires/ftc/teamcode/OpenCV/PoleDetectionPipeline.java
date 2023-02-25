@@ -38,8 +38,8 @@ public class PoleDetectionPipeline extends OpenCvPipeline {
 
     double PHYSICAL_FORWARD_DISTANCE = 25;//cm
     double PHYSICAL_WIDTH = 2.5;//cm
-    double FORWARD_FOCAL_LENGTH = 376;
-    double PHYSICAL_SIDE_DISTANCE = 12;//cm
+    double FORWARD_FOCAL_LENGTH = 310;
+    double PHYSICAL_SIDE_DISTANCE = 10;//cm
     double HALF_FOV = 29;//degrees
 
     double DF = 0;
