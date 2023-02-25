@@ -5,12 +5,14 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.GlobalVariables;
 import org.firstinspires.ftc.teamcode.SeansMotionController.Control.MotionController;
+import org.firstinspires.ftc.teamcode.SeansMotionController.Control.Odometry;
 import org.firstinspires.ftc.teamcode.SeansMotionController.Drive.SeanDrivetrain;
 import org.firstinspires.ftc.teamcode.SeansMotionController.Drive.SeansComponent;
 import org.firstinspires.ftc.teamcode.SeansMotionController.Util.StopWaypoint;
 import org.firstinspires.ftc.teamcode.SeansMotionController.Util.Waypoint;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Autonomous(name = "Drive PID")
 public class TestingPIDAuto  extends LinearOpMode {
@@ -18,6 +20,7 @@ public class TestingPIDAuto  extends LinearOpMode {
     MotionController c;
     SeanDrivetrain d;
     SeansComponent component;
+    Odometry o;
 
 
     @Override
