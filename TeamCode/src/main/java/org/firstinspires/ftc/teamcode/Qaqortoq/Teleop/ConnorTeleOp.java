@@ -176,6 +176,24 @@ public class ConnorTeleOp extends OpMode {
 
         if (gamepad2.left_trigger > 0.0 && !leftTrigger2State) {//Front 90
             lastPosition = armTarget;
+            armTarget = GlobalVariables.front45;
+            armFFAngle = 135;
+            onWayDown = true;
+            onWayUp = false;
+        }
+        leftTrigger2State = gamepad2.left_trigger > 0.0;
+
+        if (gamepad2.right_trigger > 0.0 && !rightTrigger2State) {//Back 90
+            lastPosition = armTarget;
+            armTarget = GlobalVariables.back45;
+            armFFAngle = 405;
+            onWayDown = true;
+            onWayUp = false;
+        }
+        rightTrigger2State = gamepad2.right_trigger > 0.0;
+
+        if (gamepad2.left_bumper && !leftBumper2State) {//Front 45
+            lastPosition = armTarget;
             armTarget = GlobalVariables.front90;
             armFFAngle = 180;
             if (lastPosition == GlobalVariables.front45) {
@@ -186,9 +204,9 @@ public class ConnorTeleOp extends OpMode {
                 onWayUp = false;
             }
         }
-        leftTrigger2State = gamepad2.left_trigger > 0.0;
+        leftBumper2State = gamepad2.left_bumper;
 
-        if (gamepad2.right_trigger > 0.0 && !rightTrigger2State) {//Back 90
+        if (gamepad2.right_bumper && !rightBumper2State) {//Back 45
             lastPosition = armTarget;
             armTarget = GlobalVariables.back90;
             armFFAngle = 360;
@@ -199,24 +217,6 @@ public class ConnorTeleOp extends OpMode {
                 onWayDown = true;
                 onWayUp = false;
             }
-        }
-        rightTrigger2State = gamepad2.right_trigger > 0.0;
-
-        if (gamepad2.left_bumper && !leftBumper2State) {//Front 45
-            lastPosition = armTarget;
-            armTarget = GlobalVariables.front45;
-            armFFAngle = 135;
-            onWayDown = true;
-            onWayUp = false;
-        }
-        leftBumper2State = gamepad2.left_bumper;
-
-        if (gamepad2.right_bumper && !rightBumper2State) {//Back 45
-            lastPosition = armTarget;
-            armTarget = GlobalVariables.back45;
-            armFFAngle = 405;
-            onWayDown = true;
-            onWayUp = false;
         }
         rightBumper2State = gamepad2.right_bumper;
 
